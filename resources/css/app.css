@@ -1,1 +1,101 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
+
+.carousel-control {
+    width: 4%;
+}
+
+.carousel-control.left,
+.carousel-control.right {
+    margin-left: 15px;
+    background-image: none;
+}
+
+@media (max-width: 767px) {
+    .carousel-inner .active.left {
+        left: -100%;
+    }
+
+    .carousel-inner .next {
+        left: 100%;
+    }
+
+    .carousel-inner .prev {
+        left: -100%;
+    }
+
+    .active>div {
+        display: none;
+    }
+
+    .active>div:first-child {
+        display: block;
+    }
+
+}
+
+@media (min-width: 767px) and (max-width: 992px) {
+    .carousel-inner .active.left {
+        left: -50%;
+    }
+
+    .carousel-inner .next {
+        left: 50%;
+    }
+
+    .carousel-inner .prev {
+        left: -50%;
+    }
+
+    .active>div {
+        display: none;
+    }
+
+    .active>div:first-child {
+        display: block;
+    }
+
+    .active>div:first-child+div {
+        display: block;
+    }
+}
+
+@media (min-width: 992px) {
+    .carousel-inner .active.left {
+        left: -25%;
+    }
+
+    .carousel-inner .next {
+        left: 25%;
+    }
+
+    .carousel-inner .prev {
+        left: -25%;
+    }
+}
+
+ul {
+    list-style-type: none;
+}
+
+.jumbo {
+    background-image: url("{{ asset('images/upload/image.png') }}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 450px !important;
+}
+
+body {
+    font-family: 'Amaranth' !important;
+    font-size: 16px !important;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    .jumbo {
+        object-fit: cover;
+        width: 100% !important;
+        height: 200px !important;
+    }
+}

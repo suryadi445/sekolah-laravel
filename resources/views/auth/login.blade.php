@@ -71,6 +71,11 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-md-8 offset-md-4">
+                                    <p>Belum memiliki akun? <a href="{{ route('register') }}">Registrasi</a></p>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

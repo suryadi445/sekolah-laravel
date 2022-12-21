@@ -18,6 +18,10 @@ Route::get('/pengumuman', function () {
     return view('frontend.pengumuman');
 });
 
+Route::get('/gallery', function () {
+    return view('frontend.gallery');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
