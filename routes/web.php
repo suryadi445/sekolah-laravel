@@ -26,4 +26,4 @@ Route::get('/gallery', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/slideshow', [SlideshowController::class, 'index'])->name('slideshow');
+Route::resource('/slideshow', SlideshowController::class);
