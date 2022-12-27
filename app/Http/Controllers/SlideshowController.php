@@ -134,6 +134,16 @@ class SlideshowController extends Controller
      */
     public function destroy(Slideshow $slideshow)
     {
-        //
+        $file_path = public_path() .  $slideshow->image;
+        unlink($file_path);
+
+
+        $delete = Slideshow::destroy($slideshow->id);
+
+        if ($delete) {
+            return back()->with('success', 'Success! file deleted');
+        } else {
+            return back()->with('failed', 'Alert! file not deleted');
+        }
     }
 }

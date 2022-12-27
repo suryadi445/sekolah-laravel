@@ -35,21 +35,28 @@
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->user }}</td>
                                 <td>
-                                    <div class="d-grid gap-2">
-                                        <button type="button" class="btn btn-sm btn-warning btn_edit"
-                                            data-id="{{ $item->id }}" data-bs-toggle="modal"
-                                            data-bs-target="#modal_edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            Edit
-                                        </button>
-                                        <a href="" class="btn btn-sm btn-danger">
+                                    <button type="button" class="btn btn-sm btn-warning btn_edit"
+                                        data-id="{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#modal_edit">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Edit
+                                    </button>
+                                    <form method="POST" action="{{ route('slideshow.destroy', $item->id) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
                                             <i class="fa-solid fa-trash"></i>
                                             Delete
-                                        </a>
-                                    </div>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
+
+                        @if (count($slideshow) == 0)
+                            <td colspan="5">
+                                <span class="text-danger">Data Tidak Tersedia </span>
+                            </td>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -124,6 +131,32 @@
                     $('#image').removeClass('d-none');
                     $('#form_edit').attr('action', "{{ route('slideshow.index') }}" + '/' + id);
 
+                })
+            })
+
+            $(document).on('click', '.btn_delete', function(e) {
+                e.preventDefault()
+                var form = $(this).closest("form");
+
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Data Tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6e7881',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        form.submit();
+                        // Swal.fire(
+                        //     'Deleted!',
+                        //     'Your file has been deleted.',
+                        //     'success'
+                        // )
+                    }
                 })
             })
         });
