@@ -1,18 +1,20 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="offset-md-9 col-md-3">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add">
-                        <i class="fa-solid fa-plus"></i>
-                        Tambah Data
-                    </button>
+    @empty($introduction)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="offset-md-9 col-md-3">
+                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add">
+                            <i class="fa-solid fa-plus"></i>
+                            Tambah Data
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endempty
 
     <div class="row mt-3">
         <div class="col-md-12">
@@ -20,47 +22,45 @@
                 <table class="table table-striped text-center">
                     <thead class="bg-dark text-light">
                         <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Gambar</th>
+                            <th scope="col">Text</th>
                             <th scope="col">Tanggal Dibuat</th>
                             <th scope="col">User</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($slideshow))
-                            @foreach ($slideshow as $key => $item)
-                                <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->user }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-warning btn_edit"
-                                            data-id="{{ $item->id }}" data-bs-toggle="modal"
-                                            data-bs-target="#modal_edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            Edit
+                        @if (!empty($introduction))
+                            <tr>
+                                <td><img src="{{ $introduction->image }}" alt="image" width="100px"></td>
+                                <td>{{ $introduction->text }}</td>
+                                <td>{{ $introduction->created_at }}</td>
+                                <td>{{ $introduction->user }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-warning btn_edit"
+                                        data-id="{{ $introduction->id }}" data-bs-toggle="modal"
+                                        data-bs-target="#modal_edit">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Edit
+                                    </button>
+                                    <form method="POST" action="{{ route('introduction.destroy', $introduction->id) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
+                                            <i class="fa-solid fa-trash"></i>
+                                            Delete
                                         </button>
-                                        <form method="POST" action="{{ route('slideshow.destroy', $item->id) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
-                                                <i class="fa-solid fa-trash"></i>
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    </form>
+                                </td>
+                            </tr>
                         @endif
 
 
-                        @if (count($slideshow) == 0)
+                        @empty($introduction)
                             <td colspan="5">
                                 <span class="text-danger">Data Tidak Tersedia </span>
                             </td>
-                        @endif
+                        @endempty
                     </tbody>
                 </table>
             </div>
@@ -75,13 +75,17 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('slideshow.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('introduction.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar SlideShow</label>
-                            <input class="form-control" type="file" id="formFileMultiple" name="image[]" multiple>
-                            <div id="emailHelp" class="form-text text-danger">*Bisa lebih dari 1 gambar</div>
+                            <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="image">
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"
+                                value="{{ old('text') }}" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -102,7 +106,6 @@
                 </div>
                 <form action="" method="POST" enctype="multipart/form-data" id="form_edit">
                     @csrf
-                    @method('PUT')
 
                     <div class="modal-body">
                         <input type="hidden" id="id" name="id">
@@ -111,8 +114,13 @@
                         <img src="" alt="image" id="image" width="100px" height="100px">
 
                         <div class="mb-3 mt-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar SlideShow</label>
+                            <label for="formFileMultiple" class="form-label fw-bold">Gambar introduction</label>
                             <input class="form-control" type="file" id="image" name="image">
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="text" name="text"
+                                style="height: 100px"></textarea>
+                            <label for="text">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -129,11 +137,12 @@
             $(document).on('click', '.btn_edit', function() {
                 $('#image').addClass('d-none');
                 var id = $(this).attr('data-id')
-                $.get("{{ route('slideshow.index') }}" + '/' + id + '/edit', function(
-                    data) {
+                $.get("{{ route('introduction.index') }}" + '/' + id + '/edit', function(data) {
+                    console.log(data.text);
                     $('#image').attr('src', data.image);
+                    $('#text').val(data.text);
                     $('#image').removeClass('d-none');
-                    $('#form_edit').attr('action', "{{ route('slideshow.index') }}" + '/' + id);
+                    $('#form_edit').attr('action', "{{ route('introduction.store') }}");
 
                 })
             })

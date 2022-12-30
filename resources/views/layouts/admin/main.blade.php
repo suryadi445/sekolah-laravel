@@ -4,8 +4,8 @@
     </div> --}}
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Library</li>
+            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title ?? '' }}</li>
         </ol>
     </nav>
 

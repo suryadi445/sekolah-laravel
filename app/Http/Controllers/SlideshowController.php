@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Slideshow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
+
+
 
 
 class SlideshowController extends Controller
@@ -16,6 +20,7 @@ class SlideshowController extends Controller
      */
     public function index()
     {
+        $data['title'] = 'Slideshow';
         $data['slideshow'] = Slideshow::get();
 
         return view('backend.slideshow', $data);
@@ -49,7 +54,9 @@ class SlideshowController extends Controller
 
         if ($request->hasfile('image')) {
             foreach ($request->file('image') as $file) {
+
                 $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
+
                 if ($file->move(public_path('images\upload'), $name)) {
                     $files[] = $name;
                     $insert = Slideshow::create([

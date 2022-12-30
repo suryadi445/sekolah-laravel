@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\IntroductionController;
+use App\Models\Introduction;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,4 +28,7 @@ Route::get('/gallery', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// BACKEND
 Route::resource('/slideshow', SlideshowController::class);
+Route::resource('/introduction', IntroductionController::class);
