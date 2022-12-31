@@ -35,7 +35,7 @@
                                 <td><img src="{{ $introduction->image }}" alt="image" width="100px"></td>
                                 <td>{{ $introduction->text }}</td>
                                 <td>{{ $introduction->created_at }}</td>
-                                <td>{{ $introduction->user }}</td>
+                                <td>{{ getUser($introduction->user)->name }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-warning btn_edit"
                                         data-id="{{ $introduction->id }}" data-bs-toggle="modal"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beranda;
+use App\Models\Introduction;
 use App\Models\Slideshow;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,7 @@ class BerandaController extends Controller
     public function index()
     {
         $data['slideshow'] = Slideshow::all();
+        $data['introduction'] = Introduction::first();
 
         return view('frontend.beranda', $data);
     }

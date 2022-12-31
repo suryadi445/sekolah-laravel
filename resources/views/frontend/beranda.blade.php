@@ -30,15 +30,10 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <h1>Welcome</h1>
-                            Kami Menyambut baik terbitnya Website Sekolah yang baru , dengan harapan dipublikasinya website
-                            ini
-                            sekolah berharap : Peningkatan layanan pendidikan kepada siswa, orangtua, dan masyarakat pada
-                            umumnya
-                            semakin
-                            meningkat.
+                            {{ $introduction->text ?? '' }}
                         </div>
                         <div class="col-sm-4">
-                            <img src="{{ asset('images/upload/image.png') }}" class="d-block w-100" alt="image">
+                            <img src="{{ $introduction->image ?? '' }}" class="d-block w-100" alt="image">
                         </div>
                     </div>
                 </div>

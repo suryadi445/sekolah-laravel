@@ -22,7 +22,7 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link" href="#">
+                         <a class="nav-link" href="/latestNews">
                              <span data-feather="users" class="align-text-bottom"></span>
                              Berita Terkini
                          </a>

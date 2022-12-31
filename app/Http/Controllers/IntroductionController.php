@@ -42,7 +42,7 @@ class IntroductionController extends Controller
     {
         $validated = $request->validate([
             'text' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $cek_row = Introduction::first();
@@ -68,6 +68,12 @@ class IntroductionController extends Controller
                         ]);
                 }
             }
+        } else {
+            $insert = Introduction::where('id', $cek_row->id)
+                ->update([
+                    'text' => $request->text,
+                    "user" => Auth::id(),
+                ]);
         }
 
         if ($insert) {

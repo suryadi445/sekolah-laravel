@@ -17,22 +17,24 @@
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-striped text-center">
+                <table class="table table-striped text-center text-capitalize">
                     <thead class="bg-dark text-light">
                         <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Gambar</th>
+                            <th scope="col">Judul</th>
+                            <th scope="col">Text</th>
                             <th scope="col">Tanggal Dibuat</th>
                             <th scope="col">User</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($slideshow))
-                            @foreach ($slideshow as $key => $item)
+                        @if (!empty($latestNews))
+                            @foreach ($latestNews as $item)
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
                                     <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
+                                    <td>{{ $item->judul }}</td>
+                                    <td>{{ $item->text }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ getUser($item->user)->name }}</td>
                                     <td>
@@ -42,7 +44,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                             Edit
                                         </button>
-                                        <form method="POST" action="{{ route('slideshow.destroy', $item->id) }}">
+                                        <form method="POST" action="{{ route('latestNews.destroy', $item->id) }}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
@@ -56,11 +58,11 @@
                         @endif
 
 
-                        @if (count($slideshow) == 0)
+                        @empty($latestNews)
                             <td colspan="5">
                                 <span class="text-danger">Data Tidak Tersedia </span>
                             </td>
-                        @endif
+                        @endempty
                     </tbody>
                 </table>
             </div>
@@ -75,13 +77,22 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('slideshow.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('latestNews.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar SlideShow</label>
-                            <input class="form-control" type="file" id="formFileMultiple" name="image[]" multiple>
-                            <div id="emailHelp" class="form-text text-danger">*Bisa lebih dari 1 gambar</div>
+                            <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="image">
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" placeholder="Judul" name="judul"
+                                value="{{ old('judul') }}">
+                            <label for="judul">Judul Berita</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"
+                                value="{{ old('text') }}" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -103,7 +114,6 @@
                 <form action="" method="POST" enctype="multipart/form-data" id="form_edit">
                     @csrf
                     @method('PUT')
-
                     <div class="modal-body">
                         <input type="hidden" id="id" name="id">
 
@@ -111,8 +121,18 @@
                         <img src="" alt="image" id="image" width="100px" height="100px">
 
                         <div class="mb-3 mt-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar SlideShow</label>
+                            <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
                             <input class="form-control" type="file" id="image" name="image">
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="judul" placeholder="Judul"
+                                name="judul" value="{{ old('judul') }}">
+                            <label for="judul">Judul Berita</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="text" name="text"
+                                style="height: 100px"></textarea>
+                            <label for="text">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -129,11 +149,13 @@
             $(document).on('click', '.btn_edit', function() {
                 $('#image').addClass('d-none');
                 var id = $(this).attr('data-id')
-                $.get("{{ route('slideshow.index') }}" + '/' + id + '/edit', function(
-                    data) {
+                $.get("{{ route('latestNews.index') }}" + '/' + id + '/edit', function(data) {
                     $('#image').attr('src', data.image);
+                    $('#id').val(id);
+                    $('#text').val(data.text);
+                    $('#judul').val(data.judul);
                     $('#image').removeClass('d-none');
-                    $('#form_edit').attr('action', "{{ route('slideshow.index') }}" + '/' + id);
+                    $('#form_edit').attr('action', "{{ route('latestNews.index') }}" + '/' + id);
 
                 })
             })
