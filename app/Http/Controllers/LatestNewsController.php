@@ -18,10 +18,10 @@ class LatestNewsController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Berita Terkini';
-        $data['latestNews'] = LatestNews::orderByDesc('updated_at')->get();
+        $title = 'Berita Terkini';
+        $latestNews = LatestNews::orderByDesc('updated_at')->paginate(10);
 
-        return view('backend.latestNews', $data);
+        return view('backend.latestNews', compact(['title', 'latestNews']));
     }
 
     /**

@@ -10,8 +10,8 @@ class LatestController extends Controller
 {
     public function index()
     {
-        $data['latestNews'] = LatestNews::orderByDesc('updated_at')->get();
+        $latestNews = LatestNews::orderByDesc('updated_at')->paginate(12);
 
-        return view('frontend.latest', $data);
+        return view('frontend.latest', compact(['latestNews']));
     }
 }

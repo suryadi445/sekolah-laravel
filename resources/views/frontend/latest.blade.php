@@ -33,5 +33,10 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="d-flex justify-content-center mt-5">
+                {!! $latestNews->links() !!}
+            </div>
+        </div>
     </div>
 @endsection

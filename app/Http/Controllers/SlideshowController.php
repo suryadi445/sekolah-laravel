@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Slideshow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
 
 class SlideshowController extends Controller
 {
@@ -16,10 +15,10 @@ class SlideshowController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Slideshow';
-        $data['slideshow'] = Slideshow::orderByDesc('id')->get();
+        $title = 'Slideshow';
+        $slideshow = Slideshow::orderByDesc('id')->paginate(5);
 
-        return view('backend.slideshow', $data);
+        return view('backend.slideshow', compact(['title', 'slideshow']));
     }
 
     /**

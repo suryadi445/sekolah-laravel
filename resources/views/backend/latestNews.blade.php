@@ -65,6 +65,10 @@
                         @endempty
                     </tbody>
                 </table>
+
+                <div class="d-flex justify-content-end mt-5">
+                    {!! $latestNews->links() !!}
+                </div>
             </div>
         </div>
     </div>

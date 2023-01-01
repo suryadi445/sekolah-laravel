@@ -20,10 +20,10 @@ class IntroductionController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Kata Pengantar';
-        $data['introduction'] = Introduction::first();
+        $title = 'Kata Pengantar';
+        $introduction = Introduction::first();
 
-        return view('backend.introduction', $data);
+        return view('backend.introduction', compact('title', 'introduction'));
     }
 
     /**
