@@ -4,7 +4,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\IntroductionController;
+use App\Http\Controllers\LatestController;
 use App\Http\Controllers\LatestNewsController;
+use App\Models\LatestNews;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,14 +18,14 @@ Route::get('/about', function () {
 Route::get('/source/{slug}', function () {
     return view('frontend.source');
 });
-
 Route::get('/pengumuman', function () {
     return view('frontend.pengumuman');
 });
-
 Route::get('/gallery', function () {
     return view('frontend.gallery');
 });
+Route::get('/latest', [LatestController::class, 'index']);
+
 
 Auth::routes();
 

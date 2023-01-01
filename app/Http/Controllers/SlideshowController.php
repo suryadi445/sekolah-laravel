@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
-
-
-
-
 class SlideshowController extends Controller
 {
     /**
@@ -21,7 +17,7 @@ class SlideshowController extends Controller
     public function index()
     {
         $data['title'] = 'Slideshow';
-        $data['slideshow'] = Slideshow::get();
+        $data['slideshow'] = Slideshow::orderByDesc('id')->get();
 
         return view('backend.slideshow', $data);
     }

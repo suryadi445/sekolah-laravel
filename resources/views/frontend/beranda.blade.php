@@ -1,7 +1,7 @@
 @extends('layouts.landing')
 
 @section('container')
-    <section id="carousel">
+    <section id="carousel" class="pt-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
                 @foreach ($slideshow as $key => $slide)
@@ -25,7 +25,7 @@
 
     <div class="container">
         <section id="welcome">
-            <div class="row mt-5">
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-8">
@@ -33,7 +33,8 @@
                             {{ $introduction->text ?? '' }}
                         </div>
                         <div class="col-sm-4">
-                            <img src="{{ $introduction->image ?? '' }}" class="d-block w-100" alt="image">
+                            <img src="{{ $introduction->image ?? '' }}" class="rounded img-fluid img-thumbnail"
+                                alt="image">
                         </div>
                     </div>
                 </div>
@@ -47,59 +48,59 @@
                 </div>
             </div>
 
-            <div class="row mt-5">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="{{ asset('images/upload/image.png') }}" class="d-block w-100" alt="image">
-                        </div>
-                        <div class="col-sm-8">
-                            <p>20 Desember 2022</p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est nostrum non accusamus, vero
-                                beatae
-                                dolorem quaerat reprehenderit fugiat repellat quidem magni nam quia consectetur vel velit
-                                asperiores provident cupiditate esse laudantium, tempora quae praesentium. Earum voluptate
-                                ab
-                                repudiandae corrupti quas dolorum, tempore, alias facere eligendi placeat praesentium dolor?
-                                Nostrum vero recusandae totam esse eligendi deleniti tempora eveniet laboriosam officiis
-                                dignissimos ratione repellat numquam, quod reprehenderit rem maiores illum. Beatae sit
-                                maxime,
-                                sapiente, cum odit adipisci sunt consequatur quidem nulla possimus autem officiis fuga
-                                temporibus minus dolorum libero corrupti nam! Fuga, placeat impedit tempore ut atque vel
-                                dolor
-                                laborum tempora temporibus.
-                            </p>
-                            <a href="#">Baca Selengkapnya</a>
+            @if ($latestNews->count())
+                <div class="row mt-5">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="{{ $latestNews[0]->image }}" class="d-block w-100 rounded img-fluid img-thumbnail"
+                                    alt="image">
+                            </div>
+                            <div class="col-sm-8">
+                                <p>
+                                    {{ $latestNews[0]->created_at->isoFormat('dddd, D MMMM Y') }}
+                                </p>
+                                <p>
+                                    {{ $latestNews[0]->text }}
+                                </p>
+                                <a href="/latest/{{ $latestNews[0]->id }}">Baca Selengkapnya</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        @for ($i = 0; $i < 8; $i++)
-                            <div class="col-md-3">
-                                <div class="card h-100">
-                                    <img src="{{ asset('images/upload/map.jpg') }}" class="card-img-top" alt="image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural
-                                            lead-in to additional content. This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">Last updated 3 mins ago</small>
+
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            @foreach ($latestNews->skip(1) as $news)
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <img src="{{ $news->image }}" class="card-img-top" alt="image">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $news->judul }}</h5>
+                                            <p class="card-text">{{ $news->text }}</p>
+                                            <p class="text-end pt-3">
+                                                <a href="/latest/{{ $news->id }}">Baca
+                                                    Selengkapnya</a>
+                                            </p>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated
+                                                {{ $news->created_at->diffForHumans() }}</small>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endfor
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
 
             <div class="row mt-5 d-flex justify-content-center">
-                <a href="#" class="col-sm-3 btn btn-info">
+                <a href="/latest" class="col-sm-3 btn btn-info">
                     <span>Berita Selengkapnya
                         <i class="fa-solid fa-right-long"></i>
                     </span>

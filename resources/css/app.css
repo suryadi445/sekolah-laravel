@@ -98,4 +98,20 @@ body {
         width: 100% !important;
         height: 200px !important;
     }
+
+    #carousel {
+        min-height: 230px !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #carousel {
+        min-height: 430px !important;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #carousel {
+        min-height: 600px !important;
+    }
 }

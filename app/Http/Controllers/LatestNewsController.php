@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\LatestNews;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 
 class LatestNewsController extends Controller
@@ -17,7 +19,7 @@ class LatestNewsController extends Controller
     public function index()
     {
         $data['title'] = 'Berita Terkini';
-        $data['latestNews'] = LatestNews::all();
+        $data['latestNews'] = LatestNews::orderByDesc('updated_at')->get();
 
         return view('backend.latestNews', $data);
     }
@@ -46,17 +48,24 @@ class LatestNewsController extends Controller
             'image' => 'mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $file = $request->file('image');
-        $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
 
-        if ($file->move(public_path('images\upload'), $name)) {
-            $insert = LatestNews::create([
-                'judul' => $request->judul,
-                'text' => $request->text,
-                'image' => '\images/upload/' . $name,
-                "user" => Auth::id(),
-            ]);
-        }
+        $images = $request->file('image');
+        $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+        // resize image 
+        $canvas = Image::canvas(1024, 1024);
+        $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $canvas->insert($image, 'center');
+        $canvas->save('images\upload' . '/' . $imageName);
+
+        // insert to db
+        $insert = LatestNews::create([
+            'judul' => $request->judul,
+            'text' => $request->text,
+            'image' => '\images/upload/' . $imageName,
+            "user" => Auth::id(),
+        ]);
 
         if ($insert) {
             return back()->with('success', 'Success! Data saved successfully');
@@ -64,6 +73,8 @@ class LatestNewsController extends Controller
             return back()->with('failed', 'Alert! Data failed to save');
         }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -106,19 +117,26 @@ class LatestNewsController extends Controller
 
         $file = $request->file('image');
         if ($request->hasFile('image')) {
-            $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
 
             $file_path = public_path() .  $latestNews->image;
             unlink($file_path);
 
+            $images = $request->file('image');
+            $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
+            // resize image 
+            $canvas = Image::canvas(1024, 1024);
+            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $canvas->insert($image, 'center');
+            $canvas->save('images\upload' . '/' . $imageName);
 
-            if ($file->move(public_path('images\upload'), $name)) {
-                $update_data = [
-                    'judul' => $request->judul,
-                    'text' => $request->text,
-                    'image' => '\images\upload/' . $name,
-                ];
-            }
+
+            $update_data = [
+                'judul' => $request->judul,
+                'text' => $request->text,
+                'image' => '\images\upload/' . $imageName,
+            ];
         } else {
             $update_data = [
                 'judul' => $request->judul,

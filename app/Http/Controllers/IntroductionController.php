@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Introduction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
+
+
 
 
 class IntroductionController extends Controller
@@ -40,7 +44,7 @@ class IntroductionController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'text' => 'required',
             'image' => 'mimes:jpg,png,jpeg|max:2048',
         ]);
@@ -48,32 +52,33 @@ class IntroductionController extends Controller
         $cek_row = Introduction::first();
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
+            $images = $request->file('image');
+            $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+            // resize image 
+            $canvas = Image::canvas(1024, 1024);
+            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $canvas->insert($image, 'center');
+            $canvas->save('images\upload' . '/' . $imageName);
+
+            $data = [
+                'text' => $request->text,
+                'image' => '\images/upload/' . $imageName,
+                "user" => Auth::id(),
+            ];
+
+
             if (empty($cek_row)) {
-                if ($file->move(public_path('images\upload'), $name)) {
-                    $insert = Introduction::create([
-                        'text' => $request->text,
-                        'image' => '\images/upload/' . $name,
-                        "user" => Auth::id(),
-                    ]);
-                }
+                $insert = Introduction::create($data);
             } else {
-                if ($file->move(public_path('images\upload'), $name)) {
-                    $insert = Introduction::where('id', $cek_row->id)
-                        ->update([
-                            'text' => $request->text,
-                            'image' => '\images/upload/' . $name,
-                            "user" => Auth::id(),
-                        ]);
-                }
+                $insert = Introduction::where('id', $cek_row->id)->update($data);
             }
         } else {
-            $insert = Introduction::where('id', $cek_row->id)
-                ->update([
-                    'text' => $request->text,
-                    "user" => Auth::id(),
-                ]);
+            $insert = Introduction::where('id', $cek_row->id)->update([
+                'text' => $request->text,
+                "user" => Auth::id(),
+            ]);
         }
 
         if ($insert) {
