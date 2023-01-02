@@ -6,7 +6,8 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\IntroductionController;
 use App\Http\Controllers\LatestController;
 use App\Http\Controllers\LatestNewsController;
-use App\Models\LatestNews;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AktifitasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,7 @@ Route::get('/gallery', function () {
     return view('frontend.gallery');
 });
 Route::get('/latest', [LatestController::class, 'index']);
+Route::get('/aktifitas', [AktifitasController::class, 'index']);
 
 
 Auth::routes();
@@ -35,3 +37,4 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('/slideshow', SlideshowController::class);
 Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
+Route::resource('/activity', ActivityController::class);

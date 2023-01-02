@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Beranda;
 use App\Models\Introduction;
 use App\Models\LatestNews;
@@ -20,6 +21,7 @@ class BerandaController extends Controller
         $data['slideshow'] = Slideshow::all();
         $data['introduction'] = Introduction::first();
         $data['latestNews'] = LatestNews::orderByDesc('updated_at')->take(9)->get();
+        $data['activity'] = Activity::orderByDesc('id')->take(5)->get();
 
         return view('frontend.beranda', $data);
     }
