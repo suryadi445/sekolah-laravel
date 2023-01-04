@@ -8,6 +8,7 @@ use App\Http\Controllers\LatestController;
 use App\Http\Controllers\LatestNewsController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AktifitasController;
+use App\Http\Controllers\AlumniController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,3 +39,4 @@ Route::resource('/slideshow', SlideshowController::class);
 Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
 Route::resource('/activity', ActivityController::class);
+Route::resource('/alumni', AlumniController::class);

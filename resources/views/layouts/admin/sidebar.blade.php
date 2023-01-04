@@ -35,9 +35,9 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ Request::is('informasi') ? 'active' : '' }}" href="#">
+                         <a class="nav-link {{ Request::is('alumni') ? 'active' : '' }}" href="/alumni">
                              <span data-feather="layers" class="align-text-bottom"></span>
-                             Informasi Terbaru
+                             Alumni
                          </a>
                      </li>
                      <li class="nav-item">

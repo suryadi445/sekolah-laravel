@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Alumni;
 use App\Models\Beranda;
 use App\Models\Introduction;
 use App\Models\LatestNews;
@@ -22,6 +23,13 @@ class BerandaController extends Controller
         $data['introduction'] = Introduction::first();
         $data['latestNews'] = LatestNews::orderByDesc('updated_at')->take(9)->get();
         $data['activity'] = Activity::orderByDesc('id')->take(5)->get();
+        $data['alumnis'] = Alumni::orderByDesc('id')->take(16)->get();
+
+        // foreach ($data['alumnis']->chunk(4) as $key => $tes) {
+        //     // echo '<pre>';
+        //     echo $tes;
+        // }
+        // die;
 
         return view('frontend.beranda', $data);
     }

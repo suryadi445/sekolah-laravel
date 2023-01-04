@@ -160,11 +160,12 @@
             </div>
         </section>
 
-        <section id="informasi" class="bg-light">
+        <section id="alumni" class="bg-light mt-5 pt-5">
             <div class="container pt-3 pb-5">
+
                 <div class="row">
                     <div class="col-6">
-                        <h1 class="mb-3">Informasi Terbaru </h1>
+                        <h1 class="mb-3">Alumni Kami </h1>
                     </div>
                     <div class="col-6 text-right">
                         <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button"
@@ -179,118 +180,104 @@
                     <div class="col-12">
                         <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532781914607-2031eca2f00d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=7c625ea379640da3ef2e24f20df7ce8d">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
+                            <div class="carousel-inner row w-100 mx-auto">
+                                @if ($alumnis->count())
+                                    @foreach ($alumnis as $key => $item)
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="shadow p-3 mb-5 bg-body">
+                                                        <img class="img-fluid" src="{{ $item->image }}"
+                                                            style="width: 100%; height: 25vw; object-fit: cover;">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
-
+                                                <div class="offset-md-1 col-md-6">
+                                                    <div class="card text-center shadow p-3 mb-5 bg-body">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">{{ $item->nama_siswa }}
+                                                            </h4>
+                                                            <p class="card-text">{{ $item->text }}</p>
+                                                            <p class="card-text">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Minus quam voluptas earum porro dolore
+                                                                perferendis, aperiam illum, sunt dolorem quod ex iusto
+                                                                deserunt, nihil recusandae! Hic minus quisquam tempore eum!
+                                                            </p>
+                                                        </div>
+                                                        <div class="card-footer text-muted">
+                                                            <span>
+                                                                Tahun Ajaran :
+                                                                {{ $item->angkatan_awal . ' - ' . $item->angkatan_akhir }}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
-
+                                                <div class="row d-flex justify-content-center">
+                                                    <a href="/alumniKami" class="text-center">
+                                                        Berita Selengkapnya
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
 
-
-                                <div class="carousel-item">
-                                    <div class="row">
-
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532781914607-2031eca2f00d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=7c625ea379640da3ef2e24f20df7ce8d">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
+                                        {{-- <div class="carousel-item">
+                                            <div class="row">
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="card">
+                                                        <img class="img-fluid" alt="100%x280" src="{{ $key }}">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Special title treatment</h4>
+                                                            <p class="card-text">With supporting text below as a natural
+                                                                lead-in to
+                                                                additional content.</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="card">
+                                                        <img class="img-fluid" alt="100%x280"
+                                                            src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Special title treatment</h4>
+                                                            <p class="card-text">With supporting text below as a natural
+                                                                lead-in to
+                                                                additional content.</p>
 
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="card">
+                                                        <img class="img-fluid" alt="100%x280"
+                                                            src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Special title treatment</h4>
+                                                            <p class="card-text">With supporting text below as a natural
+                                                                lead-in to
+                                                                additional content.</p>
 
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card">
-                                                <img class="img-fluid" alt="100%x280"
-                                                    src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to
-                                                        additional content.</p>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="card">
+                                                        <img class="img-fluid" alt="100%x280"
+                                                            src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Special title treatment</h4>
+                                                            <p class="card-text">With supporting text below as a natural
+                                                                lead-in to
+                                                                additional content.</p>
 
+                                                        </div>
+                                                    </div>
                                                 </div>
+
                                             </div>
-                                        </div>
+                                        </div> --}}
+                                    @endforeach
+                                @endif
 
-                                    </div>
-                                </div>
-
-
-                                <div class="carousel-item">
+                                {{-- <div class="carousel-item">
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <div class="card">
@@ -340,7 +327,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
