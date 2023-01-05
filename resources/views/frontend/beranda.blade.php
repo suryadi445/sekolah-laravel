@@ -185,13 +185,13 @@
                                     @foreach ($alumnis as $key => $item)
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                             <div class="row">
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-lg-4 col-md-12 mb-3">
                                                     <div class="shadow p-3 mb-5 bg-body">
                                                         <img class="img-fluid" src="{{ $item->image }}"
-                                                            style="width: 100%; height: 25vw; object-fit: cover;">
+                                                            style="width: 100%; height: 25vw; object-fit: contain;">
                                                     </div>
                                                 </div>
-                                                <div class="offset-md-1 col-md-6">
+                                                <div class="offset-lg-1 col-lg-6 col-md-12">
                                                     <div class="card text-center shadow p-3 mb-5 bg-body">
                                                         <div class="card-body">
                                                             <h4 class="card-title">{{ $item->nama_siswa }}
