@@ -28,6 +28,8 @@ Route::get('/gallery', function () {
     return view('frontend.gallery');
 });
 Route::get('/latest', [LatestController::class, 'index']);
+Route::get('/latest/{id}', [LatestController::class, 'index']);
+Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
 Route::get('/alumniKami', [AlumniKamiController::class, 'index']);
 Route::get('/alumniKami/{angkatan}', [AlumniKamiController::class, 'index']);

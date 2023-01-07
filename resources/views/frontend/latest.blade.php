@@ -7,10 +7,11 @@
     <div class="container">
         <div class="row mt-5 text-center">
             <div class="col-sm-12">
-                <h1>Latest News</h1>
+                <h1>Latest News </h1>
             </div>
         </div>
-        <div class="row mb-3 mt-3">
+
+        <div class="row mb-3 mt-3 {{ $id != null ? 'd-none' : '' }}">
             <div class="offset-md-6 col-md-3">
                 <div class="form-floating">
                     <select class="form-select select_tahun" id="floatingSelect">
@@ -62,18 +63,23 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-group">
                     @if ($latestNews->count())
-                        <div class="row">
+                        <div class="row justify-content-center">
                             @foreach ($latestNews as $news)
                                 <div class="col-md-3 mt-5">
                                     <div class="card h-100">
                                         <img src="{{ $news->image }}" class="card-img-top" alt="image">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $news->judul }}</h5>
-                                            <p class="card-text">{{ $news->text }}</p>
+                                            <a href="" class="btn_text text-decoration-none"
+                                                data-id="{{ $news->id }}">
+                                                <p class="card-text ">{{ $news->text }}</p>
+                                            </a>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-muted">Last updated
@@ -99,6 +105,22 @@
         </div>
     </div>
 
+    <div class="modal" id="modal_detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="judul"></h1>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="text_modal"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $(document).on('change', '.select_tahun', function() {
@@ -107,14 +129,24 @@
 
                 window.location.href = '/latest?tahun=' + tahun + '&bulan=' + bulan;
             })
-        });
 
-        $(document).ready(function() {
             $(document).on('change', '.select_bulan', function() {
                 let tahun = $('.select_tahun').val()
                 let bulan = $(this).val()
 
                 window.location.href = '/latest?tahun=' + tahun + '&bulan=' + bulan;
+            })
+
+            $(document).on('click', '.btn_text', function(e) {
+                e.preventDefault()
+                let id = $(this).attr('data-id')
+                const myModal = new bootstrap.Modal(document.getElementById('modal_detail'))
+                $.get('/latest/get_row/' + id, function(data) {
+                    console.log(data);
+                    $('#judul').text(data.judul)
+                    $('#text_modal').text(data.text)
+                })
+                myModal.show()
             })
         });
     </script>

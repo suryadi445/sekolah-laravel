@@ -8,12 +8,12 @@ use App\Models\LatestNews;
 
 class LatestController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id = null)
     {
         $tahun = $request->tahun;
         $bulan = $request->bulan;
 
-        if ($tahun != 'all') {
+        if ($tahun != 'all' && $tahun) {
             if ($bulan != 'all') {
                 $latestNews = LatestNews::whereYear('updated_at', $tahun)
                     ->whereMonth('updated_at', $bulan)
@@ -24,7 +24,7 @@ class LatestController extends Controller
                     ->paginate(12)
                     ->appends(request()->query());
             }
-        } else if ($bulan != 'all') {
+        } else if ($bulan != 'all' && $bulan) {
             if ($tahun != 'all') {
                 $latestNews = LatestNews::whereYear('updated_at', $tahun)
                     ->whereMonth('updated_at', $bulan)
@@ -41,6 +41,18 @@ class LatestController extends Controller
         }
 
 
-        return view('frontend.latest', compact(['latestNews', 'tahun', 'bulan']));
+        if ($id) {
+            $latestNews = LatestNews::where('id', $id)->paginate(1);
+        }
+
+
+        return view('frontend.latest', compact(['latestNews', 'tahun', 'bulan', 'id']));
+    }
+
+    public function get_row($id)
+    {
+        $data = LatestNews::where('id', $id)->first();
+
+        return response()->json($data);
     }
 }
