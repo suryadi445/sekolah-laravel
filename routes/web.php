@@ -29,6 +29,9 @@ Route::get('/gallery', function () {
 });
 Route::get('/latest', [LatestController::class, 'index']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
+Route::get('/alumniKami', [AlumniKamiController::class, 'index']);
+Route::get('/alumniKami/{angkatan}', [AlumniKamiController::class, 'index']);
+
 
 
 Auth::routes();
@@ -41,4 +44,3 @@ Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
 Route::resource('/activity', ActivityController::class);
 Route::resource('/alumni', AlumniController::class);
-Route::resource('/alumniKami', AlumniKamiController::class);

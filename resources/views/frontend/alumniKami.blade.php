@@ -12,14 +12,18 @@
         </div>
         <div class="row mb-3">
             <div class="offset-md-9 col-md-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected value="" disabled>Semua Angkatan</option>
-                    @foreach ($angkatans as $angkatan)
-                        <option value="{{ $angkatan->angkatan_awal }}">
-                            {{ $angkatan->angkatan_awal }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="form-floating">
+                    <select class="form-select select_angkatan" id="floatingSelect">
+                        <option value="">Semua Angkatan</option>
+                        @foreach ($angkatans as $ang)
+                            <option value="{{ $ang->angkatan_awal }}"
+                                {{ $angkatan == $ang->angkatan_awal ? 'selected' : '' }}>
+                                {{ $ang->angkatan_awal }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label for="floatingSelect">Angkatan</label>
+                </div>
             </div>
         </div>
         @if ($alumnis->count())
@@ -27,7 +31,7 @@
                 @foreach ($alumnis as $item)
                     <div class="col">
                         <div class="card h-100">
-                            <img src="{{ $item->image }}" class="card-img-top" alt="image">
+                            <img src="{{ url($item->image) }}" class="card-img-top" alt="image">
                             <div class="card-body">
                                 <p class="card-text">{{ $item->nama_siswa }}</p>
                             </div>
@@ -42,6 +46,19 @@
                 </div>
             </div>
         @endif
-
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('change', '.select_angkatan', function() {
+                var val = $(this).val();
+                if (val == '') {
+                    window.location.href = '/alumniKami';
+                } else {
+                    window.location.href = '/alumniKami?angkatan=' + val;
+                }
+
+            })
+        });
+    </script>
 @endsection
