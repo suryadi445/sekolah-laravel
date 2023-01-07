@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row mb-3 mt-3">
-            <div class="offset-md-6 col-md-3">
+            <div class="offset-md-6 col-md-3 mt-2">
                 <div class="form-floating">
                     <select class="form-select select_tahun" id="floatingSelect">
                         <option value="all">Semua Tahun</option>
@@ -27,7 +27,7 @@
                     <label for="floatingSelect">Tahun</label>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-2">
                 <div class="form-floating">
                     <select class="form-select select_bulan" id="floatingSelect">
                         <option value="all">Semua</option>

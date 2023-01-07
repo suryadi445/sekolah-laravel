@@ -10,13 +10,14 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AktifitasController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AlumniKamiController;
+use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 // front end
 Route::get('/', [BerandaController::class, 'index']);
-Route::get('/about', function () {
-    return view('frontend.about');
+Route::get('/tentangKami', function () {
+    return view('frontend.tentangKami');
 });
 Route::get('/source/{slug}', function () {
     return view('frontend.source');
@@ -46,3 +47,5 @@ Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
 Route::resource('/activity', ActivityController::class);
 Route::resource('/alumni', AlumniController::class);
+Route::resource('/about', AboutController::class);
+Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about.remove');

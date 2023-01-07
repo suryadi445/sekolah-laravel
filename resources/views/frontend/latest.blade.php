@@ -5,14 +5,14 @@
     @include('layouts.jumbotron')
 
     <div class="container">
-        <div class="row mt-5 text-center">
-            <div class="col-sm-12">
+        <div class="row mt-5">
+            <div class="col-md-12">
                 <h1>Latest News </h1>
             </div>
         </div>
 
         <div class="row mb-3 mt-3 {{ $id != null ? 'd-none' : '' }}">
-            <div class="offset-md-6 col-md-3">
+            <div class="offset-md-6 col-md-3 mt-2">
                 <div class="form-floating">
                     <select class="form-select select_tahun" id="floatingSelect">
                         <option value="all">Semua</option>
@@ -42,7 +42,7 @@
                     <label for="floatingSelect">Tahun</label>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-2">
                 <div class="form-floating">
                     <select class="form-select select_bulan" id="floatingSelect">
                         <option value="all">Semua</option>
@@ -66,7 +66,7 @@
 
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="card-group">
                     @if ($latestNews->count())
                         <div class="row justify-content-center">
@@ -142,7 +142,6 @@
                 let id = $(this).attr('data-id')
                 const myModal = new bootstrap.Modal(document.getElementById('modal_detail'))
                 $.get('/latest/get_row/' + id, function(data) {
-                    console.log(data);
                     $('#judul').text(data.judul)
                     $('#text_modal').text(data.text)
                 })

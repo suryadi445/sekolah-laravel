@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
-use Illuminate\Support\Facades\Auth;
+use App\Models\About;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 
-class ActivityController extends Controller
+class AboutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,10 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $title = 'Kegiatan Siswa';
-        $activity = Activity::orderByDesc('id')->paginate(10);
+        $title = 'About Us';
+        $about = About::orderByDesc('id')->paginate(20);
 
-
-        return view('backend.activity', compact(['title', 'activity']));
+        return view('backend.about', compact(['about', 'title']));
     }
 
     /**
@@ -43,27 +42,36 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required|max:255',
+            'slug' => 'required',
+            'image' => 'mimes:png,jpg,jpeg|max:2048',
             'text' => 'required',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        $images = $request->file('image');
-        $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-        // resize image 
-        $canvas = Image::canvas(1024, 1024);
-        $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $canvas->insert($image, 'center');
-        $canvas->save('images\upload' . '/' . $imageName);
+        if ($request->hasFile('image')) {
 
-        $insert = Activity::create([
-            'judul' => $request->judul,
-            'text' => $request->text,
-            'image' => '\images/upload/' . $imageName,
-            'user'  => Auth::id(),
-        ]);
+            $images = $request->file('image');
+            $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+            // resize image 
+            $canvas = Image::canvas(1024, 1024);
+            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $canvas->insert($image, 'center');
+            $canvas->save('images\upload' . '/' . $imageName);
+
+            $insert = About::create([
+                'slug' => $request->slug,
+                'text' => $request->text,
+                'image' => '\images/upload/' . $imageName,
+                'user'  => Auth::id(),
+            ]);
+        } else {
+            $insert = About::create([
+                'slug' => $request->slug,
+                'text' => $request->text,
+                'user'  => Auth::id(),
+            ]);
+        }
 
         if ($insert) {
             return back()->with('success', 'Success! Data saved successfully');
@@ -75,10 +83,10 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Activity  $activity
+     * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $activity)
+    public function show(About $about)
     {
         //
     }
@@ -86,12 +94,12 @@ class ActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Activity  $activity
+     * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $activity)
+    public function edit(About $about)
     {
-        $data = Activity::where('id', $activity->id)->first();
+        $data = About::where('id', $about->id)->first();
 
         return response()->json($data);
     }
@@ -100,23 +108,18 @@ class ActivityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Activity  $activity
+     * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request, About $about)
     {
         $request->validate([
-            'judul' => 'required|max:255',
+            'image' => 'mimes:png,jpg, jpeg|max:2048',
             'text' => 'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'slug' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
-
-            // delete image lama    
-            $file_path = public_path() .  $activity->image;
-            unlink($file_path);
-
             $images = $request->file('image');
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
             // resize image 
@@ -129,13 +132,12 @@ class ActivityController extends Controller
 
             $imageName = '\images/upload/' . $imageName;
         } else {
-
-            $imageName = $activity->image;
+            $imageName = $about->image;
         }
 
-        $update = Activity::where('id', $request->id)
+        $update = About::where('id', $request->id)
             ->update([
-                'judul' => $request->judul,
+                'slug' => $request->slug,
                 'text' => $request->text,
                 'image' => $imageName,
                 'user'  => Auth::id(),
@@ -151,20 +153,40 @@ class ActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Activity  $activity
+     * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $activity)
+    public function destroy(About $about)
     {
-        $file_path = public_path() .  $activity->image;
-        unlink($file_path);
+        $image = $about->image;
 
-        $delete = Activity::destroy($activity->id);
+        if ($image) {
+            $file_path = public_path() .  $about->image;
+            unlink($file_path);
+        }
+
+        $delete = About::destroy($about->id);
 
         if ($delete) {
             return back()->with('success', 'Success! Data successfuly deleted');
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function remove($id)
+    {
+        $about = About::where('id', $id)->update([
+            'image' => NULL
+        ]);
+
+        $tbl_about = About::where('id', $id)->first();
+        $image = $tbl_about->image;
+        if ($image) {
+            $file_path = public_path() .  $about->image;
+            unlink($file_path);
+        }
+
+        return back()->with('success', 'Success! Data successfuly deleted');
     }
 }
