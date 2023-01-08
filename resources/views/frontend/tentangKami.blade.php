@@ -5,24 +5,47 @@
     @include('layouts.jumbotron')
 
     <section id="history">
-        <div class="container-fluid mt-5">
+        <div class="container mt-5">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <h2>Sejarah Sekolah</h2>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quibusdam modi quam. Ipsam
-                                nostrum
-                                maiores distinctio tempora nihil, molestias, quae necessitatibus veritatis sed, alias
-                                recusandae
-                                qui
-                                delectus cum voluptatibus temporibus!
-                            </p>
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item "><a class="nav-link active" data-toggle="tab" href="#about">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#karir">Karir</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="about" class="tab-pane fade show active">
+                        <div class="row mt-5">
+                            <div class="col-sm-12">
+                                <div class="row row-cols-1 row-cols-md-2 g-4">
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="..." class="card-img-top" alt="...">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Profile Kami</h5>
+                                                <a href="/tentangKami/profile">
+                                                    <p class="card-text">Lihat Detail</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="..." class="card-img-top" alt="...">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Sejarah Kami</h5>
+                                                <a href="/tentangKami/sejarah">
+                                                    <p class="card-text">Lihat Detail</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <img src="{{ asset('images/upload/image.png') }}" class="img-fluid" alt="image">
-                        </div>
+                    </div>
+                    <div id="karir" class="tab-pane fade">
+                        <h3>Menu 1</h3>
+                        <p>Some content in menu 1.</p>
                     </div>
                 </div>
             </div>

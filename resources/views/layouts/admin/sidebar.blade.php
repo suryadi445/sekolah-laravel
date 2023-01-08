@@ -74,6 +74,12 @@
                              Guru
                          </a>
                      </li>
+                     <li class="nav-item">
+                         <a class="nav-link {{ Request::is('setting') ? 'active' : '' }}" href="/settings">
+                             <span data-feather="file-text" class="align-text-bottom"></span>
+                             Pengaturan
+                         </a>
+                     </li>
                  </ul>
              </div>
          </nav>
