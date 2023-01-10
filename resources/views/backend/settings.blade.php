@@ -5,16 +5,18 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-3">
-                    @if ($settings->logo)
+                    @if (!empty($settings->logo))
                         <img src="{{ $settings->logo }}" alt="image" width="100px">
                     @endif
                 </div>
                 <div class="offset-md-6 col-md-3">
-                    <button type="button" class="btn btn-info float-end text-light" data-bs-toggle="modal"
-                        data-bs-target="#modal_add">
-                        <i class="fa-solid fa-plus"></i>
-                        Social Media
-                    </button>
+                    @if ($settings)
+                        <button type="button" class="btn btn-info float-end text-light" data-bs-toggle="modal"
+                            data-bs-target="#modal_add">
+                            <i class="fa-solid fa-plus"></i>
+                            Social Media
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -356,28 +358,29 @@
                     @method('PUT')
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input type="text" placeholder="Input " class="form-control" placeholder="Input facebook"
-                                name="facebook" value="{{ old('facebook') }}">
+                            <input type="hidden" name="sosmed" id="sosmed" value="sosmed">
+                            <input type="text" class="form-control" placeholder="Input facebook" name="facebook"
+                                value="{{ $settings->facebook ?? '' }}">
                             <label for="facebook">Facebook</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" placeholder="Input " class="form-control" placeholder="Input twitter"
-                                name="twitter" value="{{ old('twitter') }}">
+                            <input type="text" class="form-control" placeholder="Input twitter" name="twitter"
+                                value="{{ $settings->twitter ?? '' }}">
                             <label for="twitter">Twitter</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" placeholder="Input " class="form-control" placeholder="Input ig"
-                                name="ig" value="{{ old('ig') }}">
+                            <input type="text" class="form-control" placeholder="Input ig" name="ig"
+                                value="{{ $settings->ig ?? '' }}">
                             <label for="ig">Instagram</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" placeholder="Input " class="form-control" placeholder="Input youtube"
-                                name="youtube" value="{{ old('youtube') }}">
+                            <input type="text" class="form-control" placeholder="Input youtube" name="youtube"
+                                value="{{ $settings->youtube ?? '' }}">
                             <label for="youtube">Youtube</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" placeholder="Input " class="form-control" placeholder="Input linkedin"
-                                name="linkedin" value="{{ old('linkedin') }}">
+                            <input type="text" class="form-control" placeholder="Input linkedin" name="linkedin"
+                                value="{{ $settings->linkedin ?? '' }}">
                             <label for="linkedin">Linked In</label>
                         </div>
                     </div>

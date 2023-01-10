@@ -93,19 +93,34 @@ class SettingsController extends Controller
         unset($_POST['_token']);
         unset($_POST['_method']);
 
+        if (!empty($_POST['sosmed'])) {
+            unset($_POST['sosmed']);
 
-        if ($cek_row) {
-            foreach ($_POST as $name => $value) {
-                $insert = Settings::where('id', 1)
-                    ->update([
+            $sosmed = [
+                'facebook' => $_POST['facebook'],
+                'ig' => $_POST['ig'],
+                'twitter' => $_POST['twitter'],
+                'linkedin' => $_POST['linkedin'],
+                'youtube' => $_POST['youtube'],
+            ];
+
+            $insert = Settings::where('id', 1)
+                ->update($sosmed);
+        } else {
+
+            if ($cek_row) {
+                foreach ($_POST as $name => $value) {
+                    $insert = Settings::where('id', 1)
+                        ->update([
+                            $name => $value
+                        ]);
+                }
+            } else {
+                foreach ($_POST as $name => $value) {
+                    $insert = Settings::create([
                         $name => $value
                     ]);
-            }
-        } else {
-            foreach ($_POST as $name => $value) {
-                $insert = Settings::create([
-                    $name => $value
-                ]);
+                }
             }
         }
 
