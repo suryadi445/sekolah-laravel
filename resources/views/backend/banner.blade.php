@@ -36,7 +36,7 @@
                                     <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
                                     <td>{{ $item->kategori }}</td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>{{ getUser($item->user)->name }}</td>
+                                    <td>{{ getUser($item->user)->name ?? '' }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning btn_edit"
                                             data-id="{{ $item->id }}" data-bs-toggle="modal"
@@ -86,6 +86,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <input class="form-control" type="file" id="formFileMultiple" name="image">
+                            <small class="text-danger">Gunakan foto landscape (mendatar) untuk hasil terbaik</small>
                         </div>
                         <div class="form-floating">
                             <select class="form-select" id="kategori" name="kategori">
@@ -123,12 +124,24 @@
                     <div class="modal-body">
                         <input type="hidden" id="id" name="id">
 
-                        <div id="" class="form-text text-danger">Image sebelumnya</div>
+                        <div id="" class="form-text text-danger">Image Sebelumnya</div>
                         <img src="" alt="image" id="image" width="100px" height="100px">
 
                         <div class="mb-3 mt-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar banner</label>
                             <input class="form-control" type="file" id="image" name="image">
+                            <small class="text-danger">Gunakan foto landscape (mendatar) untuk hasil terbaik</small>
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select" id="kategori_edit" name="kategori">
+                                <option selected disabled value="">Pilih Halaman</option>
+                                <option value="About">About</option>
+                                <option value="Guru">Guru</option>
+                                <option value="Siswa">Siswa</option>
+                                <option value="Pengumuman">Pengumuman</option>
+                                <option value="Agenda">Agenda</option>
+                                <option value="Gallery">Gallery</option>
+                            </select>
+                            <label for="kategori">Kategori Halaman</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -149,6 +162,7 @@
                     data) {
                     $('#image').attr('src', data.image);
                     $('#image').removeClass('d-none');
+                    $('#kategori_edit').val(data.kategori);
                     $('#form_edit').attr('action', "{{ route('banner.index') }}" + '/' + id);
 
                 })
