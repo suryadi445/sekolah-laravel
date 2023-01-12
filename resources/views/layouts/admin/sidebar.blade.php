@@ -1,117 +1,117 @@
- <div class="container-fluid">
-     <div class="row">
-         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-             <div class="position-sticky pt-3 sidebar-sticky">
-                 <ul class="nav flex-column">
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page"
-                             href="#">
-                             <span data-feather="home" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-house"></i> Dashboard
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('slideshow') ? 'active' : '' }}" data-bs-toggle="collapse"
-                             href="#collapseExample" role="button" aria-expanded="false"
-                             aria-controls="collapseExample">
-                             <span data-feather="file" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-image"></i>
-                             Slideshow
-                             <i class="fa-solid fa-angle-down"></i>
-                         </a>
-                         <div class="collapse" id="collapseExample">
-                             <ul class=""
-                                 style="list-style: none; margin-left: 0; padding-left: 1em; text-indent: 1.2em;">
-                                 <li class="pt-1 ">
-                                     <a href="" class="text-decoration-none text-dark">
-                                         Slideshow Utama
-                                     </a>
-                                 </li>
-                                 <li class="pt-2 ">
-                                     <a href="" class="text-decoration-none text-dark">
-                                         Banner
-                                     </a>
-                                 </li>
-                             </ul>
-                         </div>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('introduction') ? 'active' : '' }}" href="/introduction">
-                             <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-book-open"></i>
-                             Kata Pengantar
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('latestNews') ? 'active' : '' }}" href="/latestNews">
-                             <span data-feather="users" class="align-text-bottom"></span>
-                             <i class="fa-regular fa-newspaper"></i>
-                             Berita Terkini
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('activity') ? 'active' : '' }}" href="/activity">
-                             <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-chalkboard-user"></i>
-                             Kegiatan Siswa
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('alumni') ? 'active' : '' }}" href="/alumni">
-                             <span data-feather="layers" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-graduation-cap"></i>
-                             Alumni
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('footer') ? 'active' : '' }}" href="#">
-                             <span data-feather="layers" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-bars-staggered"></i>
-                             Footer
-                         </a>
-                     </li>
-                 </ul>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3 sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page"
+                            href="#">
+                            <span data-feather="home" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-house"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('slideshow') ? 'active' : '' }}" data-bs-toggle="collapse"
+                            href="#collapseExample" role="button" aria-expanded="false"
+                            aria-controls="collapseExample">
+                            <span data-feather="file" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-image"></i>
+                            Slideshow
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <ul class=""
+                                style="list-style: none; margin-left: 0; padding-left: 1em; text-indent: 1.4em;">
+                                <li class="pt-1 ">
+                                    <a href="/slideshow" class="text-decoration-none text-dark">
+                                        Slideshow Utama
+                                    </a>
+                                </li>
+                                <li class="pt-2 ">
+                                    <a href="/banner" class="text-decoration-none text-dark">
+                                        Image Banner
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('introduction') ? 'active' : '' }}" href="/introduction">
+                            <span data-feather="shopping-cart" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-book-open"></i>
+                            Kata Pengantar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('latestNews') ? 'active' : '' }}" href="/latestNews">
+                            <span data-feather="users" class="align-text-bottom"></span>
+                            <i class="fa-regular fa-newspaper"></i>
+                            Berita Terkini
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('activity') ? 'active' : '' }}" href="/activity">
+                            <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            Kegiatan Siswa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('alumni') ? 'active' : '' }}" href="/alumni">
+                            <span data-feather="layers" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            Alumni
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('footer') ? 'active' : '' }}" href="#">
+                            <span data-feather="layers" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-bars-staggered"></i>
+                            Footer
+                        </a>
+                    </li>
+                </ul>
 
-                 <h6
-                     class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                     <span>Saved reports</span>
-                     <a class="link-secondary" href="#" aria-label="Add a new report">
-                         <span data-feather="plus-circle" class="align-text-bottom"></span>
-                     </a>
-                 </h6>
-                 <ul class="nav flex-column mb-2">
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="/about">
-                             <span data-feather="file-text" class="align-text-bottom"></span>
-                             <i class="fa-brands fa-square-font-awesome-stroke"></i>
-                             About
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('siswa') ? 'active' : '' }}" href="#">
-                             <span data-feather="file-text" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-user-graduate"></i>
-                             Siswa
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('guru') ? 'active' : '' }}" href="#">
-                             <span data-feather="file-text" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-person-chalkboard"></i>
-                             Guru
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('setting') ? 'active' : '' }}" href="/settings">
-                             <span data-feather="file-text" class="align-text-bottom"></span>
-                             <i class="fa-solid fa-gear"></i>
-                             Pengaturan
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </nav>
+                <h6
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                    <span>Saved reports</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle" class="align-text-bottom"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="/about">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-brands fa-square-font-awesome-stroke"></i>
+                            About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('siswa') ? 'active' : '' }}" href="#">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-user-graduate"></i>
+                            Siswa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('guru') ? 'active' : '' }}" href="#">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-person-chalkboard"></i>
+                            Guru
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('setting') ? 'active' : '' }}" href="/settings">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-gear"></i>
+                            Pengaturan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-         @include('layouts.admin.main')
-     </div>
- </div>
+        @include('layouts.admin.main')
+    </div>
+</div>

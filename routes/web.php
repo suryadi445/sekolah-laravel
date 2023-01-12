@@ -13,13 +13,13 @@ use App\Http\Controllers\AlumniKamiController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 // front end
 Route::get('/', [BerandaController::class, 'index']);
-Route::get('/tentangKami', [TentangKamiController::class, 'index']);
-Route::get('/tentangKami/{slug}', [TentangKamiController::class, 'index']);
+Route::get('/tentangKami/{slug?}', [TentangKamiController::class, 'index']);
 
 Route::get('/source/{slug}', function () {
     return view('frontend.source');
@@ -30,12 +30,10 @@ Route::get('/pengumuman', function () {
 Route::get('/gallery', function () {
     return view('frontend.gallery');
 });
-Route::get('/latest', [LatestController::class, 'index']);
-Route::get('/latest/{id}', [LatestController::class, 'index']);
+Route::get('/latest/{id?}', [LatestController::class, 'index']);
 Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
-Route::get('/alumniKami', [AlumniKamiController::class, 'index']);
-Route::get('/alumniKami/{angkatan}', [AlumniKamiController::class, 'index']);
+Route::get('/alumniKami/{angkatan?}', [AlumniKamiController::class, 'index']);
 
 
 
@@ -52,3 +50,4 @@ Route::resource('/alumni', AlumniController::class);
 Route::resource('/about', AboutController::class);
 Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about.remove');
 Route::resource('/settings', SettingsController::class);
+Route::resource('/banner', BannerController::class);
