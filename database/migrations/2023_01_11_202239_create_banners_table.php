@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('image');
             $table->string('kategori');
             $table->string('user');
+            $table->string('judul');
+            $table->longText('text');
             $table->timestamps();
         });
     }
