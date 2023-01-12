@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class BannerController extends Controller
 {
@@ -36,7 +38,29 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'kategori' => 'required|unique:banners',
+        ]);
+
+        if($request->hasfile('image')){
+            $images = $request->file('image');
+            $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+
+            $images->move(public_path('images/upload/'), $imageName);
+            
+            $insert = Banner::create([
+                'image' => '\images/upload/' . $imageName,
+                'kategori' => $request->kategori,
+                'user' => Auth::id(),
+            ]);
+        }
+
+        if ($insert) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**

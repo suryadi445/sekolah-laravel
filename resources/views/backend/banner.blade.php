@@ -22,6 +22,7 @@
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Gambar</th>
+                            <th scope="col">Kategori Halaman</th>
                             <th scope="col">Tanggal Dibuat</th>
                             <th scope="col">User</th>
                             <th scope="col">Action</th>
@@ -33,6 +34,7 @@
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
+                                    <td>{{ $item->kategori }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ getUser($item->user)->name }}</td>
                                     <td>
@@ -83,9 +85,19 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar banner</label>
-                            <input class="form-control" type="file" id="formFileMultiple" name="image[]" multiple>
-                            <div id="emailHelp" class="form-text text-danger">*Bisa lebih dari 1 gambar</div>
+                            <input class="form-control" type="file" id="formFileMultiple" name="image">
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select" id="kategori" name="kategori">
+                                <option selected disabled value="">Pilih Halaman</option>
+                                <option value="About">About</option>
+                                <option value="Guru">Guru</option>
+                                <option value="Siswa">Siswa</option>
+                                <option value="Pengumuman">Pengumuman</option>
+                                <option value="Agenda">Agenda</option>
+                                <option value="Gallery">Gallery</option>
+                            </select>
+                            <label for="kategori">Kategori Halaman</label>
                         </div>
                     </div>
                     <div class="modal-footer">
