@@ -19,7 +19,9 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::orderByDesc('id')->paginate(10);
-        return view('backend.banner', compact(['banners']));
+        $title = 'Banner';
+
+        return view('backend.banner', compact(['banners', 'title']));
     }
 
     /**
@@ -43,6 +45,8 @@ class BannerController extends Controller
         $request->validate([
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             'kategori' => 'required|unique:banners',
+            'text' => 'required',
+            'judul' => 'required',
         ]);
 
         if ($request->hasfile('image')) {
@@ -54,6 +58,8 @@ class BannerController extends Controller
             $insert = Banner::create([
                 'image' => '\images/upload/' . $imageName,
                 'kategori' => $request->kategori,
+                'judul' => $request->judul,
+                'text' => $request->text,
                 'user' => Auth::id(),
             ]);
         }
@@ -100,8 +106,8 @@ class BannerController extends Controller
     {
         $request->validate([
             'image' => 'mimes:png,jpg,jpeg|max:2048',
-            'kategori' => ['required', Rule::unique('banners')->ignore($banner->id)]
-
+            'kategori' => ['required', Rule::unique('banners')->ignore($banner->id)], 'text' => 'required',
+            'judul' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
@@ -118,14 +124,16 @@ class BannerController extends Controller
             $imageName = $banner->image;
         };
 
-        $insert = Banner::where('id', $banner->id)
+        $update = Banner::where('id', $banner->id)
             ->update([
-                'user' => Auth::id(),
                 'image' =>  $imageName,
-                'kategori' => $request->kategori
+                'kategori' => $request->kategori,
+                'judul' => $request->judul,
+                'text' => $request->text,
+                'user' => Auth::id(),
             ]);
 
-        if ($insert) {
+        if ($update) {
             return back()->with('success', 'Success! Data saved successfully');
         } else {
             return back()->with('failed', 'Alert! Data failed to save');

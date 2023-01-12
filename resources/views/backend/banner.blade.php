@@ -23,6 +23,8 @@
                             <th scope="col">No</th>
                             <th scope="col">Gambar</th>
                             <th scope="col">Kategori Halaman</th>
+                            <th scope="col">Judul</th>
+                            <th scope="col">Text</th>
                             <th scope="col">Tanggal Dibuat</th>
                             <th scope="col">User</th>
                             <th scope="col">Action</th>
@@ -35,6 +37,8 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
                                     <td>{{ $item->kategori }}</td>
+                                    <td>{{ $item->judul }}</td>
+                                    <td>{{ $item->text }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ getUser($item->user)->name ?? '' }}</td>
                                     <td>
@@ -59,7 +63,7 @@
 
 
                         @if (count($banners) == 0)
-                            <td colspan="5">
+                            <td colspan="8">
                                 <span class="text-danger">Data Tidak Tersedia </span>
                             </td>
                         @endif
@@ -88,7 +92,7 @@
                             <input class="form-control" type="file" id="formFileMultiple" name="image">
                             <small class="text-danger">Gunakan foto landscape (mendatar) untuk hasil terbaik</small>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <select class="form-select" id="kategori" name="kategori">
                                 <option selected disabled value="">Pilih Halaman</option>
                                 <option value="About">About</option>
@@ -99,6 +103,14 @@
                                 <option value="Gallery">Gallery</option>
                             </select>
                             <label for="kategori">Kategori Halaman</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="judul" id="judul" placeholder="Judul">
+                            <label for="judul">Judul</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="text" id="text" style="height: 100px"></textarea>
+                            <label for="text">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -126,7 +138,6 @@
 
                         <div id="" class="form-text text-danger">Image Sebelumnya</div>
                         <img src="" alt="image" id="image" width="100px" height="100px">
-
                         <div class="mb-3 mt-3">
                             <input class="form-control" type="file" id="image" name="image">
                             <small class="text-danger">Gunakan foto landscape (mendatar) untuk hasil terbaik</small>
@@ -142,6 +153,16 @@
                                 <option value="Gallery">Gallery</option>
                             </select>
                             <label for="kategori">Kategori Halaman</label>
+                        </div>
+                        <div class="form-floating mt-3 mb-3">
+                            <input type="text" class="form-control" name="judul" id="judul_edit"
+                                placeholder="Judul">
+                            <label for="judul">Judul</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="text" id="text_edit"
+                                style="height: 100px"></textarea>
+                            <label for="text">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,6 +184,8 @@
                     $('#image').attr('src', data.image);
                     $('#image').removeClass('d-none');
                     $('#kategori_edit').val(data.kategori);
+                    $('#judul_edit').val(data.judul);
+                    $('#text_edit').val(data.text);
                     $('#form_edit').attr('action', "{{ route('banner.index') }}" + '/' + id);
 
                 })
