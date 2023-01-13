@@ -1,16 +1,14 @@
-<section id="jumbotron">
-    <div class="row pl-0 pt-5 rounded-lg m-2">
-        <div class="col-sm-8 px-0">
-            <div class="jumbo"></div>
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-lg-6 col-sm-12">
+            <img src="{{ $jumbotron->image ?? asset('images/default/landscape.png') }}" class="d-block w-100"
+                alt="image" loading="lazy">
         </div>
-        <div class="col-sm-4">
-            <h1 class="display-4">Hello, world!</h1>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
-                to
-                featured content or information.</p>
-            <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">{{ $jumbotron->judul ?? 'Judul' }}</h1>
+            <p class="lead">
+                {{ $jumbotron->text ?? 'Lorem ipsum,' }}
+            </p>
         </div>
     </div>
-</section>
+</div>

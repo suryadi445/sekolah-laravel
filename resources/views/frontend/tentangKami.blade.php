@@ -2,10 +2,10 @@
 
 
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $jumbotron)
 
     <section id="history">
-        <div class="container mt-5">
+        <div class="container px-4 mt-5">
             <div class="row">
                 <ul class="nav nav-pills nav-fill">
                     <li class="nav-item "><a class="nav-link active" data-toggle="tab" href="#about">Tentang Kami</a></li>
@@ -53,7 +53,7 @@
     </section>
 
     <section id="peta">
-        <div class="container-fluid mt-5">
+        <div class="container px-4 mt-5">
             <div class="row">
                 <div class="col-sm-12">
                     <iframe
