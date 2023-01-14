@@ -108,6 +108,13 @@
                             Pengaturan
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('default') ? 'active' : '' }}" href="/defaults">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-gear"></i>
+                            Default
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

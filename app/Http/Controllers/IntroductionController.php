@@ -46,7 +46,7 @@ class IntroductionController extends Controller
     {
         $request->validate([
             'text' => 'required',
-            'image' => 'requirde|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'required|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $cek_row = Introduction::first();
