@@ -6,20 +6,13 @@
         <div class="container mt-5 pt-5">
             <div class="row">
                 <div class="col-sm-8">
-                    <h2>Sejarah Sekolah</h2>
+                    <h2>{{ $detail->judul ?? '' }}</h2>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quibusdam modi
-                        quam. Ipsam
-                        nostrum
-                        maiores distinctio tempora nihil, molestias, quae necessitatibus veritatis sed,
-                        alias
-                        recusandae
-                        qui
-                        delectus cum voluptatibus temporibus!
+                        {{ $detail->text }}
                     </p>
                 </div>
                 <div class="col-sm-4">
-                    <img src="{{ asset('images/upload/image.png') }}" class="img-fluid" alt="image">
+                    <img src="{{ $detail->image }}" class="img-fluid" alt="image">
                 </div>
             </div>
         </div>

@@ -45,6 +45,8 @@ class AboutController extends Controller
             'slug' => 'required',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
             'text' => 'required',
+            'judul' => 'required',
+
         ]);
 
         if ($request->hasFile('image')) {
@@ -60,6 +62,7 @@ class AboutController extends Controller
             $canvas->save('images\upload' . '/' . $imageName);
 
             $insert = About::create([
+                'judul' => $request->judul,
                 'slug' => $request->slug,
                 'text' => $request->text,
                 'image' => '\images/upload/' . $imageName,
@@ -117,6 +120,7 @@ class AboutController extends Controller
             'image' => 'mimes:png,jpg, jpeg|max:2048',
             'text' => 'required',
             'slug' => 'required',
+            'judul' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
@@ -141,6 +145,7 @@ class AboutController extends Controller
                 'text' => $request->text,
                 'image' => $imageName,
                 'user'  => Auth::id(),
+                'judul' => $request->judul,
             ]);
 
         if ($update) {

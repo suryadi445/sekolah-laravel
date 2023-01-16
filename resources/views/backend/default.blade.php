@@ -89,7 +89,7 @@
                 <form action="/default/store" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-floating">
+                        <div class="form-floating mt-3">
                             <select class="form-select" id="floatingSelect" name="url" required>
                                 <option selected disabled value="">Pilih Kategori</option>
                                 <option value="profile">Profile Sekolah</option>

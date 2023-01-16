@@ -19,7 +19,8 @@
                                 <div class="row row-cols-1 row-cols-md-2 g-4">
                                     <div class="col">
                                         <div class="card">
-                                            <img src="..." class="card-img-top" alt="...">
+                                            <img src="{{ $profile->image ?? '' }}" class="card-img-top w-100 h-50"
+                                                alt="image">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Profile Kami</h5>
                                                 <a href="/tentangKami/profile">
@@ -30,7 +31,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            <img src="..." class="card-img-top" alt="...">
+                                            <img src="{{ $sejarah->image ?? '' }}" class="card-img-top" alt="image">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Sejarah Kami</h5>
                                                 <a href="/tentangKami/sejarah">

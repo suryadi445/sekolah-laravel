@@ -109,7 +109,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('default') ? 'active' : '' }}" href="/defaults">
+                        <a class="nav-link {{ Request::is('default') ? 'active' : '' }}" href="/default">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-gear"></i>
                             Default

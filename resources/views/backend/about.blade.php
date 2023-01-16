@@ -22,6 +22,7 @@
                         <tr>
                             <th scope="col">Gambar</th>
                             <th scope="col">Kategori</th>
+                            <th scope="col">Judul</th>
                             <th scope="col">Text</th>
                             <th scope="col">Tanggal Dibuat</th>
                             <th scope="col">User</th>
@@ -49,6 +50,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->slug }}</td>
+                                    <td>{{ $item->judul }}</td>
                                     <td>{{ $item->text }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ getUser($item->user)->name }}</td>
@@ -110,10 +112,15 @@
                         <div class="mb-3 mt-3">
                             <input class="form-control" type="file" id="formFileMultiple" name="image">
                         </div>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"
-                                value="{{ old('text') }}" style="height: 100px"></textarea>
-                            <label for="floatingTextarea2">Text</label>
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" placeholder="Leave a comment here" name="judul"
+                                value="{{ old('judul') }}">
+                            <label for="judul">Judul</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="text" value="{{ old('text') }}"
+                                style="height: 100px"></textarea>
+                            <label for="text">Text</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -153,6 +160,11 @@
                             <label for="slug">Kategori</label>
                         </div>
                         <div class="form-floating mt-3">
+                            <input type="text" class="form-control" placeholder="Leave a comment here" id="judul"
+                                name="judul">
+                            <label for="judul">Judul</label>
+                        </div>
+                        <div class="form-floating mt-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="text" name="text"
                                 style="height: 100px"></textarea>
                             <label for="text">Text</label>
@@ -184,6 +196,7 @@
                     $('#image').attr('src', data.image);
                     $('#id').val(id);
                     $('#text').val(data.text);
+                    $('#judul').val(data.judul);
                     $('#slug').val(data.slug);
                     $('#image').removeClass('d-none');
                     $('#form_edit').attr('action', "{{ route('about.index') }}" + '/' + id);
