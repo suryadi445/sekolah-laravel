@@ -99,6 +99,9 @@
                         </div>
                         <div class="mb-3 mt-3">
                             <input class="form-control" type="file" id="formFileMultiple" name="image" required>
+                            <small class="text-danger">
+                                Gunakan foto landscape (mendatar) untuk hasil terbaik
+                            </small>
                         </div>
                     </div>
                     <div class="modal-footer">

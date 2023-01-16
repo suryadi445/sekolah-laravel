@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DefaultWeb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 class DefaultWebController extends Controller
 {
@@ -34,7 +36,14 @@ class DefaultWebController extends Controller
                 $images = $request->file('image');
                 $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
 
-                $images->move(public_path('images/upload/'), $imageName);
+
+                $imageResize = Image::make($images);
+                $imageResize->orientate()
+                    ->fit(600, 360, function ($constraint) {
+                        $constraint->upsize();
+                        $constraint->aspectRatio();
+                    })
+                    ->save('images\upload' . '/' . $imageName);
             }
 
             $insert = DefaultWeb::create([
@@ -73,7 +82,13 @@ class DefaultWebController extends Controller
             $images = $request->file('image');
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
 
-            $images->move(public_path('images/upload/'), $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(600, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $gambar = '\images/upload/' . $imageName;
 
