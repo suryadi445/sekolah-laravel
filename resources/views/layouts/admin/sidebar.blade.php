@@ -88,7 +88,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('siswa') ? 'active' : '' }}" href="#">
+                        <a class="nav-link {{ Request::is('siswa') ? 'active' : '' }}" href="/siswa">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-user-graduate"></i>
                             Siswa

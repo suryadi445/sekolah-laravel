@@ -15,6 +15,7 @@ use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DefaultWebController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +53,7 @@ Route::resource('/about', AboutController::class);
 Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about.remove');
 Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
+Route::resource('/siswa', SiswaController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);
