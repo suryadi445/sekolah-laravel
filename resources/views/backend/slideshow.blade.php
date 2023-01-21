@@ -1,75 +1,85 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
-    <div class="row">
-        <div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
             <div class="row">
-                <div class="offset-md-9 col-md-3">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add">
-                        <i class="fa-solid fa-plus"></i>
-                        Tambah Data
-                    </button>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="offset-md-9 col-md-3">
+                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                data-bs-target="#modal_add">
+                                <i class="fa-solid fa-plus"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped text-center">
-                    <thead class="bg-dark text-light">
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Gambar</th>
-                            <th scope="col">Tanggal Dibuat</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($slideshow))
-                            @foreach ($slideshow as $key => $item)
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table
+                            class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                            <thead class="bg-dark text-light">
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ getUser($item->user)->name }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-warning btn_edit"
-                                            data-id="{{ $item->id }}" data-bs-toggle="modal"
-                                            data-bs-target="#modal_edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            Edit
-                                        </button>
-                                        <form method="POST" action="{{ route('slideshow.destroy', $item->id) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
-                                                <i class="fa-solid fa-trash"></i>
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Gambar</th>
+                                    <th scope="col">Tanggal Dibuat</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            @endforeach
-                        @endif
+                            </thead>
+                            <tbody>
+                                @if (!empty($slideshow))
+                                    @foreach ($slideshow as $key => $item)
+                                        <tr>
+                                            <th scope="row">{{ $key + 1 }}</th>
+                                            <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ getUser($item->user)->name }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning btn_edit"
+                                                    data-id="{{ $item->id }}" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_edit">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                    Edit
+                                                </button>
+                                                <form method="POST" action="{{ route('slideshow.destroy', $item->id) }}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
 
 
-                        @if (count($slideshow) == 0)
-                            <td colspan="5">
-                                <span class="text-danger">Data Tidak Tersedia </span>
-                            </td>
-                        @endif
-                    </tbody>
-                </table>
+                                @if (count($slideshow) == 0)
+                                    <td colspan="5">
+                                        <span class="text-danger">Data Tidak Tersedia </span>
+                                    </td>
+                                @endif
+                            </tbody>
+                        </table>
 
-                <div class="d-flex justify-content-end mt-5">
-                    {!! $slideshow->links() !!}
+                        <div class="d-flex justify-content-center">
+                            {!! $slideshow->links() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     <!-- Modal -->
     <div class="modal fade" id="modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

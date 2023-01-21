@@ -1,68 +1,76 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
-    @empty($introduction)
-        <div class="row">
-            <div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            @empty($introduction)
                 <div class="row">
-                    <div class="offset-md-9 col-md-3">
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add">
-                            <i class="fa-solid fa-plus"></i>
-                            Tambah Data
-                        </button>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="offset-md-9 col-md-3">
+                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                    data-bs-target="#modal_add">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Tambah Data
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endempty
         </div>
-    @endempty
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table
+                            class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th scope="col">Gambar</th>
+                                    <th scope="col">Text</th>
+                                    <th scope="col">Tanggal Dibuat</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($introduction))
+                                    <tr>
+                                        <td><img src="{{ $introduction->image }}" alt="image" width="100px"></td>
+                                        <td>{{ $introduction->text }}</td>
+                                        <td>{{ $introduction->created_at }}</td>
+                                        <td>{{ getUser($introduction->user)->name }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-warning btn_edit"
+                                                data-id="{{ $introduction->id }}" data-bs-toggle="modal"
+                                                data-bs-target="#modal_edit">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                Edit
+                                            </button>
+                                            <form method="POST"
+                                                action="{{ route('introduction.destroy', $introduction->id) }}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
 
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped text-center">
-                    <thead class="bg-dark text-light">
-                        <tr>
-                            <th scope="col">Gambar</th>
-                            <th scope="col">Text</th>
-                            <th scope="col">Tanggal Dibuat</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($introduction))
-                            <tr>
-                                <td><img src="{{ $introduction->image }}" alt="image" width="100px"></td>
-                                <td>{{ $introduction->text }}</td>
-                                <td>{{ $introduction->created_at }}</td>
-                                <td>{{ getUser($introduction->user)->name }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning btn_edit"
-                                        data-id="{{ $introduction->id }}" data-bs-toggle="modal"
-                                        data-bs-target="#modal_edit">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                        Edit
-                                    </button>
-                                    <form method="POST" action="{{ route('introduction.destroy', $introduction->id) }}">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
-                                            <i class="fa-solid fa-trash"></i>
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endif
 
-
-                        @empty($introduction)
-                            <td colspan="5">
-                                <span class="text-danger">Data Tidak Tersedia </span>
-                            </td>
-                        @endempty
-                    </tbody>
-                </table>
+                                @empty($introduction)
+                                    <td colspan="5">
+                                        <span class="text-danger">Data Tidak Tersedia </span>
+                                    </td>
+                                @endempty
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
