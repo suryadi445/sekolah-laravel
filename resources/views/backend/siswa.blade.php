@@ -16,6 +16,28 @@
 
     <div class="row mt-3">
         <div class="col-md-12">
+            <div class="row">
+                <div class="offset-md-9 col-md-3">
+                    <div class="row">
+                        <form action="{{ route('siswa.index') }}" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" name="cari" id="cari" class="form-control"
+                                    placeholder="Cari Siswa" value="{{ request('cari') }}" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text bg-info"
+                                        id="basic-addon2">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-striped text-center text-capitalize">
                     <thead class="bg-dark text-light">

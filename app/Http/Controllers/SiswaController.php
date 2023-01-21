@@ -16,10 +16,10 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Siswa';
-        $siswa = Siswa::orderByDesc('id')->paginate(20);
+        $siswa = Siswa::latest()->search()->paginate(20);
 
         return view('backend/siswa', compact(['siswa', 'title']));
     }
