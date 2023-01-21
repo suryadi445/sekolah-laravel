@@ -226,6 +226,17 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        //
+        if ($siswa->image) {
+            $file_path = public_path() .  $siswa->image;
+            unlink($file_path);
+        }
+
+        $delete = Siswa::destroy($siswa->id);
+
+        if ($delete) {
+            return back()->with('success', 'Success! file deleted');
+        } else {
+            return back()->with('failed', 'Alert! file not deleted');
+        }
     }
 }
