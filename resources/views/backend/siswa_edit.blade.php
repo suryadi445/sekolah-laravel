@@ -3,9 +3,10 @@
 @section('admin')
     <div class="row">
         <div class="col-sm-12">
-            <form action="{{ route('siswa.store') }}" method="POST" class="row g-3 needs-validation"
+            <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" class="row g-3 needs-validation"
                 enctype="multipart/form-data" novalidate>
-                {{ csrf_field() }}
+                @csrf
+                @method('PUT')
                 <div class="card mb-5 px-0">
                     <div class="card-header">
                         <div class="row">
@@ -14,22 +15,21 @@
                                     <div class="offset-sm-4 col-sm-4">
                                         <div class="form-floating">
                                             <select class="form-select" id="tahun_ajaran_awal" name="tahun_ajaran_awal"
-                                                aria-label="Floating label select example" required
-                                                value="{{ old('tahun_ajaran_awal') }}">
-                                                <option value="" selected>Pilih Tahun Ajaran</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') ? 'selected' : '' }}
+                                                aria-label="Floating label select example" required>
+                                                <option value="">Pilih Tahun Ajaran</option>
+                                                <option {{ date('Y') == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') }}">{{ date('Y') }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 1 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 1 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 2 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 2 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 2 }}">{{ date('Y') - 2 }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 3 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 3 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 3 }}">{{ date('Y') - 3 }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 4 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 4 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 4 }}">{{ date('Y') - 4 }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 5 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 5 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 5 }}">{{ date('Y') - 5 }}</option>
-                                                <option {{ old('tahun_ajaran_awal') == date('Y') - 6 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 6 == $tahun_ajaran[0] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 6 }}">{{ date('Y') - 6 }}</option>
                                             </select>
                                             <label for="tahun_ajaran_awal">Tahun Ajaran Awal</label>
@@ -41,24 +41,24 @@
                                                 aria-label="Floating label select example" required
                                                 value="{{ old('tahun_ajaran_akhir') }}">
                                                 <option value="" selected>Plih Tahun Ajaran</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') + 1 ? 'selected' : '' }}
+                                                <option {{ date('Y') + 1 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') + 1 }}">{{ date('Y') + 1 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') ? 'selected' : '' }}
+                                                <option {{ date('Y') == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') }}">{{ date('Y') }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 1 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 1 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 2 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 2 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 2 }}">{{ date('Y') - 2 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 3 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 3 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 3 }}">{{ date('Y') - 3 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 4 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 4 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 4 }}">{{ date('Y') - 4 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 5 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 5 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 5 }}">{{ date('Y') - 5 }}</option>
-                                                <option {{ old('tahun_ajaran_akhir') == date('Y') - 6 ? 'selected' : '' }}
+                                                <option {{ date('Y') - 6 == $tahun_ajaran[1] ? 'selected' : '' }}
                                                     value="{{ date('Y') - 6 }}">{{ date('Y') - 6 }}</option>
                                             </select>
-                                            <label for="tahun_ajaran_akhir">Tahun Ajaran Awal</label>
+                                            <label for="tahun_ajaran_akhir">Tahun Ajaran Akhir</label>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required
-                                        value="{{ old('nama_siswa') }}">
+                                        value="{{ old('nama_siswa', $siswa->nama_siswa) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nama Siswa
                                     </div>
@@ -86,7 +86,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                        required value="{{ old('tempat_lahir') }}">
+                                        required value="{{ old('tempat_lahir', $siswa->tempat_lahir) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Tempat Lahir
                                     </div>
@@ -98,7 +98,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required
-                                        value="{{ old('tgl_lahir') }}">
+                                        value="{{ old('tgl_lahir', $siswa->tgl_lahir) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Tanggal Lahir
                                     </div>
@@ -112,14 +112,15 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="jenis_kelamin"
                                             id="jenis_kelamin" value="laki-laki" checked
-                                            {{ old('jenis_kelamin') == 'laki-laki' ? 'checked' : '' }}>
+                                            {{ old('jenis_kelamin') == $siswa->jenis_kelamin ? 'checked' : '' }}>
                                         <label class="form-check-label" for="jenis_kelamin">
                                             Laki-Laki
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan"
-                                            value="perempuan" {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }}>
+                                            value="perempuan"
+                                            {{ old('jenis_kelamin') == $siswa->jenis_kelamin ? 'checked' : '' }}>
                                         <label class="form-check-label" for="perempuan">
                                             Perempuan
                                         </label>
@@ -135,7 +136,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" class="form-control" id="nis" name="nis" required
-                                        value="{{ old('nis') }}">
+                                        value="{{ old('nis', $siswa->nis) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nomor Induk Siswa
                                     </div>
@@ -145,7 +146,7 @@
                                 <div class="mb-3">
                                     <label for="nisn" class="form-label">Nomor Induk Siswa Nasional</label>
                                     <input type="text" class="form-control" id="nisn" name="nisn"
-                                        {{ old('nisn') }}>
+                                        {{ old('nisn', $siswa->nisn) }}>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -154,18 +155,23 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <select class="form-select" name="agama" required value="{{ old('agama') }}">
-                                        <option selected value="" disabled>Pilih Agama</option>
-                                        <option {{ old('agama') == 'Islam' ? 'selected' : '' }} value="Islam">Islam
+                                        <option value="" disabled>Pilih Agama</option>
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Islam">
+                                            Islam
                                         </option>
-                                        <option {{ old('agama') == 'Kristen' ? 'selected' : '' }} value="Kristen">Kristen
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Kristen">
+                                            Kristen
                                         </option>
-                                        <option {{ old('agama') == 'Katolik' ? 'selected' : '' }} value="Katolik">Katolik
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Katolik">
+                                            Katolik
                                         </option>
-                                        <option {{ old('agama') == 'Hindu' ? 'selected' : '' }} value="Hindu">Hindu
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Hindu">
+                                            Hindu
                                         </option>
-                                        <option {{ old('agama') == 'Budha' ? 'selected' : '' }} value="Budha">Budha
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Budha">
+                                            Budha
                                         </option>
-                                        <option {{ old('agama') == 'Konghucu' ? 'selected' : '' }} value="Konghucu">
+                                        <option {{ old('agama') == $siswa->agama ? 'selected' : '' }} value="Konghucu">
                                             Konghucu
                                         </option>
                                     </select>
@@ -179,7 +185,7 @@
                                     <label for="alamat" class="form-label">Alamat
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ old('alamat') }}</textarea>
+                                    <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ old('alamat', $siswa->alamat) }}</textarea>
                                     <div class="invalid-feedback">
                                         Mohon Isi Alamat Siswa
                                     </div>
@@ -199,48 +205,48 @@
                                 <div class="mb-3">
                                     <label for="nama_ayah" class="form-label">Nama Ayah</label>
                                     <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
-                                        value="{{ old('nama_ayah') }}">
+                                        value="{{ old('nama_ayah', $siswa->nama_ayah) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="no_hp_ayah" class="form-label">No Hp Ayah</label>
                                     <input type="number" class="form-control" id="no_hp_ayah" name="no_hp_ayah"
-                                        value="{{ old('no_hp_ayah') }}">
+                                        value="{{ old('no_hp_ayah', $siswa->no_hp_ayah) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="pekerjaan_ayah" class="form-label">Pekerjaan Ayah</label>
                                     <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah"
-                                        value="{{ old('pekerjaan_ayah') }}">
+                                        value="{{ old('pekerjaan_ayah', $siswa->pekerjaan_ayah) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="nama_ibu" class="form-label">Nama Ibu</label>
                                     <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
-                                        value="{{ old('nama_ibu') }}">
+                                        value="{{ old('nama_ibu', $siswa->nama_ibu) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="no_hp_ibu" class="form-label">No Hp Ibu</label>
                                     <input type="number" class="form-control" id="no_hp_ibu" name="no_hp_ibu"
-                                        value="{{ old('no_hp_ibu') }}">
+                                        value="{{ old('no_hp_ibu', $siswa->no_hp_ibu) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="pekerjaan_ibu" class="form-label">Pekerjaan Ibu</label>
                                     <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu"
-                                        value="{{ old('pekerjaan_ibu') }}">
+                                        value="{{ old('pekerjaan_ibu', $siswa->pekerjaan_ibu) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="alamat_ortu" class="form-label">Alamat Orang Tua</label>
-                                    <textarea class="form-control" id="alamat_ortu" name="alamat_ortu" rows="3">{{ old('alamat_ortu') }}</textarea>
+                                    <textarea class="form-control" id="alamat_ortu" name="alamat_ortu" rows="3">{{ old('alamat_ortu', $siswa->alamat_ortu) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -249,27 +255,27 @@
                                 <div class="mb-3">
                                     <label for="nama_wali" class="form-label">Nama Wali</label>
                                     <input type="text" class="form-control" id="nama_wali" name="nama_wali"
-                                        value="{{ old('nama_wali') }}">
+                                        value="{{ old('nama_wali', $siswa->nama_wali) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="no_hp_wali" class="form-label">No Hp Wali</label>
                                     <input type="number" class="form-control" id="no_hp_wali" name="no_hp_wali"
-                                        value="{{ old('no_hp_wali') }}">
+                                        value="{{ old('no_hp_wali', $siswa->no_hp_wali) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="pekerjaan_wali" class="form-label">Pekerjaan Wali</label>
                                     <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali"
-                                        value="{{ old('pekerjaan_wali') }}">
+                                        value="{{ old('pekerjaan_wali', $siswa->pekerjaan_wali) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="alamat_wali" class="form-label">Alamat Wali</label>
-                                    <textarea class="form-control" id="alamat_wali" name="alamat_wali" rows="3">{{ old('alamat_wali') }}</textarea>
+                                    <textarea class="form-control" id="alamat_wali" name="alamat_wali" rows="3">{{ old('alamat_wali', $siswa->alamat_wali) }}</textarea>
                                 </div>
                             </div>
                         </div>

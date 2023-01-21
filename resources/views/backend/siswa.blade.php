@@ -20,12 +20,12 @@
                 <table class="table table-striped text-center text-capitalize">
                     <thead class="bg-dark text-light">
                         <tr>
-                            <th scope="col">Gambar</th>
-                            <th scope="col">Kategori</th>
-                            <th scope="col">Judul</th>
-                            <th scope="col">Text</th>
-                            <th scope="col">Tanggal Dibuat</th>
-                            <th scope="col">User</th>
+                            <th scope="col">NIS</th>
+                            <th scope="col">Foto</th>
+                            <th scope="col">Nama Siswa</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Angkatan</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -33,42 +33,34 @@
                         @if (!empty($siswa))
                             @foreach ($siswa as $item)
                                 <tr>
+                                    <td>{{ $item->nis }}</td>
                                     <td>
                                         @if ($item->image)
-                                            <img src="{{ $item->image }}" alt="image" width="100px">
-
-                                            <a href="{{ route('siswa.remove', $item->id) }}" data-toggle="tooltip"
-                                                title="Hapus Gambar" data-id="{{ $item->id }}" class="hapus_gambar">
-                                                <button type="button" class="btn-close position-absolute"
-                                                    aria-label="Close">
-                                                </button>
-                                            </a>
+                                            <img src="{{ $item->image }}" alt="image" width="50">
                                         @else
-                                            <span class="badge text-bg-primary">
-                                                Tidak Ada Gambar
-                                            </span>
+                                            <span class="badge text-bg-success">Tidak Ada Foto</span>
                                         @endif
                                     </td>
-                                    <td>{{ $item->slug }}</td>
-                                    <td>{{ $item->judul }}</td>
-                                    <td>{{ $item->text }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ getUser($item->user)->name }}</td>
+                                    <td>{{ $item->nama_siswa }}</td>
+                                    <td>{{ $item->jenis_kelamin }}</td>
+                                    <td>{{ $item->tgl_lahir }}</td>
+                                    <td>{{ $item->thn_ajaran }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-warning btn_edit"
-                                            data-id="{{ $item->id }}" data-bs-toggle="modal"
-                                            data-bs-target="#modal_edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            Edit
-                                        </button>
-                                        <form method="POST" action="{{ route('siswa.destroy', $item->id) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
-                                                <i class="fa-solid fa-trash"></i>
-                                                Delete
-                                            </button>
-                                        </form>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('siswa.edit', $item->id) }}"
+                                                class="btn btn-sm btn-warning btn_edit me-2">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                Edit
+                                            </a>
+                                            <form method="POST" action="{{ route('siswa.destroy', $item->id) }}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger btn_delete">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -93,7 +85,6 @@
 
     <script>
         $(function() {
-
             $(document).on('click', '.btn_delete', function(e) {
                 e.preventDefault()
                 var form = $(this).closest("form");
