@@ -13,6 +13,27 @@
                     </h1>
                 </div>
             </div>
+
+            <div class="row mt-5">
+                <div class="offset-sm-8 col-md-4">
+                    <div class="row">
+                        <form action="" method="get">
+                            <div class="input-group">
+                                <input type="text" name="cari" id="cari"
+                                    class="form-control shadow mb-3 bg-body rounded" placeholder="Cari Guru"
+                                    value="{{ request('cari') }}" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button type="submit"
+                                        class="input-group-text bg-primary text-light shadow mb-3 rounded"
+                                        id="basic-addon2">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row justify-content-center">
@@ -28,7 +49,7 @@
                                         <h6 class="card-text">Jabatan: {{ $item->jabatan }}</h6>
                                         <h6 class="card-text">Pendidikan Terakhir:
                                             <span class="text-uppercase">
-                                                {{ $item->pendidikan_terakhir . ' ' . $item->alumni_dari }}
+                                                {{ $item->pendidikan_terakhir }}
                                             </span>
                                         </h6>
                                         <a href="javascript:void(0)" data-id="{{ $item->id }}"
@@ -39,6 +60,11 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
+
+
+            <div class="d-flex justify-content-center mt-5">
+                {!! $data->links() !!}
             </div>
         </section>
     </div>

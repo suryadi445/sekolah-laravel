@@ -12,17 +12,18 @@ class SourceController extends Controller
     {
         if ($slug == 'student') {
             $data = $this->student();
+
+            return view('frontend.source_siswa', compact(['data']));
         } else {
             // teacher
             $data = $this->guru();
+            return view('frontend.source_guru', compact(['data']));
         }
-
-        return view('frontend.source', compact(['data']));
     }
 
     public function student()
     {
-        $data = Siswa::all();
+        $data = Siswa::latest()->search()->paginate(12);
 
         return $data;
     }
