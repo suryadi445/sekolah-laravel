@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="row">
-                                    <div class="offset-sm-4 col-sm-4">
+                                    <div class="offset-sm-3 col-sm-3">
                                         <div class="form-floating">
                                             <select class="form-select" id="tahun_ajaran_awal" name="tahun_ajaran_awal"
                                                 aria-label="Floating label select example" required
@@ -35,7 +35,7 @@
                                             <label for="tahun_ajaran_awal">Tahun Ajaran Awal</label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="form-floating">
                                             <select class="form-select" id="tahun_ajaran_akhir" name="tahun_ajaran_akhir"
                                                 aria-label="Floating label select example" required
@@ -59,6 +59,38 @@
                                                     value="{{ date('Y') - 6 }}">{{ date('Y') - 6 }}</option>
                                             </select>
                                             <label for="tahun_ajaran_akhir">Tahun Ajaran Awal</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="kelas" name="kelas"
+                                                aria-label="Floating label select example" required
+                                                value="{{ old('kelas') }}">
+                                                <option value="" disabled selected>Pilih Kelas</option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="0">
+                                                    0
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="1">
+                                                    1
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="2">
+                                                    2
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="3">
+                                                    3
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="4">
+                                                    4
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="5">
+                                                    5
+                                                </option>
+                                                <option {{ old('kelas') ? 'selected' : '' }} value="6">
+                                                    6
+                                                </option>
+
+                                            </select>
+                                            <label for="kelas">Kelas</label>
                                         </div>
                                     </div>
                                 </div>
@@ -118,8 +150,9 @@
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan"
-                                            value="perempuan" {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="perempuan" value="perempuan"
+                                            {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="perempuan">
                                             Perempuan
                                         </label>

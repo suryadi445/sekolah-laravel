@@ -95,7 +95,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('guru') ? 'active' : '' }}" href="#">
+                        <a class="nav-link {{ Request::is('guru') ? 'active' : '' }}" href="/guru">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-person-chalkboard"></i>
                             Guru

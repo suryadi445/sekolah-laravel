@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DefaultWebController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\GuruController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,6 +55,7 @@ Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about
 Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
 Route::resource('/siswa', SiswaController::class);
+Route::resource('/guru', GuruController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

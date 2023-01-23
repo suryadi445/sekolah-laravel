@@ -21,7 +21,7 @@ class SiswaController extends Controller
         $title = 'Siswa';
         $siswa = Siswa::latest()->search()->paginate(20);
 
-        return view('backend/siswa', compact(['siswa', 'title']));
+        return view('backend.siswa', compact(['siswa', 'title']));
     }
 
     /**
@@ -33,7 +33,7 @@ class SiswaController extends Controller
     {
         $title = 'Tambah Siswa';
 
-        return view('backend/siswa_add', compact(['title']));
+        return view('backend.siswa_add', compact(['title']));
     }
 
     /**
@@ -44,13 +44,14 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
+        $request->validate([
             'nama_siswa' => 'required|max:100',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
             'nis' => 'required|max:30|unique:siswas',
             'agama' => 'required|max:20',
+            'kelas' => 'required',
             'alamat' => 'required',
             'nama_ayah' => 'max:100',
             'no_hp_ayah' => 'max:20',
@@ -84,6 +85,7 @@ class SiswaController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'nis' => $request->nis,
             'agama' => $request->agama,
+            'kelas' => $request->kelas,
             'alamat' => $request->alamat,
             'nama_ayah' => $request->nama_ayah,
             'no_hp_ayah' => $request->no_hp_ayah,
@@ -142,7 +144,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
-        $validate = $request->validate([
+        $request->validate([
             'nama_siswa' => 'required|max:100',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
@@ -153,6 +155,7 @@ class SiswaController extends Controller
                 Rule::unique('siswas')->ignore($siswa->id)
             ],
             'agama' => 'required|max:20',
+            'kelas' => 'required',
             'alamat' => 'required',
             'nama_ayah' => 'max:100',
             'no_hp_ayah' => 'max:20',
@@ -196,6 +199,7 @@ class SiswaController extends Controller
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'nis' => $request->nis,
                 'agama' => $request->agama,
+                'kelas' => $request->kelas,
                 'alamat' => $request->alamat,
                 'nama_ayah' => $request->nama_ayah,
                 'no_hp_ayah' => $request->no_hp_ayah,
@@ -226,11 +230,6 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        if ($siswa->image) {
-            $file_path = public_path() .  $siswa->image;
-            unlink($file_path);
-        }
-
         $delete = Siswa::destroy($siswa->id);
 
         if ($delete) {

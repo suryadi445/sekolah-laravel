@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image', 100)->nullable();
             $table->string('tempat_lahir', 20);
             $table->date('tgl_lahir');
+            $table->string('kelas', 10);
             $table->string('jenis_kelamin', 10);
             $table->text('alamat');
             $table->string('agama', 20);
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->string('pekerjaan_wali')->nullable();
             $table->text('alamat_wali')->nullable();
             $table->string('user', 100)->nullable();
+            $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });
     }
