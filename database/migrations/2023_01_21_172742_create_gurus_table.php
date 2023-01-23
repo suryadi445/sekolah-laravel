@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('nama_bank')->nullable();
             $table->string('image')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('user');
             $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });

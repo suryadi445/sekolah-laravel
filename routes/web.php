@@ -18,6 +18,7 @@ use App\Http\Controllers\DefaultWebController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
+use App\Http\Controllers\NoticeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +41,6 @@ Route::get('/alumniKami/{angkatan?}', [AlumniKamiController::class, 'index']);
 
 
 Auth::routes();
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // BACKEND
@@ -55,6 +55,7 @@ Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
 Route::resource('/siswa', SiswaController::class);
 Route::resource('/guru', GuruController::class);
+Route::resource('/notice', NoticeController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

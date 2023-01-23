@@ -25,7 +25,7 @@
                             class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
                             <thead class="bg-dark text-light">
                                 <tr>
-                                    <th scope="col">Gambar</th>
+                                    <th scope="col">Tanggal Kegiatan</th>
                                     <th scope="col">Judul</th>
                                     <th scope="col">Text</th>
                                     <th scope="col">Tanggal Dibuat</th>
@@ -34,14 +34,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($latestNews))
-                                    @foreach ($latestNews as $item)
+                                @if (!empty($notice))
+                                    @foreach ($notice as $item)
                                         <tr>
-                                            <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
+                                            <td>{{ tanggal($item->tanggal) }}</td>
                                             <td>{{ $item->judul }}</td>
                                             <td>{{ $item->text }}</td>
                                             <td>{{ $item->created_at }}</td>
-                                            <td>{{ getUser($item->user)->name }}</td>
+                                            <td>{{ getUser($item->user)->name ?? '' }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-warning btn_edit"
                                                     data-id="{{ $item->id }}" data-bs-toggle="modal"
@@ -49,7 +49,7 @@
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                     Edit
                                                 </button>
-                                                <form method="POST" action="{{ route('latestNews.destroy', $item->id) }}">
+                                                <form method="POST" action="{{ route('notice.destroy', $item->id) }}">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
@@ -63,7 +63,7 @@
                                 @endif
 
 
-                                @if (count($latestNews) == 0)
+                                @if (count($notice) == 0)
                                     <td colspan="6">
                                         <span class="text-danger">Data Tidak Tersedia </span>
                                     </td>
@@ -72,7 +72,7 @@
                     </table>
 
                     <div class="d-flex justify-content-center">
-                        {!! $latestNews->links() !!}
+                        {!! $notice->links() !!}
                     </div>
                 </div>
             </div>
@@ -91,21 +91,22 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('latestNews.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('notice.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="image">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" placeholder="tanggal" name="tanggal"
+                            value="{{ old('tanggal') }}" required>
+                        <label for="tanggal">Tanggal Acara</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" placeholder="Judul" name="judul"
-                            value="{{ old('judul') }}">
+                            value="{{ old('judul') }}" required>
                         <label for="judul">Judul Berita</label>
                     </div>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"
-                            value="{{ old('text') }}" style="height: 100px"></textarea>
+                            value="{{ old('text') }}" style="height: 100px" required></textarea>
                         <label for="floatingTextarea2">Text</label>
                     </div>
                 </div>
@@ -131,12 +132,10 @@
                 <div class="modal-body">
                     <input type="hidden" id="id" name="id">
 
-                    <div id="" class="form-text text-danger">Image sebelumnya</div>
-                    <img src="" alt="image" id="image" width="100px" height="100px">
-
-                    <div class="mb-3 mt-3">
-                        <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
-                        <input class="form-control" type="file" id="image" name="image">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" placeholder="tanggal" name="tanggal"
+                            id="tanggal" value="{{ old('tanggal') }}">
+                        <label for="tanggal">Tanggal Acara</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="judul" placeholder="Judul"
@@ -163,13 +162,12 @@
         $(document).on('click', '.btn_edit', function() {
             $('#image').addClass('d-none');
             var id = $(this).attr('data-id')
-            $.get("{{ route('latestNews.index') }}" + '/' + id + '/edit', function(data) {
-                $('#image').attr('src', data.image);
+            $.get("{{ route('notice.index') }}" + '/' + id + '/edit', function(data) {
                 $('#id').val(id);
+                $('#tanggal').val(data.tanggal);
                 $('#text').val(data.text);
                 $('#judul').val(data.judul);
-                $('#image').removeClass('d-none');
-                $('#form_edit').attr('action', "{{ route('latestNews.index') }}" + '/' + id);
+                $('#form_edit').attr('action', "{{ route('notice.index') }}" + '/' + id);
 
             })
         })

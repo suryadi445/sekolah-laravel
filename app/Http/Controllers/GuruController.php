@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class GuruController extends Controller
@@ -86,6 +87,7 @@ class GuruController extends Controller
             'no_rekening'   => $request->no_rekening,
             'nama_bank'   => $request->nama_bank,
             'alamat'   => $request->alamat,
+            'user' => Auth::id(),
             'image'   => $image ?? '',
         ]);
 
@@ -187,8 +189,9 @@ class GuruController extends Controller
                 'mulai_tugas'   => $request->mulai_tugas,
                 'no_rekening'   => $request->no_rekening,
                 'nama_bank'   => $request->nama_bank,
-                'alamat'   => trim($request->alamat),
+                'alamat'   => $request->alamat,
                 'image'   => $image,
+                'user' => Auth::id(),
             ]);
 
         if ($update) {
@@ -207,7 +210,7 @@ class GuruController extends Controller
     public function destroy(Guru $guru)
     {
 
-        $delete = guru::destroy($guru->id);
+        $delete = Guru::destroy($guru->id);
 
         if ($delete) {
             return back()->with('success', 'Success! file deleted');

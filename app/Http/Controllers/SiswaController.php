@@ -6,6 +6,8 @@ use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -99,6 +101,8 @@ class SiswaController extends Controller
             'pekerjaan_wali' => $request->pekerjaan_wali,
             'alamat_wali' => $request->alamat_wali,
             'image' => $image ?? '',
+            'user' => Auth::id(),
+
         ]);
 
         if ($insert) {
@@ -213,6 +217,8 @@ class SiswaController extends Controller
                 'pekerjaan_wali' => $request->pekerjaan_wali,
                 'alamat_wali' => $request->alamat_wali,
                 'image' => $image ?? '',
+                'user' => Auth::id(),
+
             ]);
 
         if ($update) {
@@ -233,9 +239,9 @@ class SiswaController extends Controller
         $delete = Siswa::destroy($siswa->id);
 
         if ($delete) {
-            return back()->with('success', 'Success! file deleted');
+            return back()->with('success', 'Success! Data successfuly deleted');
         } else {
-            return back()->with('failed', 'Alert! file not deleted');
+            return back()->with('failed', 'Alert! Data failed to deleted');
         }
     }
 }

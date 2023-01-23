@@ -8,10 +8,10 @@ use Carbon\Carbon;
  *
  * @return response()
  */
-if (!function_exists('convertYmdToMdy')) {
-    function convertYmdToMdy($date)
+if (!function_exists('tanggal')) {
+    function tanggal($date)
     {
-        return Carbon::createFromFormat('Y-m-d', $date)->format('m-d-Y');
+        return Carbon::parse($date)->translatedFormat('l, d F Y');
     }
 }
 
@@ -30,6 +30,6 @@ if (!function_exists('convertMdyToYmd')) {
 if (!function_exists('getUser')) {
     function getUser($id_user)
     {
-        return User::where('id', $id_user)->first();
+        return User::where('id', $id_user)->first() ?? '';
     }
 }
