@@ -49,7 +49,7 @@ class SiswaController extends Controller
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
-            'nis' => 'required|max:30|unique:siswas',
+            'nis' => 'required|max:30|unique:siswas,deleted_at,NULL',
             'agama' => 'required|max:20',
             'kelas' => 'required',
             'alamat' => 'required',
@@ -152,7 +152,7 @@ class SiswaController extends Controller
             'nis' => [
                 'required',
                 'max:30',
-                Rule::unique('siswas')->ignore($siswa->id)
+                Rule::unique('siswas')->ignore($siswa->id)->whereNull('deleted_at')
             ],
             'agama' => 'required|max:20',
             'kelas' => 'required',

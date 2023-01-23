@@ -44,7 +44,7 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nik' => 'required|numeric|unique:gurus',
+            'nik' => 'required|numeric|unique:gurus,deleted_at,NULL',
             'nama_guru' => 'required',
             'pendidikan_terakhir' => 'required',
             'jabatan' => 'required',
@@ -133,7 +133,7 @@ class GuruController extends Controller
             'nik' => [
                 'required',
                 'numeric',
-                Rule::unique('gurus')->ignore($guru->id)
+                Rule::unique('gurus')->ignore($guru->id)->whereNull('deleted_at')
             ],
             'nama_guru' => 'required',
             'pendidikan_terakhir' => 'required',
@@ -143,7 +143,7 @@ class GuruController extends Controller
             'jenis_kelamin' => 'required',
             'no_hp' => [
                 'required',
-                Rule::unique('gurus')->ignore($guru->id)
+                Rule::unique('gurus')->ignore($guru->id)->whereNull('deleted_at')
             ],
             'agama' => 'required',
             'alamat' => 'required',
@@ -192,9 +192,9 @@ class GuruController extends Controller
             ]);
 
         if ($update) {
-            return redirect('/guru')->flash('success', 'Success! Data saved successfully');
+            return redirect('/guru')->with('success', 'Success! Data saved successfully');
         } else {
-            return redirect('/guru')->flash('failed', 'Alert! Data failed to save');
+            return redirect('/guru')->with('failed', 'Alert! Data failed to save');
         }
     }
 
