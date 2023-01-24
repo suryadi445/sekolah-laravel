@@ -19,6 +19,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\PengumumanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,10 +28,8 @@ Route::get('/', [BerandaController::class, 'index']);
 Route::get('/tentangKami/{slug?}', [TentangKamiController::class, 'index']);
 Route::get('/source/{slug?}', [SourceController::class, 'index']);
 Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
+Route::get('/pengumuman', [PengumumanController::class, 'index']);
 
-Route::get('/pengumuman', function () {
-    return view('frontend.pengumuman');
-});
 Route::get('/gallery', function () {
     return view('frontend.gallery');
 });

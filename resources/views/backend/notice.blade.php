@@ -37,7 +37,7 @@
                                 @if (!empty($notice))
                                     @foreach ($notice as $item)
                                         <tr>
-                                            <td>{{ tanggal($item->tanggal) }}</td>
+                                            <td>{{ tanggal_indo($item->tanggal) }}</td>
                                             <td>{{ $item->judul }}</td>
                                             <td>{{ $item->text }}</td>
                                             <td>{{ $item->created_at }}</td>

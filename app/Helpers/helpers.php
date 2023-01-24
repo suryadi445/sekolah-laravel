@@ -8,10 +8,17 @@ use Carbon\Carbon;
  *
  * @return response()
  */
-if (!function_exists('tanggal')) {
-    function tanggal($date)
+if (!function_exists('tanggal_indo')) {
+    function tanggal_indo($date)
     {
         return Carbon::parse($date)->translatedFormat('l, d F Y');
+    }
+}
+
+if (!function_exists('bulan')) {
+    function bulan($month)
+    {
+        return Carbon::parse($month)->translatedFormat('F');
     }
 }
 
