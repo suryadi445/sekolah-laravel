@@ -19,6 +19,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +31,9 @@ Route::get('/source/{slug?}', [SourceController::class, 'index']);
 Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
 
-Route::get('/gallery', function () {
-    return view('frontend.gallery');
-});
+// Route::get('/gallery', function () {
+//     return view('frontend.gallery');
+// });
 Route::get('/latest/{id?}', [LatestController::class, 'index']);
 Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
@@ -55,6 +56,7 @@ Route::resource('/banner', BannerController::class);
 Route::resource('/siswa', SiswaController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
+Route::resource('/gallery', GalleryController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

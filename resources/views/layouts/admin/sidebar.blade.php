@@ -36,6 +36,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::is('gallery') ? 'active' : '' }}" href="/gallery">
+                            <span data-feather="shopping-cart" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-images"></i>
+                            Gallery
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::is('introduction') ? 'active' : '' }}" href="/introduction">
                             <span data-feather="shopping-cart" class="align-text-bottom"></span>
                             <i class="fa-solid fa-book-open"></i>
