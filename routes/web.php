@@ -15,6 +15,7 @@ use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DefaultWebController;
+use App\Http\Controllers\FotoController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
@@ -30,10 +31,9 @@ Route::get('/tentangKami/{slug?}', [TentangKamiController::class, 'index']);
 Route::get('/source/{slug?}', [SourceController::class, 'index']);
 Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
+Route::get('/foto', [FotoController::class, 'index']);
+Route::get('/foto/get_image/{id?}', [FotoController::class, 'get_image']);
 
-// Route::get('/gallery', function () {
-//     return view('frontend.gallery');
-// });
 Route::get('/latest/{id?}', [LatestController::class, 'index']);
 Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);

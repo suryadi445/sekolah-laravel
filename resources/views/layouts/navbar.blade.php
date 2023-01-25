@@ -12,8 +12,7 @@
                 <a class="nav-link" href="/source/teacher">Guru</a>
                 <a class="nav-link" href="/source/student">Siswa</a>
                 <a class="nav-link" href="/pengumuman">Pengumuman</a>
-                <a class="nav-link" href="/agenda">Agenda</a>
-                <a class="nav-link" href="/gallery">Gallery</a>
+                <a class="nav-link" href="/foto">Gallery</a>
                 {{-- <a class="nav-link" href="/login">Login</a> --}}
                 @guest
                     @if (Route::has('login'))

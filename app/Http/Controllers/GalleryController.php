@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 
 class GalleryController extends Controller
@@ -50,13 +52,22 @@ class GalleryController extends Controller
 
         if ($request->hasfile('image')) {
             foreach ($request->file('image') as $file) {
+                $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
 
-                $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
 
-                if ($file->move(public_path('images\upload'), $name)) {
-                    $files[] = $name;
+                $imageResize = Image::make($file);
+                $imageResize->orientate()
+                    ->fit(600, 600, function ($constraint) {
+                        $constraint->upsize();
+                        $constraint->aspectRatio();
+                    })
+                    ->save('images\upload' . '/' . $imageName);
+
+
+                if ($imageResize) {
+                    $files[] = $imageName;
                     $insert = Gallery::create([
-                        "image" => '\images/upload/' . $name,
+                        "image" => '\images/upload/' . $imageName,
                         "user" => Auth::id(),
                     ]);
                 }
@@ -103,7 +114,39 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        //
+        $request->validate([
+            'image' => 'required',
+            'image.*' => 'mimes:jpg,png,jpeg|max:2048'
+        ]);
+
+        $file = $request->file('image');
+
+        if ($request->hasfile('image')) {
+            $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
+
+
+            $imageResize = Image::make($file);
+            $imageResize->orientate()
+                ->fit(600, 600, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
+
+            if ($imageResize) {
+                $update = Gallery::where('id', $gallery->id)
+                    ->update([
+                        'image' => '\images/upload/' . $imageName,
+                        "user" => Auth::id(),
+                    ]);
+            }
+        }
+
+        if ($update) {
+            return back()->with('success', 'Success! file uploaded');
+        } else {
+            return back()->with('failed', 'Alert! file not uploaded');
+        }
     }
 
     /**

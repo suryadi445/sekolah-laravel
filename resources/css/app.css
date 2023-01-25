@@ -85,6 +85,19 @@ ul {
     height: 450px !important;
 }
 
+.card_hov {
+
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+}
+
+.card_hov:hover {
+
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+}
+
 body {
     font-family: 'Amaranth' !important;
     font-size: 16px !important;
