@@ -22,6 +22,54 @@ if (!function_exists('bulan')) {
     }
 }
 
+if (!function_exists('bulanToNomor')) {
+    function bulanToNomor($bulan)
+    {
+        switch ($bulan) {
+            case "Januari":
+                $bulan = "01";
+                break;
+            case "Februari":
+                $bulan = "02";
+                break;
+            case "Maret":
+                $bulan = "03";
+                break;
+            case "April":
+                $bulan = "04";
+                break;
+            case "Mei":
+                $bulan = "05";
+                break;
+            case "Juni":
+                $bulan = "06";
+                break;
+            case "Juli":
+                $bulan = "07";
+                break;
+            case "Agustus":
+                $bulan = "08";
+                break;
+            case "September":
+                $bulan = "09";
+                break;
+            case "Oktober":
+                $bulan = "10";
+                break;
+            case "November":
+                $bulan = "11";
+                break;
+            case "Desember":
+                $bulan = "12";
+                break;
+            default:
+                $bulan = "";
+        }
+
+        return $bulan;
+    }
+}
+
 /**
  * Write code on Method
  *

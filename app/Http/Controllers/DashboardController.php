@@ -57,6 +57,18 @@ class DashboardController extends Controller
         return view('backend.dashboard', $data);
     }
 
+    public function getSiswa()
+    {
+
+        $jenis_kelamin = request('jenis_kelamin');
+        $bulan = request('bulan');
+        $agama = Siswa::where('jenis_kelamin', $jenis_kelamin)
+            ->whereMonth('created_at', bulanToNomor($bulan))
+            ->get();
+
+        return response()->json($agama);
+    }
+
     public function getAgama($slug)
     {
         $agama = Siswa::where('agama', $slug)->get();

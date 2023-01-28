@@ -69,17 +69,10 @@
                 <div class="modal-body">
                     <div class="table-responsive">
                         <table class="table text-center text-capitalize">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nama Siswa</th>
-                                    <th scope="col">Tanggal Lahir</th>
-                                    <th scope="col">Kelas</th>
-                                    <th scope="col">Jenis Kelamin</th>
-                                    <th scope="col">Alamat</th>
-                                    <th scope="col">Tahun Ajaran</th>
-                                </tr>
+                            <thead id="tbl_head">
+                                {{-- dinamis --}}
                             </thead>
-                            <tbody class="table-group-divider" id="tbl_agama">
+                            <tbody class="table-group-divider" id="tbl_body">
                                 {{-- dinamis --}}
                             </tbody>
                         </table>
@@ -126,8 +119,18 @@
                             url: "/dashboard/getAgama/" + chart.data.labels[i],
                             dataType: "json",
                             success: function(response) {
-                                // console.log(response);
-                                $('#tbl_agama').html('')
+                                $('#tbl_head').html('')
+                                let header = '<tr>' +
+                                    '<th scope="col">Nama Siswa</th>' +
+                                    '<th scope="col">Tanggal Lahir</th>' +
+                                    '<th scope="col">Kelas</th>' +
+                                    '<th scope="col">Jenis Kelamin</th>' +
+                                    '<th scope="col">Alamat</th>' +
+                                    '<th scope="col">Tahun Ajaran</th>' +
+                                    '</tr>';
+                                $('#tbl_head').html(header)
+
+                                $('#tbl_body').html('')
                                 var table = '';
                                 for (var i = 0; i < response.length; i++) {
                                     table = '<tr>' +
@@ -145,7 +148,7 @@
                                         '</td>' +
                                         '</tr>';
 
-                                    $("#tbl_agama").append(table);
+                                    $("#tbl_body").append(table);
                                 }
 
                             }
@@ -162,7 +165,7 @@
 
         // chart jumlah siswa
         var chart_siswa = document.getElementById("siswa").getContext('2d');
-        var data_2 = {
+        var data_siswa = {
             datasets: [{
                     data: {{ Js::from($pria) }},
                     label: "Laki-Laki",
@@ -202,9 +205,9 @@
             ],
             labels: {{ Js::from($bulan) }},
         };
-        var myDoughnutChart_2 = new Chart(chart_siswa, {
+        var chartSiswa = new Chart(chart_siswa, {
             type: 'bar',
-            data: data_2,
+            data: data_siswa,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -213,6 +216,59 @@
                     labels: {
                         boxWidth: 12
                     }
+                },
+                onClick: (e, activeEls, chart) => {
+                    let datasetIndex = activeEls[0].datasetIndex;
+                    let dataIndex = activeEls[0].index;
+                    let jenis_kelamin = e.chart.data.datasets[datasetIndex].label;
+                    let bulan = e.chart.data.labels[dataIndex];
+                    let jumlah = e.chart.data.datasets[datasetIndex].data[dataIndex];
+
+                    if (activeEls[0]) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/dashboard/getSiswa?bulan=" + bulan + '&jenis_kelamin=' +
+                                jenis_kelamin,
+                            dataType: "json",
+                            success: function(response) {
+                                $('#tbl_head').html('')
+                                let header = '<tr>' +
+                                    '<th scope="col">Nama Siswa</th>' +
+                                    '<th scope="col">Tanggal Lahir</th>' +
+                                    '<th scope="col">Kelas</th>' +
+                                    '<th scope="col">Jenis Kelamin</th>' +
+                                    '<th scope="col">Alamat</th>' +
+                                    '<th scope="col">Tahun Ajaran</th>' +
+                                    '</tr>';
+                                $('#tbl_head').html(header)
+
+                                $('#tbl_body').html('')
+                                var table = '';
+                                for (var i = 0; i < response.length; i++) {
+                                    table = '<tr>' +
+                                        '<td>' + response[i].nama_siswa +
+                                        '</td>' +
+                                        '<td>' + response[i].tgl_lahir +
+                                        '</td>' +
+                                        '<td>' + response[i].kelas +
+                                        '</td>' +
+                                        '<td>' + response[i].jenis_kelamin +
+                                        '</td>' +
+                                        '<td>' + response[i].alamat +
+                                        '</td>' +
+                                        '<td>' + response[i].thn_ajaran +
+                                        '</td>' +
+                                        '</tr>';
+
+                                    $("#tbl_body").append(table);
+                                }
+
+                            }
+                        });
+                    }
+
+                    $('#staticBackdropLabel').text('Siswa ' + jenis_kelamin)
+                    $('#staticBackdrop').modal('show')
                 }
             }
         });
