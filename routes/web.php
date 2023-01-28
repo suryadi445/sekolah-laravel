@@ -22,6 +22,7 @@ use App\Http\Controllers\SourceController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,3 +64,6 @@ Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);
 Route::post('/default/store', [DefaultWebController::class, 'store']);
 Route::put('/default/{id?}', [DefaultWebController::class, 'update']);
 Route::delete('/default/{id?}', [DefaultWebController::class, 'destroy']);
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama']);

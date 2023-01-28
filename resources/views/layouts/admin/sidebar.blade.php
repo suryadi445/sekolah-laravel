@@ -5,7 +5,7 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page"
-                            href="#">
+                            href="/dashboard">
                             <span data-feather="home" class="align-text-bottom"></span>
                             <i class="fa-solid fa-house"></i> Dashboard
                         </a>
