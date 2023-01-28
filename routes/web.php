@@ -68,3 +68,4 @@ Route::delete('/default/{id?}', [DefaultWebController::class, 'destroy']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama']);
 Route::get('/dashboard/getSiswa/', [DashboardController::class, 'getSiswa']);
+Route::get('/dashboard/getKelas/{slug?}', [DashboardController::class, 'getKelas']);

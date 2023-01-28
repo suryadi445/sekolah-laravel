@@ -47,9 +47,9 @@ class DashboardController extends Controller
         $data['pria'] = $pria;
         $data['perempuan'] = $perempuan;
         $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $data['nama_agama'] = ['islam', 'kristen', 'katolik', 'hindu', 'budha', 'konghucu',];
+        $data['nama_agama'] = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha', 'Konghucu',];
         $data['jml_agama'] = [$islam, $kristen, $katolik, $hindu, $budha, $konghucu,];
-        $data['nama_kelas'] = ['kelas 0', 'kelas 1', 'kelas 2', 'kelas 3', 'kelas 4', 'kelas 5', 'kelas 6'];
+        $data['nama_kelas'] = ['Kelas 0', 'Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6'];
         $data['kelas'] = [$kelas0, $kelas1, $kelas2, $kelas3, $kelas4, $kelas5, $kelas6];
 
 
@@ -62,7 +62,8 @@ class DashboardController extends Controller
 
         $jenis_kelamin = request('jenis_kelamin');
         $bulan = request('bulan');
-        $agama = Siswa::where('jenis_kelamin', $jenis_kelamin)
+        $agama = Siswa::latest()
+            ->where('jenis_kelamin', $jenis_kelamin)
             ->whereMonth('created_at', bulanToNomor($bulan))
             ->get();
 
@@ -71,7 +72,15 @@ class DashboardController extends Controller
 
     public function getAgama($slug)
     {
-        $agama = Siswa::where('agama', $slug)->get();
+        $agama = Siswa::latest()->where('agama', $slug)->get();
+
+        return response()->json($agama);
+    }
+
+    public function getKelas($slug)
+    {
+        $kelas = substr($slug, 6);
+        $agama = Siswa::latest()->where('kelas', $kelas)->get();
 
         return response()->json($agama);
     }

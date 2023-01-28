@@ -3,15 +3,6 @@
 @section('admin')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-    </div>
-
-
     <div class="card mb-5">
         <div class="card-header">
             Dashboard Siswa
@@ -68,8 +59,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table text-center text-capitalize">
-                            <thead id="tbl_head">
+                        <table
+                            class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                            <thead class="bg-dark text-light " id="tbl_head">
                                 {{-- dinamis --}}
                             </thead>
                             <tbody class="table-group-divider" id="tbl_body">
@@ -87,82 +79,6 @@
 
 
     <script type="text/javascript">
-        // chart agama
-        var agamaCanvas = document.getElementById("agama");
-        var dataList = {
-            labels: {{ Js::from($nama_agama) }},
-            datasets: [{
-                data: {{ Js::from($jml_agama) }},
-                backgroundColor: [
-                    "#1F8A70",
-                    "#7286D3",
-                    "#7B8FA1",
-                    "#CD0404",
-                    "#A31ACB",
-                    "#FFC93C"
-                ]
-            }]
-        };
-
-        var pieChart = new Chart(agamaCanvas, {
-            type: 'pie',
-            data: dataList,
-            options: {
-                maintainAspectRatio: false,
-                onClick: (event, elements, chart) => {
-                    if (elements[0]) {
-                        const i = elements[0].index;
-                        // alert(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
-
-                        $.ajax({
-                            type: "GET",
-                            url: "/dashboard/getAgama/" + chart.data.labels[i],
-                            dataType: "json",
-                            success: function(response) {
-                                $('#tbl_head').html('')
-                                let header = '<tr>' +
-                                    '<th scope="col">Nama Siswa</th>' +
-                                    '<th scope="col">Tanggal Lahir</th>' +
-                                    '<th scope="col">Kelas</th>' +
-                                    '<th scope="col">Jenis Kelamin</th>' +
-                                    '<th scope="col">Alamat</th>' +
-                                    '<th scope="col">Tahun Ajaran</th>' +
-                                    '</tr>';
-                                $('#tbl_head').html(header)
-
-                                $('#tbl_body').html('')
-                                var table = '';
-                                for (var i = 0; i < response.length; i++) {
-                                    table = '<tr>' +
-                                        '<td>' + response[i].nama_siswa +
-                                        '</td>' +
-                                        '<td>' + response[i].tgl_lahir +
-                                        '</td>' +
-                                        '<td>' + response[i].kelas +
-                                        '</td>' +
-                                        '<td>' + response[i].jenis_kelamin +
-                                        '</td>' +
-                                        '<td>' + response[i].alamat +
-                                        '</td>' +
-                                        '<td>' + response[i].thn_ajaran +
-                                        '</td>' +
-                                        '</tr>';
-
-                                    $("#tbl_body").append(table);
-                                }
-
-                            }
-                        });
-
-                        $('#staticBackdropLabel').text('Agama ' + chart.data.labels[i])
-                        $('#staticBackdrop').modal('show')
-                    }
-                }
-            }
-        });
-
-
-
         // chart jumlah siswa
         var chart_siswa = document.getElementById("siswa").getContext('2d');
         var data_siswa = {
@@ -205,7 +121,7 @@
             ],
             labels: {{ Js::from($bulan) }},
         };
-        var chartSiswa = new Chart(chart_siswa, {
+        var siswaChart = new Chart(chart_siswa, {
             type: 'bar',
             data: data_siswa,
             options: {
@@ -273,32 +189,103 @@
             }
         });
 
+
+        // chart agama
+        var chart_agama = document.getElementById("agama");
+        var data_agama = {
+            labels: {{ Js::from($nama_agama) }},
+            datasets: [{
+                data: {{ Js::from($jml_agama) }},
+                label: "Agama",
+                backgroundColor: [
+                    "#1F8A70",
+                    "#7286D3",
+                    "#7B8FA1",
+                    "#CD0404",
+                    "#A31ACB",
+                    "#FFC93C"
+                ]
+            }]
+        };
+
+        var agamaChart = new Chart(chart_agama, {
+            type: 'pie',
+            data: data_agama,
+            options: {
+                maintainAspectRatio: false,
+                onClick: (event, elements, chart) => {
+                    if (elements[0]) {
+                        const i = elements[0].index;
+                        // alert(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/dashboard/getAgama/" + chart.data.labels[i],
+                            dataType: "json",
+                            success: function(response) {
+                                $('#tbl_head').html('')
+                                let header = '<tr>' +
+                                    '<th scope="col">Nama Siswa</th>' +
+                                    '<th scope="col">Tanggal Lahir</th>' +
+                                    '<th scope="col">Kelas</th>' +
+                                    '<th scope="col">Jenis Kelamin</th>' +
+                                    '<th scope="col">Alamat</th>' +
+                                    '<th scope="col">Tahun Ajaran</th>' +
+                                    '</tr>';
+                                $('#tbl_head').html(header)
+
+                                $('#tbl_body').html('')
+                                var table = '';
+                                for (var i = 0; i < response.length; i++) {
+                                    table = '<tr>' +
+                                        '<td>' + response[i].nama_siswa +
+                                        '</td>' +
+                                        '<td>' + response[i].tgl_lahir +
+                                        '</td>' +
+                                        '<td>' + response[i].kelas +
+                                        '</td>' +
+                                        '<td>' + response[i].jenis_kelamin +
+                                        '</td>' +
+                                        '<td>' + response[i].alamat +
+                                        '</td>' +
+                                        '<td>' + response[i].thn_ajaran +
+                                        '</td>' +
+                                        '</tr>';
+
+                                    $("#tbl_body").append(table);
+                                }
+
+                            }
+                        });
+
+                        $('#staticBackdropLabel').text('Agama ' + chart.data.labels[i])
+                        $('#staticBackdrop').modal('show')
+                    }
+                }
+            }
+        });
+
         // chart kelas
         var chart_kelas = document.getElementById("kelas").getContext('2d');
-        var data_3 = {
+        var data_kelas = {
             datasets: [{
                 data: {{ Js::from($kelas) }},
-                label: "Laki-Laki",
+                label: "Kelas",
                 backgroundColor: [
-                    '#68B984',
+                    '#AFE2B6',
                     '#DAE2B6',
                     '#FFD56F',
-                    '#F0997D',
+                    '#B0997D',
                     '#FA7070',
                     '#483838',
-                    '#5BB318',
-                    '#3F4E4F',
                     '#B9F3FC',
-                    '#554994',
-                    '#678983',
-                    '#f39c12',
                 ],
-            }, ],
+            }],
             labels: {{ Js::from($nama_kelas) }},
         };
-        var myDoughnutChart_3 = new Chart(chart_kelas, {
+        var kelasChart = new Chart(chart_kelas, {
             type: 'pie',
-            data: data_3,
+            data: data_kelas,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -306,6 +293,54 @@
                     position: 'bottom',
                     labels: {
                         boxWidth: 12
+                    }
+                },
+                onClick: (event, elements, chart) => {
+                    if (elements[0]) {
+                        const i = elements[0].index;
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/dashboard/getKelas/" + chart.data.labels[i],
+                            dataType: "json",
+                            success: function(response) {
+                                $('#tbl_head').html('')
+                                let header = '<tr>' +
+                                    '<th scope="col">Nama Siswa</th>' +
+                                    '<th scope="col">Tanggal Lahir</th>' +
+                                    '<th scope="col">Kelas</th>' +
+                                    '<th scope="col">Jenis Kelamin</th>' +
+                                    '<th scope="col">Alamat</th>' +
+                                    '<th scope="col">Tahun Ajaran</th>' +
+                                    '</tr>';
+                                $('#tbl_head').html(header)
+
+                                $('#tbl_body').html('')
+                                var table = '';
+                                for (var i = 0; i < response.length; i++) {
+                                    table = '<tr>' +
+                                        '<td>' + response[i].nama_siswa +
+                                        '</td>' +
+                                        '<td>' + response[i].tgl_lahir +
+                                        '</td>' +
+                                        '<td>' + response[i].kelas +
+                                        '</td>' +
+                                        '<td>' + response[i].jenis_kelamin +
+                                        '</td>' +
+                                        '<td>' + response[i].alamat +
+                                        '</td>' +
+                                        '<td>' + response[i].thn_ajaran +
+                                        '</td>' +
+                                        '</tr>';
+
+                                    $("#tbl_body").append(table);
+                                }
+
+                            }
+                        });
+
+                        $('#staticBackdropLabel').text(chart.data.labels[i])
+                        $('#staticBackdrop').modal('show')
                     }
                 }
             }
