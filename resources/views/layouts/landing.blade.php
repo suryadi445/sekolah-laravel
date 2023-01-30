@@ -36,6 +36,14 @@
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 
+@php
+    use App\Models\Settings;
+    
+    $identity = Settings::first();
+    
+@endphp
+
+
 <body>
     @include('layouts.navbar')
 
@@ -43,7 +51,7 @@
 
     @include('layouts.counter')
 
-    @include('layouts.footer')
+    @include('layouts.footer', $identity)
 </body>
 
 </html>

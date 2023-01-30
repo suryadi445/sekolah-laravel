@@ -23,6 +23,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CareerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,6 @@ Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
 Route::get('/foto', [FotoController::class, 'index']);
 Route::get('/foto/get_image/{id?}', [FotoController::class, 'get_image']);
-
 Route::get('/latest/{id?}', [LatestController::class, 'index']);
 Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
@@ -58,6 +58,7 @@ Route::resource('/siswa', SiswaController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
 Route::resource('/gallery', GalleryController::class);
+Route::resource('/career', CareerController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

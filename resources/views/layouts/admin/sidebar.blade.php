@@ -71,10 +71,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('footer') ? 'active' : '' }}" href="#">
+                        <a class="nav-link {{ Request::is('career') ? 'active' : '' }}" href="/career">
                             <span data-feather="layers" class="align-text-bottom"></span>
-                            <i class="fa-solid fa-bars-staggered"></i>
-                            Footer
+                            <i class="fa-solid fa-id-card-clip"></i>
+                            Karir
                         </a>
                     </li>
                 </ul>

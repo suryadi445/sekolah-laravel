@@ -154,9 +154,9 @@ class BannerController extends Controller
         $delete = Banner::destroy($banner->id);
 
         if ($delete) {
-            return back()->with('success', 'Success! Data saved successfully');
+            return back()->with('success', 'Success! Data deleted successfully');
         } else {
-            return back()->with('failed', 'Alert! Data failed to save');
+            return back()->with('failed', 'Alert! Data failed deleted');
         }
     }
 }

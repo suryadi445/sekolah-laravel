@@ -55,6 +55,8 @@ class GuruController extends Controller
             'no_hp' => 'required|unique:gurus',
             'agama' => 'required',
             'alamat' => 'required',
+            'image' => 'mimes:jpg,png,jpeg|max:2048'
+
         ]);
 
         if ($request->hasFile('image')) {

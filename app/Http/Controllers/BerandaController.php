@@ -25,6 +25,7 @@ class BerandaController extends Controller
         $data['activity'] = Activity::orderByDesc('id')->take(5)->get();
         $data['alumnis'] = Alumni::orderByDesc('id')->take(16)->get();
 
+
         return view('frontend.beranda', $data);
     }
 

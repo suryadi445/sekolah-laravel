@@ -175,6 +175,58 @@
                                         @method('PUT')
                                         <td>
                                             <div class="col-auto">
+                                                <label for="latitude" class="col-form-label">latitude</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <input type="text" placeholder="Input latitude" id="latitude"
+                                                    class="form-control text-danger" name="latitude"
+                                                    value="{{ $settings->latitude ?? '' }}" required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <button class="btn btn-sm btn-warning fw-bold" type="submit">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </form>
+                                </tr>
+                                <tr>
+                                    <form action="{{ route('settings.update', 1) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <td>
+                                            <div class="col-auto">
+                                                <label for="longitude" class="col-form-label">longitude</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <input type="text" placeholder="Input longitude" id="longitude"
+                                                    class="form-control text-danger" name="longitude"
+                                                    value="{{ $settings->longitude ?? '' }}" required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <button class="btn btn-sm btn-warning fw-bold" type="submit">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </form>
+                                </tr>
+                                <tr>
+                                    <form action="{{ route('settings.update', 1) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <td>
+                                            <div class="col-auto">
                                                 <label for="email" class="col-form-label">Email</label>
                                             </div>
                                         </td>

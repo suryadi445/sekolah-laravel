@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('no_hp', 20)->nullable();
             $table->string('no_telp', 20)->nullable();
             $table->text('alamat')->nullable();
+            $table->text('latitude')->nullable();
+            $table->text('longitude')->nullable();
             $table->string('logo')->nullable();
             $table->string('email')->nullable();
             $table->string('facebook')->nullable();
