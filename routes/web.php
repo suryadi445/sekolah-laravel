@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Auth;
 // front end
 Route::get('/', [BerandaController::class, 'index']);
 Route::get('/tentangKami/{slug?}', [TentangKamiController::class, 'index']);
+Route::get('/tentangKami/getPosisi/{slug?}', [TentangKamiController::class, 'getPosisi']);
 Route::get('/source/{slug?}', [SourceController::class, 'index']);
 Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
