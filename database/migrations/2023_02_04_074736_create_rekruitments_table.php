@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email', 50);
             $table->date('tgl_lahir');
             $table->string('cv');
+            $table->enum('proses', ['0', '1']);
             $table->timestamps();
         });
     }

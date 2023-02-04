@@ -71,10 +71,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('career') ? 'active' : '' }}" href="/career">
+                        <a class="nav-link {{ Request::is('rekruitment') ? 'active' : '' }}" href="/rekruitment">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-id-card-clip"></i>
-                            Karir
+                            Rekruitment
                         </a>
                     </li>
                 </ul>

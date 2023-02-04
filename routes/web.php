@@ -24,6 +24,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\RekruitmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,3 +74,6 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama']);
 Route::get('/dashboard/getSiswa/', [DashboardController::class, 'getSiswa']);
 Route::get('/dashboard/getKelas/{slug?}', [DashboardController::class, 'getKelas']);
+
+Route::get('/rekruitment', [RekruitmentController::class, 'index']);
+Route::post('/rekruitment/prosesCV', [RekruitmentController::class, 'prosesCV']);

@@ -88,3 +88,10 @@ if (!function_exists('getUser')) {
         return User::where('id', $id_user)->first() ?? '';
     }
 }
+
+if (!function_exists('getUmur')) {
+    function getUmur($tanggal)
+    {
+        return Carbon::parse($tanggal)->diff(\Carbon\Carbon::now())->format('%y Tahun, %m bulan');
+    }
+}
