@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [BerandaController::class, 'index']);
 Route::get('/tentangKami/{slug?}', [TentangKamiController::class, 'index']);
 Route::get('/tentangKami/getPosisi/{slug?}', [TentangKamiController::class, 'getPosisi']);
+Route::get('/tentangKami/getPosisi_row/{slug?}', [TentangKamiController::class, 'getPosisi_row']);
+Route::post('/tentangKami/karir', [TentangKamiController::class, 'karir']);
 Route::get('/source/{slug?}', [SourceController::class, 'index']);
 Route::get('/source/get_guru/{id}', [SourceController::class, 'get_guru']);
 Route::get('/pengumuman', [PengumumanController::class, 'index']);

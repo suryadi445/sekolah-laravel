@@ -58,7 +58,7 @@
                                 <p><a href="/tentangKami/profile" class="text-decoration-none">Profil Kami</a></p>
                                 <p><a href="/latest" class="text-decoration-none">Berita Terkini</a></p>
                                 <p><a href="/aktifitas" class="text-decoration-none">Kegiatan Siswa</a></p>
-                                <p><a href="/karir" class="text-decoration-none">Karir</a></p>
+                                <p><a href="/tentangKami#karir" class="text-decoration-none">Karir</a></p>
                             </div>
                             <div class="col-sm-4">
                                 <h4>Ikuti Kami</h4>

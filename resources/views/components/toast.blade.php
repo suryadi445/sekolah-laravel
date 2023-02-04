@@ -10,6 +10,9 @@
             </div>
         </div>
     </div>
+    @php
+        Session::forget('success');
+    @endphp
 @endif
 @if (session('failed'))
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -23,6 +26,9 @@
             </div>
         </div>
     </div>
+    @php
+        Session::forget('failed');
+    @endphp
 @endif
 @if ($errors->any())
     <div class="toast-container position-fixed top-0 end-0 p-3">

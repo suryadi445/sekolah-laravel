@@ -3,11 +3,32 @@
 
 @section('container')
     @include('layouts.jumbotron', $jumbotron)
+    @include('components.toast')
+
+
+    <style>
+        .custom-file-button input[type=file] {
+            margin-left: -2px !important;
+        }
+
+        .custom-file-button input[type=file]::-webkit-file-upload-button {
+            display: none;
+        }
+
+        .custom-file-button input[type=file]::file-selector-button {
+            display: none;
+        }
+
+        .custom-file-button:hover label {
+            background-color: #dde0e3;
+            cursor: pointer;
+        }
+    </style>
 
     <section id="history">
         <div class="container px-4 mt-5">
             <div class="row">
-                <ul class="nav nav-pills nav-fill">
+                <ul class="nav nav-tabs nav-fill" role="tablist" id="myTab">
                     <li class="nav-item "><a class="nav-link active" data-toggle="tab" href="#about">Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#karir">Karir</a></li>
                 </ul>
@@ -77,7 +98,7 @@
                                                         <p>{{ $kar->persyaratan }}</p>
 
                                                         <a href="javascript:void(0)" data-id="{{ $kar->id }}"
-                                                            class="kirim_cv">Lamar Sekarang</a>
+                                                            class="kirim_cvRow">Lamar Sekarang</a>
                                                     </div>
                                                 @endif
                                             @empty
@@ -106,7 +127,7 @@
                                                                 <p>{{ $item->persyaratan }}</p>
 
                                                                 <a href="javascript:void(0)" data-id="{{ $item->id }}"
-                                                                    class="kirim_cv">Lamar
+                                                                    class="kirim_cvRow">Lamar
                                                                     Sekarang</a>
                                                             </div>
                                                         </div>
@@ -162,32 +183,44 @@
                     ( <small class="" id="jabatan_modal"></small> )
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="">
+
+                <form action="/tentangKami/karir" method="POST" enctype="multipart/form-data" class="needs-validation"
+                    id="formKarir" novalidate>
+                    @csrf
+                    <input type="hidden" id="jabatan" name="jabatan">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="nama" id="nama"
-                                placeholder="Nama">
+                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama"
+                                required>
                             <label for="nama">Nama</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" name="no_hp" id="no_hp"
-                                placeholder="No Handphone">
+                                placeholder="No Handphone" required>
                             <label for="no_hp">No. Handphone</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" name="email" id="email"
-                                placeholder="Email">
+                                placeholder="Email" required>
                             <label for="email">Email</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                                placeholder="Tanggal Lahir">
+                                placeholder="Tanggal Lahir" required>
                             <label for="tgl_lahir">Tanggal Lahir</label>
                         </div>
+
+                        <div class="input-group custom-file-button">
+                            <label class="input-group-text" for="cv">Upload CV</label>
+                            <input type="file" accept="application/pdf" class="form-control" id="cv"
+                                name="cv" required>
+                        </div>
+                        <small class="text-secondary">Format yg didukung: PDF (Max Size : 2,5 MB)</small>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -196,8 +229,24 @@
 
     <script>
         $(document).ready(function() {
+            $(document).on('click', '.kirim_cvRow', function() {
+                var idCareer = $(this).attr('data-id')
+                $.ajax({
+                    type: "GET",
+                    url: "/tentangKami/getPosisi_row/" + idCareer,
+                    success: function(response) {
+                        $('#title_modal').text(response.judul)
+                        $('#jabatan').val(response.jabatan)
+                        $('#jabatan_modal').text(response.jabatan)
+                    }
+                });
+
+                $('#modal_cv').modal('show');
+            })
+
             $(document).on('click', '.kirim_cv', function() {
                 var idCareer = $(this).attr('data-id')
+                $('#jabatan').val(idCareer)
                 $.ajax({
                     type: "GET",
                     url: "/tentangKami/getPosisi/" + idCareer,
@@ -233,7 +282,7 @@
                                                 <p>
                                                 ` + response[i].persyaratan + `    
                                                 </p>
-                                                <a href="javascript:void(0)" dta-id="` + response[i].id + `" class="kirim_cv">
+                                                <a href="javascript:void(0)" data-id="` + response[i].jabatan + `" class="kirim_cv">
                                                     Lamar Sekarang
                                                 </a>
                                             </div>`;
