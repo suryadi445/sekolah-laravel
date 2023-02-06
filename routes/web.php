@@ -75,5 +75,5 @@ Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama
 Route::get('/dashboard/getSiswa/', [DashboardController::class, 'getSiswa']);
 Route::get('/dashboard/getKelas/{slug?}', [DashboardController::class, 'getKelas']);
 
-Route::get('/rekruitment', [RekruitmentController::class, 'index']);
+Route::get('/rekruitment/{slug?}', [RekruitmentController::class, 'index']);
 Route::post('/rekruitment/prosesCV', [RekruitmentController::class, 'prosesCV']);

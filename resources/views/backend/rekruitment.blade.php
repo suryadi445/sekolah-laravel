@@ -4,30 +4,29 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="offset-md-6 col-md-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                                <label for="floatingSelect">Jabatan</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                                <label for="floatingSelect">Proses</label>
-                            </div>
-                        </div>
+                <div class="offset-md-6 col-md-3 mt-1">
+                    <div class="form-floating">
+                        <select class="form-select" id="pilih_jabatan" aria-label="Floating label select example">
+                            <option selected value="all">Semua Jabatan</option>
+                            @foreach ($jabatan as $item)
+                                <option class="text-capitalize" value="{{ $item->jabatan }}"
+                                    {{ request('jabatan') == $item->jabatan ? 'selected' : '' }}>{{ $item->jabatan }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label for="pilih_jabatan">Jabatan</label>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-1">
+                    <div class="form-floating">
+                        <select class="form-select" id="pilih_proses" aria-label="Floating label select example">
+                            <option selected value="all">Semua Proses</option>
+                            <option {{ request('proses') == '1' ? 'selected' : '' }} value="1">Proses
+                            </option>
+                            <option {{ request('proses') == '0' ? 'selected' : '' }} value="0">Belum
+                                Diproses</option>
+                        </select>
+                        <label for="pilih_proses">Proses</label>
                     </div>
                 </div>
             </div>
@@ -126,39 +125,18 @@
             })
 
 
-            $(document).on('click', '.btn_edit', function() {
-                $('#image').addClass('d-none');
-                var id = $(this).attr('data-id')
-                $.get("{{ route('banner.index') }}" + '/' + id + '/edit', function(
-                    data) {
-                    $('#image').attr('src', data.image);
-                    $('#image').removeClass('d-none');
-                    $('#kategori_edit').val(data.kategori);
-                    $('#judul_edit').val(data.judul);
-                    $('#text_edit').val(data.text);
-                    $('#form_edit').attr('action', "{{ route('banner.index') }}" + '/' + id);
+            $(document).on('change', '#pilih_jabatan', function() {
+                var jabatan = $(this).val();
+                var proses = $('#pilih_proses').val();
 
-                })
+                window.location = "/rekruitment?jabatan=" + jabatan + '&proses=' + proses;
             })
 
-            $(document).on('click', '.btn_delete', function(e) {
-                e.preventDefault()
-                var form = $(this).closest("form");
+            $(document).on('change', '#pilih_proses', function() {
+                var proses = $(this).val();
+                var jabatan = $('#pilih_jabatan').val();
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Data Tidak bisa dikembalikan!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6e7881',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        form.submit();
-                    }
-                })
+                window.location = "/rekruitment?jabatan=" + jabatan + '&proses=' + proses;
             })
         });
     </script>
