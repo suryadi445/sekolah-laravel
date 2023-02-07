@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="offset-md-6 col-md-3 mt-1">
+                <div class="offset-md-5 col-md-3 mt-1">
                     <div class="form-floating">
                         <select class="form-select" id="pilih_jabatan" aria-label="Floating label select example">
                             <option selected value="all">Semua Jabatan</option>
@@ -28,6 +28,16 @@
                         </select>
                         <label for="pilih_proses">Proses</label>
                     </div>
+                </div>
+                <div class="col-md-1 d-grid px-0">
+                    <label for="" class="d-block">&nbsp;</label>
+                    <form action="/rekruitment/delete" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="hidden" value="{{ request('jabatan') }}" name="jabatan">
+                        <input type="hidden" value="{{ request('proses') }}" name="proses">
+                        <button type="submit" class="btn btn-warning btn_hapus">Hapus</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -106,6 +116,26 @@
 
     <script>
         $(function() {
+            $('.btn_hapus').click(function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Data Tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6e7881',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        form.submit();
+
+                    }
+                })
+            })
+
             $(document).on('change', '.proses', function() {
                 var id = $(this).attr('data-id')
                 var value = $(this).val()

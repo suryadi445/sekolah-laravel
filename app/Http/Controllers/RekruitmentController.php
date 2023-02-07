@@ -14,20 +14,19 @@ class RekruitmentController extends Controller
         $get_jabatan = request('jabatan');
         $get_proses = request('proses');
 
-        $rekruitment = Rekruitment::orderBy('created_at');
-        if ($get_jabatan != 'all') {
+        $rekruitment = Rekruitment::orderByDesc('created_at');
+        if ($get_jabatan != 'all' && $get_jabatan != null) {
             $rekruitment->where('jabatan', $get_jabatan);
             if ($get_proses != 'all') {
                 $rekruitment->where('proses', $get_proses);
             }
         } else {
-            if ($get_proses != 'all') {
+            if ($get_proses != 'all' && $get_proses != null) {
                 $rekruitment->where('proses', $get_proses);
             }
         }
         $rekruitment = $rekruitment->paginate(20);
 
-        // dd($rekruitment);
 
         return view('backend.rekruitment', compact(['title', 'rekruitment', 'jabatan']));
     }
@@ -43,6 +42,29 @@ class RekruitmentController extends Controller
             $request->session()->put('success', 'Success! Data saved successfully');
         } else {
             $request->session()->put('failed', 'Alert! Data failed to save');
+        }
+    }
+
+    public function deleteCV(Request $request)
+    {
+        $jabatan = $request->jabatan;
+        $proses = $request->proses;
+
+        // dd($request);
+
+        $delete = Rekruitment::orderByDesc('created_at');
+        if ($jabatan != 'all' && $jabatan != null) {
+            $delete->where('jabatan', $jabatan);
+        }
+        if ($proses != 'all' && $proses != null) {
+            $delete->where('proses', $proses);
+        }
+        $delete->delete();
+
+        if ($delete) {
+            return back()->with('success', 'Success! Data deleted successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to delete');
         }
     }
 }
