@@ -16,50 +16,70 @@
                 <div class="card shadow p-3 mb-5 pb-5 bg-body rounded">
                     <div class="row">
                         <div class="col-sm-12">
+                            <small class="container">*Pendaftaran berakhir pada tanggal ...</small>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-2">
                         <div class="col-sm-12">
                             <div class="card shadow mx-2 bg-body-tertiary rounded">
                                 <div class="card-header">
                                     <h2 class="text-center">Tahun Ajaran ....</h2>
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="row p-2">
+                                    <form action="/pendaftaran/store" method="POST" class="row g-3 needs-validation"
+                                        novalidate>
+                                        @csrf
+                                        <div class="row
+                                        p-2">
                                             <div class="col-sm-4 mt-2">
                                                 <label for="nama" class="form-label">Nama Lengkap</label>
-                                                <input type="text" class="form-control" id="nama" name="nama">
+                                                <input type="text" class="form-control" id="nama" name="nama"
+                                                    value="{{ old('nama') }}" required>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Nama Siswa
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
                                                 <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                                                 <input type="text" class="form-control" id="tempat_lahir"
-                                                    name="tempat_lahir">
+                                                    name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Tempat Lahir
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
                                                 <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                                <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
+                                                <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir"
+                                                    value="{{ old('tgl_lahir') }}" required>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Tanggal Lahir
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
-                                                <label for="nama" class="form-label d-block">Jenis Kelamin</label>
+                                                <label for="jenis_kelamin" class="form-label d-block">Jenis Kelamin
+                                                </label>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                                        value="Laki-Laki" id="laki-laki">
-                                                    <label class="form-check-label" for="laki-laki">
+                                                        id="jenis_kelamin" value="laki-laki"
+                                                        {{ old('jenis_kelamin') == 'laki-laki' ? 'checked' : '' }} required>
+                                                    <label class="form-check-label" for="jenis_kelamin">
                                                         Laki-Laki
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                                        value="Perempuan" id="perempuan">
+                                                        id="perempuan" value="perempuan"
+                                                        {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }} required>
                                                     <label class="form-check-label" for="perempuan">
                                                         Perempuan
                                                     </label>
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
                                                 <label for="agama" class="form-label">Agama</label>
-                                                <select class="form-select" aria-label="Default select example">
+                                                <select class="form-select" aria-label="Default select example"
+                                                    name="agama" required>
                                                     <option selected value="" disabled>Pilih Agama</option>
                                                     <option {{ old('agama') == 'Islam' ? 'selected' : '' }} value="Islam">
                                                         Islam
@@ -83,14 +103,24 @@
                                                         Konghucu
                                                     </option>
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Agama
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
                                                 <label for="no_hp" class="form-label">No. Handphone</label>
-                                                <input type="number" class="form-control" id="no_hp" name="no_hp">
+                                                <input type="number" class="form-control" id="no_hp" name="no_hp"
+                                                    value="{{ old('no_hp') }}" required>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Nomor Handphone / WhatsApp
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 mt-2">
                                                 <label for="alamat" class="form-label">Alamat</label>
-                                                <textarea class="form-control" aria-label="With textarea" rows="3"></textarea>
+                                                <textarea class="form-control" aria-label="With textarea" rows="3" name="alamat" required>{{ old('alamat') }}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Mohon Isi Alamat
+                                                </div>
                                             </div>
                                         </div>
 

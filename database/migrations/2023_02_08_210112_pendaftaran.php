@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('registrations', function (Blueprint $table) {
+        Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
-            $table->date('tgl_pendaftaran');
-            $table->date('tgl_penutupan');
-            $table->text('info_pendaftaran');
-            $table->string('gelombang');
-            $table->string('user');
+            $table->string('nama');
+            $table->string('tempat_lahir', 20);
+            $table->date('tgl_lahir');
+            $table->string('jenis_kelamin', 10);
+            $table->string('agama', 20);
+            $table->string('no_hp', 20);
+            $table->text('alamat');
             $table->enum('status', ['0', '1']);
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registrations');
+        Schema::dropIfExists('pendaftarans');
     }
 };

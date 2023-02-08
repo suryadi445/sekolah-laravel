@@ -45,6 +45,7 @@ Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
 Route::get('/alumniKami/{angkatan?}', [AlumniKamiController::class, 'index']);
 Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
+Route::post('/pendaftaran/store', [PendaftaranController::class, 'store']);
 
 
 Auth::routes();
