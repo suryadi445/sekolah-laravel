@@ -25,6 +25,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\RekruitmentController;
+use App\Http\Controllers\PendaftaranController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,7 @@ Route::get('/latest/{id?}', [LatestController::class, 'index']);
 Route::get('/latest/get_row/{id}', [LatestController::class, 'get_row']);
 Route::get('/aktifitas', [AktifitasController::class, 'index']);
 Route::get('/alumniKami/{angkatan?}', [AlumniKamiController::class, 'index']);
+Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
 
 
 Auth::routes();

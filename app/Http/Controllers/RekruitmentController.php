@@ -50,8 +50,6 @@ class RekruitmentController extends Controller
         $jabatan = $request->jabatan;
         $proses = $request->proses;
 
-        // dd($request);
-
         $delete = Rekruitment::orderByDesc('created_at');
         if ($jabatan != 'all' && $jabatan != null) {
             $delete->where('jabatan', $jabatan);
