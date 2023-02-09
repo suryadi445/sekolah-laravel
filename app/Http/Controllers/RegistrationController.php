@@ -14,7 +14,10 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Registrasi Siswa';
+        $registration = Registration::latest()->paginate(20);
+
+        return view('backend.registration', compact(['title', 'registration']));
     }
 
     /**

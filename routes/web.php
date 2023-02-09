@@ -26,6 +26,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\RekruitmentController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,6 +67,7 @@ Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
 Route::resource('/gallery', GalleryController::class);
 Route::resource('/career', CareerController::class);
+Route::resource('/registration', RegistrationController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

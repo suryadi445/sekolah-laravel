@@ -25,17 +25,17 @@
                             class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
                             <thead class="bg-dark text-light">
                                 <tr>
-                                    <th scope="col">Gambar</th>
-                                    <th scope="col">Judul</th>
-                                    <th scope="col">Text</th>
-                                    <th scope="col">Tanggal Dibuat</th>
+                                    <th scope="col">Tanggal Pendaftaran</th>
+                                    <th scope="col">Tanggal Penutupan</th>
+                                    <th scope="col">Informasi Pendaftaran</th>
+                                    <th scope="col">Gelombang</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($latestNews))
-                                    @foreach ($latestNews as $item)
+                                @if (!empty($registration))
+                                    @foreach ($registration as $item)
                                         <tr>
                                             <td><img src="{{ $item->image }}" alt="image" width="100px"></td>
                                             <td>{{ $item->judul }}</td>
@@ -49,7 +49,8 @@
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                     Edit
                                                 </button>
-                                                <form method="POST" action="{{ route('latestNews.destroy', $item->id) }}">
+                                                <form method="POST"
+                                                    action="{{ route('registration.destroy', $item->id) }}">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger btn_delete mt-2">
@@ -63,7 +64,7 @@
                                 @endif
 
 
-                                @if (count($latestNews) == 0)
+                                @if (count($registration) == 0)
                                     <td colspan="6">
                                         <span class="text-danger">Data Tidak Tersedia </span>
                                     </td>
@@ -72,7 +73,7 @@
                         </table>
 
                         <div class="d-flex justify-content-center">
-                            {!! $latestNews->links() !!}
+                            {!! $registration->links() !!}
                         </div>
                     </div>
                 </div>
@@ -85,29 +86,56 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('latestNews.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('registration.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formFileMultiple" class="form-label fw-bold">Gambar</label>
-                            <input class="form-control" type="file" id="formFileMultiple" name="image">
+                        <div class="row">
+                            <div class="col-sm-6 mt-2">
+                                <div class="form-floating">
+                                    <select class="form-select" id="tahun_ajaran" aria-label="Tahun Ajaran"
+                                        name="tahun_ajaran">
+                                        <option value="{{ date('Y') . '-' . date('Y') + 1 }}" selected>
+                                            {{ date('Y') . '-' . date('Y') + 1 }}</option>
+                                    </select>
+                                    <label for="tahun_ajaran">Tahun Ajaran</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <div class="form-floating">
+                                    <select class="form-select" id="gelombang" name="gelombang">
+                                        <option value="" disabled selected>Pilih Gelombang</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                    </select>
+                                    <label for="gelombang">Gelombang</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" placeholder="Tanggal Pendaftaran"
+                                        name="tanggal_pendaftaran" value="{{ old('tanggal_pendaftaran') }}">
+                                    <label for="tanggal_pendaftaran">Tanggal Pendaftaran</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" placeholder="Tanggal Penutupan"
+                                        name="tanggal_penutupan" value="{{ old('tanggal_penutupan') }}">
+                                    <label for="tanggal_penutupan">Tanggal penutupan</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" placeholder="Judul" name="judul"
-                                value="{{ old('judul') }}">
-                            <label for="judul">Judul Berita</label>
-                        </div>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"
-                                value="{{ old('text') }}" style="height: 100px"></textarea>
-                            <label for="floatingTextarea2">Text</label>
-                        </div>
+                        <textarea id="informasi_pendaftaran" name="informasi_pendaftaran" value="{{ old('informasi_pendaftaran') }}">
+                        </textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -158,18 +186,30 @@
         </div>
     </div>
 
+    <script src="https://cdn.ckeditor.com/4.20.1/standard-all/ckeditor.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            CKEDITOR.replace('informasi_pendaftaran', {
+                extraPlugins: 'editorplaceholder',
+                editorplaceholder: 'Catatan: 1. Khusus pendaftaran gelombang pertama gratis biaya formulir dan diskon 20% ',
+                removeButtons: 'PasteFromWord'
+            });
+        });
+    </script>
+
     <script>
         $(function() {
             $(document).on('click', '.btn_edit', function() {
                 $('#image').addClass('d-none');
                 var id = $(this).attr('data-id')
-                $.get("{{ route('latestNews.index') }}" + '/' + id + '/edit', function(data) {
+                $.get("{{ route('registration.index') }}" + '/' + id + '/edit', function(data) {
                     $('#image').attr('src', data.image);
                     $('#id').val(id);
                     $('#text').val(data.text);
                     $('#judul').val(data.judul);
                     $('#image').removeClass('d-none');
-                    $('#form_edit').attr('action', "{{ route('latestNews.index') }}" + '/' + id);
+                    $('#form_edit').attr('action', "{{ route('registration.index') }}" + '/' + id);
 
                 })
             })

@@ -77,6 +77,13 @@
                             Rekruitment
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('registration') ? 'active' : '' }}" href="/registration">
+                            <span data-feather="layers" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-id-card"></i>
+                            Registrasi
+                        </a>
+                    </li>
                 </ul>
 
                 <h6
