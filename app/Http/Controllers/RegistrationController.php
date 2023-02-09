@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RegistrationController extends Controller
 {
@@ -38,7 +40,28 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'thn_ajaran' => 'required',
+            'gelombang' => 'required',
+            'tgl_pendaftaran' => 'required',
+            'tgl_penutupan' => 'required',
+            'info_pendaftaran' => 'required',
+        ]);
+
+        $insert = Registration::create([
+            'thn_ajaran' => $request->thn_ajaran,
+            'gelombang' => $request->gelombang,
+            'tgl_pendaftaran' => $request->tgl_pendaftaran,
+            'tgl_penutupan' => $request->tgl_penutupan,
+            'info_pendaftaran' => $request->info_pendaftaran,
+            'user' => Auth::id(),
+        ]);
+
+        if ($insert) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**
@@ -60,7 +83,9 @@ class RegistrationController extends Controller
      */
     public function edit(Registration $registration)
     {
-        //
+        $data = Registration::find($registration->id);
+
+        return response()->json($data);
     }
 
     /**
@@ -72,7 +97,29 @@ class RegistrationController extends Controller
      */
     public function update(Request $request, Registration $registration)
     {
-        //
+        $request->validate([
+            'thn_ajaran' => 'required',
+            'gelombang' => 'required',
+            'tgl_pendaftaran' => 'required',
+            'tgl_penutupan' => 'required',
+            'info_pendaftaran' => 'required',
+        ]);
+
+        $update = Registration::where('id', $registration->id)
+            ->update([
+                'thn_ajaran' => $request->thn_ajaran,
+                'gelombang' => $request->gelombang,
+                'tgl_pendaftaran' => $request->tgl_pendaftaran,
+                'tgl_penutupan' => $request->tgl_penutupan,
+                'info_pendaftaran' => $request->info_pendaftaran,
+                'user' => Auth::id(),
+            ]);
+
+        if ($update) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**
@@ -83,6 +130,12 @@ class RegistrationController extends Controller
      */
     public function destroy(Registration $registration)
     {
-        //
+        $delete = Registration::destroy($registration->id);
+
+        if ($delete) {
+            return back()->with('success', 'Success! Data successfuly deleted');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to deleted');
+        }
     }
 }

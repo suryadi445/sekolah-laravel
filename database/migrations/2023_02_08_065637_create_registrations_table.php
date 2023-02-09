@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
+            $table->string('thn_ajaran');
             $table->date('tgl_pendaftaran');
             $table->date('tgl_penutupan');
             $table->text('info_pendaftaran');
