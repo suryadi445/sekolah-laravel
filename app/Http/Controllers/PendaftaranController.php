@@ -10,7 +10,9 @@ class PendaftaranController extends Controller
 {
     public function index()
     {
-        return view('frontend.pendaftaran');
+        $pendaftaran = Registration::where('tgl_penutupan', '>=', date('Y-m-d'))->first();
+
+        return view('frontend.pendaftaran', compact('pendaftaran'));
     }
 
     public function store(Request $request)
