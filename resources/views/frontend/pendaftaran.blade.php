@@ -155,7 +155,7 @@
                 </div>
             </div>
         @else
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-sm-12">
                     <div class="alert alert-warning" role="alert">
                         <i class="fa-solid fa-circle-info"></i>

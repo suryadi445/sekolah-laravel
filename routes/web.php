@@ -17,6 +17,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DefaultWebController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\NoticeController;
@@ -27,6 +28,9 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\RekruitmentController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\MapelController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\EvaluationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,11 +67,15 @@ Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about
 Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
 Route::resource('/siswa', SiswaController::class);
+Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
 Route::resource('/gallery', GalleryController::class);
 Route::resource('/career', CareerController::class);
 Route::resource('/registration', RegistrationController::class);
+Route::resource('/mapel', MapelController::class);
+Route::resource('/kelas', KelasController::class);
+Route::resource('/evaluation', EvaluationController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

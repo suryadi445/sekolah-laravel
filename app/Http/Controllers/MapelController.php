@@ -17,7 +17,7 @@ class MapelController extends Controller
     public function index()
     {
         $title = 'Mata Pelajaran';
-        $mapel = Mapel::groupBy('mata_pelajaran')->paginate(20);
+        $mapel = Mapel::orderBy('mata_pelajaran')->paginate(20);
 
         return view('backend.mapel', compact(['title', 'mapel']));
     }
