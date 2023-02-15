@@ -1,6 +1,10 @@
 @extends('layouts.landing')
 
 @section('container')
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <section id="carousel" class="pt-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
@@ -29,11 +33,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-8" data-aos="fade-right" data-aos-duration="1500">
                                 <h1>Welcome</h1>
                                 {{ $introduction->text ?? '' }}
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" data-aos="fade-left" data-aos-duration="1500">
                                 <img src="{{ $introduction->image ?? '' }}" class="rounded img-fluid img-thumbnail"
                                     alt="image">
                             </div>
@@ -47,7 +51,7 @@
             <div class="container pt-3 pb-5">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="text-center">Berita Terkini</h1>
+                        <h1 class="text-center" data-aos="zoom-in-up" data-aos-duration="1200">Berita Terkini</h1>
                     </div>
                 </div>
 
@@ -55,11 +59,11 @@
                     <div class="row mt-5">
                         <div class="col-sm-12">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-4" data-aos="zoom-out-up" data-aos-duration="1500">
                                     <img src="{{ $latestNews[0]->image }}"
                                         class="d-block w-100 rounded img-fluid img-thumbnail" alt="image">
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8" data-aos="zoom-out-up" data-aos-delay="1000" data-aos-duration="1500">
                                     <p>
                                         {{ $latestNews[0]->created_at->isoFormat('dddd, D MMMM Y') }}
                                     </p>
@@ -116,7 +120,8 @@
             <div class="container mt-3 mb-5">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class=" text-center">Kegiatan Siswa</h1>
+                        <h1 class=" text-center" data-aos="zoom-in-up" data-aos-duration="1200">
+                            Kegiatan Siswa</h1>
                     </div>
                 </div>
 
@@ -130,18 +135,21 @@
                                             <div class="row g-0">
                                                 <div class="col-md-4">
                                                     <img src="{{ $item->image }}" class="img-fluid rounded-start h-100"
-                                                        alt="...">
+                                                        alt="image" data-aos="flip-left" data-aos-duration="2500">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ $item->judul }}</h5>
+                                                    <div class="card-body" data-aos="fade-zoom-in"
+                                                        data-aos-duration="1500" data-aos-delay="1000">
+                                                        <h5 class="card-title">
+                                                            {{ $item->judul }}</h5>
                                                         <p class="card-text">
                                                             {{ $item->text }}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer text-center">
-                                                    <small class="text-muted">Last updated
+                                                    <small class="text-muted" data-aos="fade-zoom-in"
+                                                        data-aos-duration="1500" data-aos-delay="1000">Last updated
                                                         {{ $item->created_at->diffForHumans() }}</small>
                                                 </div>
                                             </div>
@@ -165,7 +173,7 @@
 
                 <div class="row">
                     <div class="col-6">
-                        <h1 class="mb-3">Alumni Kami </h1>
+                        <h1 class="mb-3" data-aos="zoom-in-up" data-aos-duration="1200">Alumni Kami </h1>
                     </div>
                     <div class="col-6 text-right">
                         <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button"
@@ -185,14 +193,16 @@
                                     @foreach ($alumnis as $key => $item)
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-12 mb-3">
+                                                <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                    data-aos-duration="1500">
                                                     <div class="shadow p-3 mb-5 bg-body">
                                                         <img class="img-fluid" src="{{ $item->image }}"
                                                             style="width: 100%; height: 25vw; object-fit: contain;">
                                                     </div>
                                                 </div>
-                                                <div class="offset-lg-1 col-lg-6 col-md-12">
-                                                    <div class="card text-center shadow p-3 mb-5 bg-body">
+                                                <div class="offset-lg-1 col-lg-6 col-md-12" data-aos="fade-left"
+                                                    data-aos-duration="1500">
+                                                    <div class="card text-center shadow mb-5 bg-body">
                                                         <div class="card-body">
                                                             <h4 class="card-title">{{ $item->nama_siswa }}
                                                             </h4>
@@ -335,4 +345,9 @@
             </div>
         </section>
     </div>
+
+
+    <script>
+        AOS.init();
+    </script>
 @endsection

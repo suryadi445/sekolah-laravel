@@ -47,25 +47,20 @@
     </script>
 
     <script>
-        // document.getElementById("toastbtn").onclick = function() {
+        // toast
         var toastElList = [].slice.call(document.querySelectorAll('.toast'))
         var toastList = toastElList.map(function(toastEl) {
-            // Creates an array of toasts (it only initializes them)
             return new bootstrap.Toast(toastEl) // No need for options; use the default options
         });
         toastList.forEach(toast => toast.show()); // This show them
-        // console.log(toastList); // Testing to see if it works
-        // };
 
 
         // validation bootstrap
         (() => {
             'use strict'
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
             const forms = document.querySelectorAll('.needs-validation')
 
-            // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
                     if (!form.checkValidity()) {
@@ -77,6 +72,41 @@
                 }, false)
             })
         })()
+
+        // active tabs bootstrap
+        const pillsTab = document.querySelector('#myTab');
+        const pills = pillsTab.querySelectorAll('button[data-bs-toggle="tab"]');
+
+        pills.forEach(pill => {
+            pill.addEventListener('shown.bs.tab', (event) => {
+                const {
+                    target
+                } = event;
+                const {
+                    id: targetId
+                } = target;
+
+                savePillId(targetId);
+            });
+        });
+
+        const savePillId = (selector) => {
+            localStorage.setItem('activePillId', selector);
+        };
+
+        const getPillId = () => {
+            const activePillId = localStorage.getItem('activePillId');
+
+            if (!activePillId) return;
+
+            // call 'show' function
+            const someTabTriggerEl = document.querySelector(`#${activePillId}`)
+            const tab = new bootstrap.Tab(someTabTriggerEl);
+
+            tab.show();
+        };
+
+        getPillId();
     </script>
 </body>
 

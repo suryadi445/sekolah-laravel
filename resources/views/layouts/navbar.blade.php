@@ -1,14 +1,15 @@
 <nav class="navbar navbar-expand-lg bg-light fixed-top pl-2 mb-5">
     <div class="container">
-        <a class="navbar-brand text-center" href="/">Navbar</a>
+        <a class="navbar-brand text-center logo" href="/">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                <a class="nav-link" href="/tentangKami">About</a>
+                <a class="nav-link active home" aria-current="page" href="/">Home</a>
+                <a class="nav-link about" href="/tentangKami">About</a>
                 <a class="nav-link" href="/source/teacher">Guru</a>
                 <a class="nav-link" href="/source/student">Siswa</a>
                 <a class="nav-link" href="/pengumuman">Pengumuman</a>
@@ -31,7 +32,7 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -45,3 +46,22 @@
         </div>
     </div>
 </nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+<script>
+    gsap.from(".logo", {
+        rotateY: 720,
+        duration: 3,
+        opacity: 0,
+        delay: 1
+    });
+
+    gsap.from("nav", {
+        ease: "bounce.out(10.5, 0.1)",
+        delay: 0.3,
+        y: -100,
+        duration: 2,
+        opacity: 0
+    });
+</script>
