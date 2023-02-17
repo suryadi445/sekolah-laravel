@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use aPP\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -44,6 +46,7 @@ class GuruController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'nik' => 'required|numeric|unique:gurus,deleted_at,NULL',
             'nama_guru' => 'required',
@@ -56,7 +59,6 @@ class GuruController extends Controller
             'agama' => 'required',
             'alamat' => 'required',
             'image' => 'mimes:jpg,png,jpeg|max:2048'
-
         ]);
 
         if ($request->hasFile('image')) {
@@ -68,6 +70,7 @@ class GuruController extends Controller
 
             $image = '\images/upload/' . $imageName;
         }
+
 
         $insert = Guru::create([
             'nik'   => $request->nik,
@@ -91,6 +94,16 @@ class GuruController extends Controller
             'alamat'   => $request->alamat,
             'user' => Auth::id(),
             'image'   => $image ?? '',
+        ]);
+        $id_guru = $insert->id;
+
+        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
+        // create user
+        User::create([
+            'name' => $request->nama_guru,
+            'no_hp' => $request->no_hp,
+            'id_guru' => $id_guru,
+            'password' => Hash::make($passwordGuru),
         ]);
 
         if ($insert) {
@@ -195,6 +208,16 @@ class GuruController extends Controller
                 'image'   => $image,
                 'user' => Auth::id(),
             ]);
+
+        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
+        // update user
+        User::where('id_guru', $guru->id)
+            ->update([
+                'name' => $request->nama_guru,
+                'no_hp' => $request->no_hp,
+                'password' => Hash::make($passwordGuru),
+            ]);
+
 
         if ($update) {
             return redirect('/guru')->with('success', 'Success! Data saved successfully');
