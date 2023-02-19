@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Siswa;
 use Carbon\Carbon;
 
 /**
@@ -93,5 +94,23 @@ if (!function_exists('getUmur')) {
     function getUmur($tanggal)
     {
         return Carbon::parse($tanggal)->diff(\Carbon\Carbon::now())->format('%y Tahun, %m bulan');
+    }
+}
+
+if (!function_exists('getWali')) {
+    function getWali($id_siswa)
+    {
+        $data = Siswa::where('id', $id_siswa)->first() ?? '';
+
+        if ($data->nama_ayah) {
+
+            $result = $data->nama_ayah;
+        } else if ($data->nama_ibu) {
+            $result = $data->nama_ayah;
+        } else {
+            $result = $data->nama_wali;
+        }
+
+        return $result;
     }
 }
