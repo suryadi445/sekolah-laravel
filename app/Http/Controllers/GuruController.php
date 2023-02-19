@@ -97,20 +97,27 @@ class GuruController extends Controller
         ]);
         $id_guru = $insert->id;
 
-        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
-        // create user
-        User::create([
-            'name' => $request->nama_guru,
-            'no_hp' => $request->no_hp,
-            'id_guru' => $id_guru,
-            'password' => Hash::make($passwordGuru),
-        ]);
+        // PROSES INSERT USER GURU
+        $this->insert_user($request, $id_guru);
 
         if ($insert) {
             return redirect('/guru')->with('success', 'Success! Data saved successfully');
         } else {
             return redirect('/guru')->with('failed', 'Alert! Data failed to save');
         }
+    }
+
+    public function insert_user($request, $id_guru)
+    {
+        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
+        // create user
+        User::create([
+            'name' => $request->nama_guru,
+            'no_hp' => $request->no_hp,
+            'id_guru' => $id_guru,
+            'id_group' => 3, // id_group (super admin, kepsek, guru, ortu)
+            'password' => Hash::make($passwordGuru),
+        ]);
     }
 
     /**
@@ -209,15 +216,8 @@ class GuruController extends Controller
                 'user' => Auth::id(),
             ]);
 
-        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
-        // update user
-        User::where('id_guru', $guru->id)
-            ->update([
-                'name' => $request->nama_guru,
-                'no_hp' => $request->no_hp,
-                'password' => Hash::make($passwordGuru),
-            ]);
-
+        // PROSES UPDATE USER GURU
+        $this->update_user($request, $guru);
 
         if ($update) {
             return redirect('/guru')->with('success', 'Success! Data saved successfully');
@@ -226,6 +226,22 @@ class GuruController extends Controller
         }
     }
 
+    public function update_user($request, $guru)
+    {
+        // update user
+        $updateUser = [
+            'name' => $request->nama_guru,
+            'no_hp' => $request->no_hp,
+        ];
+
+        if ($request->tgl_lahir != $guru->tgl_lahir) {
+            $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
+            $updateUser['password'] = Hash::make($passwordGuru);
+        }
+
+        User::where('id_guru', $guru->id)
+            ->update($updateUser);
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -80,7 +80,7 @@ class TentangKamiController extends Controller
         if ($insert) {
             Session::flash('success', 'Success! Data saved successfully');
         } else {
-            Session::flash('failed', 'Alert! file not uploaded');
+            Session::flash('failed', 'Alert! Data failed to save');
         }
 
         return redirect('tentangKami');

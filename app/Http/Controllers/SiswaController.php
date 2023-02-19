@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -102,14 +104,37 @@ class SiswaController extends Controller
             'alamat_wali' => $request->alamat_wali,
             'image' => $image ?? '',
             'user' => Auth::id(),
-
         ]);
+        $id_siswa = $insert->id;
+
+        $this->insert_user($request, $id_siswa);
 
         if ($insert) {
             return Redirect::to('/siswa')->with('success', 'Success! Data saved successfully');
         } else {
             return Redirect::to('/siswa')->with('failed', 'Alert! Data failed to save');
         }
+    }
+
+    public function insert_user($request, $id_siswa)
+    {
+        $passwordSiswa = date("dmY", strtotime($request->nis));
+        if ($request->no_hp_ayah) {
+            $no_hp = $request->no_hp_ayah;
+        } else if ($request->no_hp_ibu) {
+            $no_hp = $request->no_hp_ibu;
+        } else {
+            $no_hp = $request->no_hp_wali;
+        }
+
+        // create user
+        User::create([
+            'name' => $request->nama_siswa,
+            'no_hp' => $no_hp,
+            'id_siswa' => $id_siswa, // insert id
+            'id_group' => 4, // id_group (super admin, kepsek, guru, ortu)
+            'password' => Hash::make($passwordSiswa),
+        ]);
     }
 
     /**
@@ -221,11 +246,41 @@ class SiswaController extends Controller
 
             ]);
 
+        // PROSES UPDATE KE TABLE USER
+        $this->update_user($request, $siswa);
+
+
         if ($update) {
             return Redirect::to('/siswa')->with('success', 'Success! Data saved successfully');
         } else {
             return Redirect::to('/siswa')->with('failed', 'Alert! Data failed to save');
         }
+    }
+
+    public function update_user($request, $siswa)
+    {
+        //  update user siswa / wali murid
+        $passwordSiswa = date("dmY", strtotime($request->nis));
+        if ($request->no_hp_ayah) {
+            $no_hp = $request->no_hp_ayah;
+        } else if ($request->no_hp_ibu) {
+            $no_hp = $request->no_hp_ibu;
+        } else {
+            $no_hp = $request->no_hp_wali;
+        }
+
+        $updateUser = [
+            'name' => $request->nama_siswa,
+            'no_hp' => $no_hp,
+        ];
+
+        if ($request->nis != $siswa->nis) {
+            $updateUser['password'] = Hash::make($passwordSiswa);
+        }
+
+        // update user
+        User::where('id_siswa', $siswa->id)
+            ->update($updateUser);
     }
 
     /**

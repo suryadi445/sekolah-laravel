@@ -31,6 +31,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,6 +76,7 @@ Route::resource('/career', CareerController::class);
 Route::resource('/registration', RegistrationController::class);
 Route::resource('/mapel', MapelController::class);
 Route::resource('/kelas', KelasController::class);
+Route::resource('/user', UserController::class);
 Route::resource('/evaluation', EvaluationController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
