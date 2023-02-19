@@ -29,6 +29,9 @@
                                                 <th scope="col">Wali Kelas</th>
                                                 <th scope="col">Keterangan</th>
                                                 <th scope="col">Tanggal Dibuat</th>
+                                                @if (userLogin()->id_group == 1 || userLogin()->id_group == 2)
+                                                    <th scope="col">Biaya SPP</th>
+                                                @endif
                                                 <th scope="col">User</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -43,6 +46,9 @@
                                                     <td>{{ $item->nama_guru }}</td>
                                                     <td>{{ $item->keterangan }}</td>
                                                     <td>{{ $item->created_at }}</td>
+                                                    @if (userLogin()->id_group == 1 || userLogin()->id_group == 2)
+                                                        <td>{{ 'Rp. ' . rupiah($item->biaya_spp) }}</td>
+                                                    @endif
                                                     <td>{{ getUser($item->user)->name ?? '' }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-warning btn_edit"
@@ -97,31 +103,53 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
+                        @if (userLogin()->id_group == 1 || userLogin()->id_group == 2)
+                            <div class="form-floating mt-3">
+                                <input type="number" class="form-control" name="biaya_spp" placeholder="Biaya SPP"
+                                    value="{{ old('biaya_spp') }}" required>
+                                <label for="biaya_spp">
+                                    Biaya Spp
+                                    <i class="text-danger">*</i>
+                                </label>
+                            </div>
+                        @endif
                         <div class="form-floating mt-3">
-                            <input type="text" class="form-control" placeholder="Leave a comment here" name="kelas"
-                                value="{{ old('kelas') }}">
-                            <label for="kelas">Kelas</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <input type="text" class="form-control" placeholder="Leave a comment here" name="sub_kelas"
-                                value="{{ old('sub_kelas') }}">
-                            <label for="sub_kelas">Sub Kelas</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <select class="form-select" name="id_guru">
-                                <option selected disabled value="">Pilih Guru</option>
-                                @foreach ($guru as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_guru }}</option>
+                            <select class="form-select" name="kelas" required>
+                                <option selected disabled value="">Pilih Kelas</option>
+                                @foreach (arrayKelas() as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
                                 @endforeach
                             </select>
-                            <label for="floatingSelect">Wali Kelas</label>
+                            <label for="floatingSelect">Kelas
+                                <i class="text-danger">*</i>
+                            </label>
                         </div>
                         <div class="form-floating mt-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" name="keterangan" style="height: 100px">{{ old('keterangan') }}</textarea>
-                            <label for="keterangan">Keterangan</label>
+                            <input type="text" class="form-control" name="sub_kelas" value="{{ old('sub_kelas') }}"
+                                placeholder="Sub Kelas" required>
+                            <label for="sub_kelas">Sub Kelas
+                                <i class="text-danger">*</i>
+                            </label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <select class="form-select" name="id_guru" required>
+                                <option selected disabled value="">Pilih Guru</option>
+                                @foreach ($guru as $item)
+                                    <option value="{{ $item->id }}">{{ ucwords($item->nama_guru) }}</option>
+                                @endforeach
+                            </select>
+                            <label for="floatingSelect">Wali Kelas
+                                <i class="text-danger">*</i>
+                            </label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="keterangan" style="height: 100px" required>{{ old('keterangan') }}</textarea>
+                            <label for="keterangan">Keterangan
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -145,6 +173,13 @@
                     @method('PUT')
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
+                        @if (userLogin()->id_group == 1 || userLogin()->id_group == 2)
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" placeholder="Leave a comment here"
+                                    name="biaya_spp" id="biaya_spp" value="{{ old('biaya_spp') }}">
+                                <label for="biaya_spp">Biaya Spp</label>
+                            </div>
+                        @endif
                         <div class="form-floating mt-3">
                             <input type="text" class="form-control" placeholder="Leave a comment here" name="kelas"
                                 id="kelas" value="{{ old('kelas') }}">
@@ -192,6 +227,7 @@
                 var id = $(this).attr('data-id')
                 $.get("{{ route('kelas.index') }}" + '/' + id + '/edit', function(data) {
                     $('#id').val(id);
+                    $('#biaya_spp').val(Math.round(data.biaya_spp));
                     $('#kelas').val(data.kelas);
                     $('#sub_kelas').val(data.sub_kelas);
                     $('#id_guru').val(data.id_guru);

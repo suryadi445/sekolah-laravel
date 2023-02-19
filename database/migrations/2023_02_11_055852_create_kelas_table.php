@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('kelas');
             $table->string('sub_kelas');
             $table->string('keterangan')->nullable();
+            $table->decimal('biaya_spp')->nullable();
             $table->integer('id_guru');
             $table->string('user');
             $table->softDeletes('deleted_at', 0);

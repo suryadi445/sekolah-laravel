@@ -21,7 +21,6 @@ class KelasController extends Controller
             ->orderBy('kelas.kelas')
             ->select('kelas.*', 'gurus.nama_guru')
             ->paginate(20);
-
         $guru = Guru::orderBy('nama_guru')->get();
 
         return view('backend.kelas', compact(['title', 'kelas', 'guru']));
@@ -49,6 +48,7 @@ class KelasController extends Controller
             'kelas' => 'required',
             'sub_kelas' => 'required',
             'id_guru' => 'required',
+            'biaya_spp' => 'numeric|required',
         ]);
 
         $insert = Kelas::create([
@@ -56,6 +56,7 @@ class KelasController extends Controller
             'sub_kelas' => $request->sub_kelas,
             'id_guru' => $request->id_guru,
             'keterangan' => $request->keterangan,
+            'biaya_spp' => $request->biaya_spp,
             'user' => Auth::id(),
         ]);
 
@@ -103,6 +104,7 @@ class KelasController extends Controller
             'kelas' => 'required',
             'sub_kelas' => 'required',
             'id_guru' => 'required',
+            'biaya_spp' => 'numeric',
         ]);
 
         $update = Kelas::where('id', $request->id)
@@ -111,6 +113,7 @@ class KelasController extends Controller
                 'sub_kelas' => $request->sub_kelas,
                 'id_guru' => $request->id_guru,
                 'keterangan' => $request->keterangan,
+                'biaya_spp' => $request->biaya_spp,
                 'user' => Auth::id(),
             ]);
 

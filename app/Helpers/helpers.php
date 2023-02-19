@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Settings;
 use App\Models\User;
 use App\Models\Siswa;
 use Carbon\Carbon;
@@ -9,6 +10,13 @@ use Carbon\Carbon;
  *
  * @return response()
  */
+if (!function_exists('rupiah')) {
+    function rupiah($number)
+    {
+        return number_format($number, 0, ',', '.');
+    }
+}
+
 if (!function_exists('tanggal_indo')) {
     function tanggal_indo($date)
     {
@@ -112,5 +120,47 @@ if (!function_exists('getWali')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('arrayKelas')) {
+    function arrayKelas()
+    {
+        $tipe_sekolah = Settings::first()->tipe_sekolah;
+        if ($tipe_sekolah == 'Pra Sekolah') {
+            $result = [
+                '0'
+            ];
+        } elseif ($tipe_sekolah == 'SD') {
+            $result = [
+                'I',
+                'II',
+                'III',
+                'IV',
+                'V',
+                'VI',
+            ];
+        } elseif ($tipe_sekolah == 'SMP') {
+            $result = [
+                'VII',
+                'VIII',
+                'IX',
+            ];
+        } elseif ($tipe_sekolah == 'SMA') {
+            $result = [
+                'X',
+                'XI',
+                'XII',
+            ];
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('userLogin')) {
+    function userLogin()
+    {
+        return auth()->user();
     }
 }
