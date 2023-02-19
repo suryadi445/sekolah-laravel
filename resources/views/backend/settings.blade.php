@@ -71,6 +71,48 @@
                                         @method('PUT')
                                         <td>
                                             <div class="col-auto">
+                                                <label for="tipe_sekolah" class="col-form-label">Tipe Sekolah</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <select class="form-select text-danger" id="tipe_sekolah"
+                                                    name="tipe_sekolah" required>
+                                                    <option {{ ($settings->tipe_sekolah ?? '') == '' ? 'selected' : '' }}
+                                                        value="" disabled selected>Pilih Tipe Sekolah</option>
+                                                    <option
+                                                        {{ ($settings->tipe_sekolah ?? '') == 'Pra Sekolah' ? 'selected' : '' }}
+                                                        value="Pra Sekolah">Pra
+                                                        Sekolah</option>
+                                                    <option {{ ($settings->tipe_sekolah ?? '') == 'SD' ? 'selected' : '' }}
+                                                        value="SD">Sekolah Dasar
+                                                    </option>
+                                                    <option {{ ($settings->tipe_sekolah ?? '') == 'SMP' ? 'selected' : '' }}
+                                                        value="SMP">Sekolah
+                                                        Menengah Pertama
+                                                    </option>
+                                                    <option {{ ($settings->tipe_sekolah ?? '') == 'SMA' ? 'selected' : '' }}
+                                                        value="SMA">Sekolah
+                                                        Mengah Atas</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <button class="btn btn-sm btn-warning fw-bold" type="submit">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </form>
+                                </tr>
+                                <tr>
+                                    <form action="{{ route('settings.update', 1) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <td>
+                                            <div class="col-auto">
                                                 <label for="nama_perusahaan" class="col-form-label">Nama Sekolah</label>
                                             </div>
                                         </td>
