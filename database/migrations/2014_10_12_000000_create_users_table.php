@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->integer('id_guru');
             $table->integer('id_siswa');
+            $table->enum('is_active', ['0', '1']);
+            $table->integer('id_group');
             $table->rememberToken();
             $table->timestamps();
         });

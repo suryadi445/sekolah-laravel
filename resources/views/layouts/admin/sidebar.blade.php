@@ -36,6 +36,14 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="/user">
+                            <span data-feather="file-text" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-users-gear"></i>
+                            Users
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::is('slideshow') ? 'active' : '' }}" data-bs-toggle="collapse"
                             href="#collapseExample" role="button" aria-expanded="false"
                             aria-controls="collapseExample">

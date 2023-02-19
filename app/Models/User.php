@@ -22,7 +22,9 @@ class User extends Authenticatable
         'no_hp',
         'id_siswa',
         'id_guru',
+        'id_group',
         'password',
+        'is_active',
     ];
 
     /**
