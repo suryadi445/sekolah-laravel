@@ -31,6 +31,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\SppSiswaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,9 @@ Route::resource('/about', AboutController::class);
 Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about.remove');
 Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
+Route::get('/siswa/getKota', [SiswaController::class, 'getKota']);
 Route::resource('/siswa', SiswaController::class);
+
 Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
@@ -78,6 +81,8 @@ Route::resource('/mapel', MapelController::class);
 Route::resource('/kelas', KelasController::class);
 Route::resource('/user', UserController::class);
 Route::resource('/evaluation', EvaluationController::class);
+Route::resource('/sppSiswa', SppSiswaController::class);
+Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

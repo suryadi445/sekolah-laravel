@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('nama_siswa', 100);
             $table->string('image', 100)->nullable();
+            $table->string('provinsi', 20);
             $table->string('tempat_lahir', 20);
             $table->date('tgl_lahir');
             $table->string('kelas', 10);
+            $table->string('sub_kelas', 10);
             $table->string('jenis_kelamin', 10);
             $table->text('alamat');
             $table->string('agama', 20);

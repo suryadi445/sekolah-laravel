@@ -74,7 +74,7 @@
 
 
                                         @if ($kelas->count() == 0)
-                                            <td colspan="7">
+                                            <td colspan="10">
                                                 <span class="text-danger">Data Tidak Tersedia </span>
                                             </td>
                                         @endif
@@ -120,9 +120,11 @@
                         <div class="form-floating mt-3">
                             <select class="form-select" name="kelas" required>
                                 <option selected disabled value="">Pilih Kelas</option>
-                                @foreach (arrayKelas() as $item)
-                                    <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
+                                @if (arrayKelas())
+                                    @foreach (arrayKelas() as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <label for="floatingSelect">Kelas
                                 <i class="text-danger">*</i>
@@ -147,7 +149,7 @@
                             </label>
                         </div>
                         <div class="form-floating mt-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" name="keterangan" style="height: 100px" required>{{ old('keterangan') }}</textarea>
+                            <textarea class="form-control" placeholder="Leave a comment here" name="keterangan" style="height: 100px">{{ old('keterangan') }}</textarea>
                             <label for="keterangan">Keterangan
                             </label>
                         </div>

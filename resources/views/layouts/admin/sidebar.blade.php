@@ -20,7 +20,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('spp') ? 'active' : '' }}" href="/spp">
+                        <a class="nav-link {{ Request::is('sppSiswa') ? 'active' : '' }}" href="/sppSiswa">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-wallet"></i>
                             SPP Siswa

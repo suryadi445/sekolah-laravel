@@ -51,7 +51,7 @@
 
     @include('layouts.counter')
 
-    @include('layouts.footer', $identity)
+    @include('layouts.footer', $identity ?? [])
 
     @include('components.toast')
 

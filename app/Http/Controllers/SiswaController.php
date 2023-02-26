@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,8 +37,11 @@ class SiswaController extends Controller
     public function create()
     {
         $title = 'Tambah Siswa';
+        $kelas = Kelas::groupBy('sub_kelas')
+            ->groupBy('kelas')
+            ->orderBy('kelas')->get();
 
-        return view('backend.siswa_add', compact(['title']));
+        return view('backend.siswa_add', compact(['title', 'kelas']));
     }
 
     /**
@@ -50,10 +54,11 @@ class SiswaController extends Controller
     {
         $request->validate([
             'nama_siswa' => 'required|max:100',
+            'provinsi' => 'required|max:20',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
-            'nis' => 'required|max:30|unique:siswas,deleted_at,NULL',
+            'nis' => 'required|max:30|unique:siswas,nis,NULL,id,deleted_at,NULL',
             'agama' => 'required|max:20',
             'kelas' => 'required',
             'alamat' => 'required',
@@ -84,12 +89,14 @@ class SiswaController extends Controller
         $insert = Siswa::create([
             'thn_ajaran' => $request->tahun_ajaran_awal . '-' . $request->tahun_ajaran_akhir,
             'nama_siswa' => $request->nama_siswa,
+            'provinsi' => $request->provinsi,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'nis' => $request->nis,
             'agama' => $request->agama,
-            'kelas' => $request->kelas,
+            'kelas' => explode('.', $request->kelas)[0],
+            'sub_kelas' => explode('.', $request->kelas)[1],
             'alamat' => $request->alamat,
             'nama_ayah' => $request->nama_ayah,
             'no_hp_ayah' => $request->no_hp_ayah,
@@ -123,8 +130,10 @@ class SiswaController extends Controller
             $no_hp = $request->no_hp_ayah;
         } else if ($request->no_hp_ibu) {
             $no_hp = $request->no_hp_ibu;
-        } else {
+        } else if ($request->no_hp_wali) {
             $no_hp = $request->no_hp_wali;
+        } else {
+            $no_hp = 0;
         }
 
         // create user
@@ -159,9 +168,12 @@ class SiswaController extends Controller
         $title = 'Edit Siswa';
         $siswa = Siswa::where('id', $siswa->id)->first();
         $tahun_ajaran = explode('-', $siswa->thn_ajaran);
+        $kelas = Kelas::groupBy('sub_kelas')
+            ->groupBy('kelas')
+            ->orderBy('kelas')->get();
 
 
-        return view('backend.siswa_edit', compact(['title', 'siswa', 'tahun_ajaran']));
+        return view('backend.siswa_edit', compact(['title', 'siswa', 'tahun_ajaran', 'kelas']));
     }
 
     /**
@@ -175,6 +187,7 @@ class SiswaController extends Controller
     {
         $request->validate([
             'nama_siswa' => 'required|max:100',
+            'provinsi' => 'required|max:20',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -223,6 +236,7 @@ class SiswaController extends Controller
             ->update([
                 'thn_ajaran' => $request->tahun_ajaran_awal . '-' . $request->tahun_ajaran_akhir,
                 'nama_siswa' => $request->nama_siswa,
+                'provinsi' => $request->provinsi,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -292,11 +306,20 @@ class SiswaController extends Controller
     public function destroy(Siswa $siswa)
     {
         $delete = Siswa::destroy($siswa->id);
+        $delete = User::where('id_siswa', $siswa->id)->delete();
 
         if ($delete) {
             return back()->with('success', 'Success! Data successfuly deleted');
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function getKota()
+    {
+        $id_provinsi = request('id_provinsi');
+        $kota = getKota($id_provinsi);
+
+        return response()->json($kota);
     }
 }

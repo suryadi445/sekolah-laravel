@@ -48,7 +48,7 @@ class KelasController extends Controller
             'kelas' => 'required',
             'sub_kelas' => 'required',
             'id_guru' => 'required',
-            'biaya_spp' => 'numeric|required',
+            'biaya_spp' => 'numeric',
         ]);
 
         $insert = Kelas::create([

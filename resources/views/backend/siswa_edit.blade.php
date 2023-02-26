@@ -67,27 +67,13 @@
                                                 aria-label="Floating label select example" required
                                                 value="{{ old('kelas') }}">
                                                 <option value="" disabled>Pilih Kelas</option>
-                                                <option {{ $siswa->kelas == 0 ? 'selected' : '' }} value="0">
-                                                    0
-                                                </option>
-                                                <option {{ $siswa->kelas == 1 ? 'selected' : '' }} value="1">
-                                                    1
-                                                </option>
-                                                <option {{ $siswa->kelas == 2 ? 'selected' : '' }} value="2">
-                                                    2
-                                                </option>
-                                                <option {{ $siswa->kelas == 3 ? 'selected' : '' }} value="3">
-                                                    3
-                                                </option>
-                                                <option {{ $siswa->kelas == 4 ? 'selected' : '' }} value="4">
-                                                    4
-                                                </option>
-                                                <option {{ $siswa->kelas == 5 ? 'selected' : '' }} value="5">
-                                                    5
-                                                </option>
-                                                <option {{ $siswa->kelas == 6 ? 'selected' : '' }} value="6">
-                                                    6
-                                                </option>
+                                                @foreach ($kelas as $item)
+                                                    <option
+                                                        {{ $item->kelas . '.' . $item->sub_kelas == $siswa->kelas . '.' . $siswa->sub_kelas ? 'selected' : '' }}
+                                                        value="{{ $item->kelas . '.' . $item->sub_kelas }}">
+                                                        {{ $item->kelas . '.' . strtoupper($item->sub_kelas) }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                             <label for="kelas">Kelas</label>
                                         </div>
@@ -116,11 +102,47 @@
                                     <label for="tempat_lahir" class="form-label">Tempat Lahir
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                        required value="{{ old('tempat_lahir', $siswa->tempat_lahir) }}">
-                                    <div class="invalid-feedback">
-                                        Mohon Isi Tempat Lahir
-                                    </div>
+                                    <span class="select2-selection select2-selection--single form-control input-lg"
+                                        role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                        aria-labelledby="select2-e8ez-container" style="border: 0.1px solid #ced4da;">
+                                        <select class="form-select select2" id="provinsi" name="provinsi"
+                                            data-select2-id="provinsi" value="{{ old('provinsi') }}" required>
+                                            <option value="" disabled selected>Pilih Provinsi</option>
+                                            @foreach (getProvinsi() as $item)
+                                                <option
+                                                    {{ old('tempat_lahir', $siswa->provinsi == $item->id) ? 'selected' : '' }}
+                                                    value="{{ $item->id }}">
+                                                    {{ $item->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Mohon Isi Tempat Lahir
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="tempat_lahir" class="form-label">Tempat Lahir
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <span class="select2-selection select2-selection--single form-control input-lg"
+                                        role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                        aria-labelledby="select2-e8ez-container" style="border: 0.1px solid #ced4da;">
+                                        <select class="form-select select2" id="tempat_lahir" name="tempat_lahir"
+                                            data-select2-id="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+                                            <option value="" disabled selected>Pilih Tempat Lahir</option>
+                                            @foreach (getKota($siswa->provinsi) as $item)
+                                                <option
+                                                    {{ old('tempat_lahir', $siswa->tempat_lahir == $item->id) ? 'selected' : '' }}
+                                                    value="{{ $item->id }}">
+                                                    {{ $item->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Mohon Isi Tempat Lahir
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -163,25 +185,6 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nis" class="form-label">Nomor Induk Siswa
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" id="nis" name="nis" required
-                                        value="{{ old('nis', $siswa->nis) }}">
-                                    <div class="invalid-feedback">
-                                        Mohon Isi Nomor Induk Siswa
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="mb-3">
-                                    <label for="nisn" class="form-label">Nomor Induk Siswa Nasional</label>
-                                    <input type="text" class="form-control" id="nisn" name="nisn"
-                                        {{ old('nisn', $siswa->nisn) }}>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="mb-3">
                                     <label for="agama" class="form-label">Agama
                                         <span class="text-danger">*</span>
                                     </label>
@@ -209,6 +212,25 @@
                                     <div class="invalid-feedback">
                                         Mohon Isi Agama Siswa
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="nis" class="form-label">Nomor Induk Siswa
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="nis" name="nis" required
+                                        value="{{ old('nis', $siswa->nis) }}">
+                                    <div class="invalid-feedback">
+                                        Mohon Isi Nomor Induk Siswa
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="nisn" class="form-label">Nomor Induk Siswa Nasional</label>
+                                    <input type="text" class="form-control" id="nisn" name="nisn"
+                                        {{ old('nisn', $siswa->nisn) }}>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -323,24 +345,30 @@
     </div>
 
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (() => {
-            'use strict'
+        $(document).on("change", "#provinsi", function() {
+            $('#loading').show();
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
+            let provinsi = this.value;
+            $('#tempat_lahir').html('')
+            $('#tempat_lahir').html('<option value="" disabled selected>Pilih Tempat Lahir </option>')
+            $.ajax({
+                type: "GET",
+                url: "/siswa/getKota?id_provinsi=" + provinsi,
+                dataType: "json",
+                success: function(response) {
+                    $('#loading').hide();
 
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
+                    $.each(response, function(index, value) {
+                        var provinsi = value.nama;
+                        var id_kota = value.id;
 
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
+                        $('#tempat_lahir').append($('<option>', {
+                            value: id_kota,
+                            text: provinsi,
+                        }));
+                    });
+                }
+            });
+        });
     </script>
 @endsection

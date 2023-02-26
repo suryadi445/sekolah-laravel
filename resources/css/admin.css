@@ -80,6 +80,65 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
+
+/* sweet alert */
 .swal2-popup .swal2-styled:focus {
     box-shadow: none !important;
+}
+
+/* loading */
+#loading {
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #bac0c4;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* Animasi putar spinner */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* select2 */
+
+.select2-results__option:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.select2-results__option[aria-disabled="true"]:hover {
+    background-color: #e9ecef;
+    color: #c7c7c7;
+}
+
+.select2-selection:before {
+    content: "" !important;
+    position: absolute !important;
+    right: 5px !important;
+    top: 42% !important;
+    border-top: 5px solid #888 !important;
+    border-left: 4px solid transparent !important;
+    border-right: 4px solid transparent !important;
 }

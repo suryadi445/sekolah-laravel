@@ -9,12 +9,12 @@
                                 <img src="{{ asset('images/upload/image.png') }}" class="d-block w-100 mb-2"
                                     alt="image">
                                 <h4>
-                                    @if ($identity['nama_perusahaan'])
+                                    @if ($identity['nama_perusahaan'] ?? '')
                                         {{ $identity['nama_perusahaan'] }}
                                     @endif
                                 </h4>
                                 <p>
-                                    @if ($identity['alamat'])
+                                    @if ($identity['alamat'] ?? '')
                                         <a href="http://maps.google.com/?q={{ $identity['latitude'] }},{{ $identity['longitude'] }}"
                                             target="_blank" class="text-decoration-none text-light"
                                             title="Lihat Alamat">
@@ -24,7 +24,7 @@
                                     @endif
                                 </p>
                                 <p>
-                                    @if ($identity['email'])
+                                    @if ($identity['email'] ?? '')
                                         <a href="mailto: {{ $identity['email'] }}" target="_blank"
                                             class="text-decoration-none text-light" title="Kirim Email">
                                             <i class="fa-solid fa-envelope me-1"></i>
@@ -33,7 +33,7 @@
                                     @endif
                                 </p>
                                 <p>
-                                    @if ($identity['no_telp'])
+                                    @if ($identity['no_telp'] ?? '')
                                         <a href="tel:{{ $identity['no_telp'] }}" target="_blank"
                                             class="text-decoration-none text-light" title="Telepon Kami">
                                             <i class="fa-solid fa-phone me-1"></i>
@@ -42,7 +42,7 @@
                                     @endif
                                 </p>
                                 <p>
-                                    @if ($identity['no_hp'])
+                                    @if ($identity['no_hp'] ?? '')
                                         <a href="whatsapp://send?abid={{ $identity['no_hp'] }}" target="_blank"
                                             class="text-decoration-none text-light" title="Kirim Whatsapp">
                                             <i class="fa-brands fa-whatsapp me-1"></i>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <h4>Ikuti Kami</h4>
-                                @if ($identity['facebook'])
+                                @if ($identity['facebook'] ?? '')
                                     <p>
                                         <a href="{{ $identity['facebook'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-facebook"></i>
@@ -70,14 +70,14 @@
                                         </a>
                                     </p>
                                 @endif
-                                @if ($identity['ig'])
+                                @if ($identity['ig'] ?? '')
                                     <p>
                                         <a href="{{ $identity['ig'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-instagram"></i> Instagram
                                         </a>
                                     </p>
                                 @endif
-                                @if ($identity['twitter'])
+                                @if ($identity['twitter'] ?? '')
                                     <p>
                                         <a href="{{ $identity['twitter'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-twitter"></i>
@@ -85,7 +85,7 @@
                                         </a>
                                     </p>
                                 @endif
-                                @if ($identity['youtube'])
+                                @if ($identity['youtube'] ?? '')
                                     <p>
                                         <a href="{{ $identity['youtube'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-youtube"></i>
@@ -93,7 +93,7 @@
                                         </a>
                                     </p>
                                 @endif
-                                @if ($identity['linkedin'])
+                                @if ($identity['linkedin'] ?? '')
                                     <p>
                                         <a href="{{ $identity['linkedin'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-linkedin"></i>
