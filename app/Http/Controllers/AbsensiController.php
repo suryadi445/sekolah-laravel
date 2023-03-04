@@ -8,7 +8,6 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Termwind\Components\Dd;
 
 class AbsensiController extends Controller
 {
@@ -32,9 +31,6 @@ class AbsensiController extends Controller
         $data['absensi'] = $absensi->get();
         $data['jumlah_all'] = count($data['absensi']);
 
-
-
-        // return view('backend.absensi', compact(['title', 'siswa', 'mapel', 'kelas', 'absensi', 'cek_absensi']));
         return view('backend.absensi', $data);
     }
 

@@ -54,7 +54,6 @@ class SiswaController extends Controller
     {
         $request->validate([
             'nama_siswa' => 'required|max:100',
-            'provinsi' => 'required|max:20',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -89,7 +88,6 @@ class SiswaController extends Controller
         $insert = Siswa::create([
             'thn_ajaran' => $request->tahun_ajaran_awal . '-' . $request->tahun_ajaran_akhir,
             'nama_siswa' => $request->nama_siswa,
-            'provinsi' => $request->provinsi,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
@@ -187,7 +185,6 @@ class SiswaController extends Controller
     {
         $request->validate([
             'nama_siswa' => 'required|max:100',
-            'provinsi' => 'required|max:20',
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -236,13 +233,13 @@ class SiswaController extends Controller
             ->update([
                 'thn_ajaran' => $request->tahun_ajaran_awal . '-' . $request->tahun_ajaran_akhir,
                 'nama_siswa' => $request->nama_siswa,
-                'provinsi' => $request->provinsi,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'nis' => $request->nis,
                 'agama' => $request->agama,
-                'kelas' => $request->kelas,
+                'kelas' => explode('.', $request->kelas)[0],
+                'sub_kelas' => explode('.', $request->kelas)[1],
                 'alamat' => $request->alamat,
                 'nama_ayah' => $request->nama_ayah,
                 'no_hp_ayah' => $request->no_hp_ayah,
@@ -313,13 +310,5 @@ class SiswaController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
-    }
-
-    public function getKota()
-    {
-        $id_provinsi = request('id_provinsi');
-        $kota = getKota($id_provinsi);
-
-        return response()->json($kota);
     }
 }

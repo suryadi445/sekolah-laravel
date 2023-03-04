@@ -171,7 +171,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" style="overflow:hidden;" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -227,15 +228,16 @@
                                 <td width="30%">Merchant </td>
                                 <td>:</td>
                                 <td width="70%">
-                                    <span class="select2-selection select2-selection--single form-control input-lg"
-                                        role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                        aria-labelledby="select2-e8ez-container" style="border: 0.1px solid #ced4da;">
-                                        <select class="form-select select2 bordered" name="merchant" id="merchant">
-                                            <option disabled selected value="">Pilih Merchant Pembayaran</option>
-                                            @foreach (namaBank() as $item)
-                                                <option value="Transfer Bank">{{ $item['name'] }}</option>
-                                            @endforeach
-                                        </select>
+                                    <select class="form-select" name="merchant" id="merchant">
+                                        <option disabled selected value="">
+                                            Pilih Merchant Pembayaran
+                                        </option>
+                                        <option value="BRI">BRI</option>
+                                        <option value="Mandiri">Mandiri</option>
+                                        <option value="Mandiri Syariah">Mandiri Syariah</option>
+                                        <option value="BCA">BCA</option>
+                                        <option value="BCA Syariah">BCA Syariah</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr class="d-none emoney">
@@ -257,12 +259,9 @@
         </div>
     </div>
 
+
     <script>
         $(document).ready(function() {
-            $(".select2").select2({
-                dropdownParent: $("#exampleModal"),
-                theme: 'bootstrap-5',
-            });
 
             $(document).on('change', '#jenis_pembayaran', function() {
                 let value = $(this).val()

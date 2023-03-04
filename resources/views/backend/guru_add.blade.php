@@ -97,7 +97,7 @@
                                     <input type="text" class="form-control" id="program_studi" name="program_studi"
                                         value="{{ old('program_studi') }}">
                                     <div class="invalid-feedback">
-                                        Mohon Isi Tempat Lahir
+                                        Mohon Isi Program Studi
                                     </div>
                                 </div>
                             </div>

@@ -172,9 +172,6 @@
                                     <div class="invalid-feedback">
                                         Mohon Isi Tempat Lahir
                                     </div>
-                                    <div class="invalid-feedback">
-                                        Mohon Isi Tempat Lahir
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">

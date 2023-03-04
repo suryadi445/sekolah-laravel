@@ -32,7 +32,10 @@
                                                 <option {{ old('tahun_ajaran_awal') == date('Y') - 6 ? 'selected' : '' }}
                                                     value="{{ date('Y') - 6 }}">{{ date('Y') - 6 }}</option>
                                             </select>
-                                            <label for="tahun_ajaran_awal">Tahun Ajaran Awal</label>
+                                            <label for="tahun_ajaran_awal">
+                                                Tahun Ajaran Awal
+                                                <i class="text-danger">*</i>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-3  mt-1 mb-1">
@@ -58,7 +61,10 @@
                                                 <option {{ old('tahun_ajaran_akhir') == date('Y') - 6 ? 'selected' : '' }}
                                                     value="{{ date('Y') - 6 }}">{{ date('Y') - 6 }}</option>
                                             </select>
-                                            <label for="tahun_ajaran_akhir">Tahun Ajaran Awal</label>
+                                            <label for="tahun_ajaran_akhir">
+                                                Tahun Ajaran Awal
+                                                <i class="text-danger">*</i>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-3  mt-1 mb-1">
@@ -70,11 +76,14 @@
                                                 @foreach ($kelas as $item)
                                                     <option {{ old('kelas') ? 'selected' : '' }}
                                                         value="{{ $item->kelas . '.' . $item->sub_kelas }}">
-                                                        {{ $item->kelas . '.' . $item->sub_kelas }}
+                                                        {{ $item->kelas . '.' . strtoupper($item->sub_kelas) }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <label for="kelas">Kelas</label>
+                                            <label for="kelas">
+                                                Kelas
+                                                <i class="text-danger">*</i>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -98,46 +107,26 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="provinsi" class="form-label">Provinsi Tempat Lahir
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <span class="select2-selection select2-selection--single form-control input-lg"
-                                        role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                        aria-labelledby="select2-e8ez-container" style="border: 0.1px solid #ced4da;">
-                                        <select class="form-select select2" id="provinsi" name="provinsi"
-                                            data-select2-id="provinsi" value="{{ old('provinsi') }}" required>
-                                            <option value="" disabled selected>Pilih Provinsi</option>
-                                            @foreach (getProvinsi() as $item)
-                                                <option {{ old('provinsi') == $item->id ? 'selected' : '' }}
-                                                    value="{{ $item->id }}">
-                                                    {{ $item->nama }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Mohon Isi Tempat Lahir
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="mb-3">
                                     <div class="mb-3">
                                         <label for="tempat_lahir" class="form-label">Tempat Lahir
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <span class="select2-selection select2-selection--single form-control input-lg"
-                                            role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                            aria-labelledby="select2-e8ez-container" style="border: 0.1px solid #ced4da;">
-                                            <select class="form-select select2" id="tempat_lahir" name="tempat_lahir"
-                                                data-select2-id="kota" required value="{{ old('tempat_lahir') }}">
-                                                <option value="" disabled selected>
-                                                    Pilih Tempat Lahir
+                                        <select class="form-select select2" id="tempat_lahir" name="tempat_lahir"
+                                            data-select2-id="kota" required value="{{ old('tempat_lahir') }}">
+                                            <option value="" disabled selected>
+                                                Pilih Tempat Lahir
+                                            </option>
+                                            @foreach (arrayKota() as $item)
+                                                <option {{ old('tempat_lahir') ? 'selected' : '' }}
+                                                    value="{{ $item }}">
+                                                    {{ strtoupper($item) }}
                                                 </option>
-                                            </select>
+                                            @endforeach
+                                        </select>
 
-                                            <div class="invalid-feedback">
-                                                Mohon Isi Tempat Lahir
-                                            </div>
+                                        <div class="invalid-feedback">
+                                            Mohon Isi Tempat Lahir
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +326,6 @@
 
     <script>
         $(document).ready(function() {
-
             $(document).on("change", "#provinsi", function() {
                 $('#loading').show();
 

@@ -65,6 +65,16 @@
                                         Kelas
                                     </a>
                                 </li>
+                                <li class="pt-2 ">
+                                    <a href="/jabatan" class="text-decoration-none text-dark">
+                                        Jabatan
+                                    </a>
+                                </li>
+                                <li class="pt-2 ">
+                                    <a href="/pembayaran" class="text-decoration-none text-dark">
+                                        Pembayaran
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>
