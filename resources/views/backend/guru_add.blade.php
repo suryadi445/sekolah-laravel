@@ -117,8 +117,14 @@
                                     <label for="jabatan" class="form-label">Jabatan
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="jabatan" name="jabatan" required
-                                        value="{{ old('jabatan') }}">
+                                    <select class="form-select" name="jabatan" required value="{{ old('jabatan') }}">
+                                        <option selected value="" disabled>Pilih Jabatan</option>
+                                        @foreach ($jabatan as $item)
+                                            <option {{ old('jabatan') ? 'selected' : '' }}
+                                                value="{{ $item->nama_jabatan }}">{{ strtoupper($item->nama_jabatan) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     <div class="invalid-feedback">
                                         Mohon Isi Jabatan
                                     </div>
@@ -129,8 +135,16 @@
                                     <label for="tempat_lahir" class="form-label">Tempat Lahir
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                        required value="{{ old('tempat_lahir') }}">
+                                    <select class="form-select select2" name="tempat_lahir" required
+                                        value="{{ old('tempat_lahir') }}">
+                                        <option selected value="" disabled>Pilih Tempat Lahir</option>
+                                        @foreach (arrayKota() as $item)
+                                            <option {{ old('tempat_lahir') ? 'selected' : '' }}
+                                                value="{{ $item }}">
+                                                {{ strtoupper($item) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     <div class="invalid-feedback">
                                         Mohon Isi Tempat Lahir
                                     </div>

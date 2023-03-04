@@ -120,25 +120,3 @@ body {
         transform: rotate(360deg);
     }
 }
-
-/* select2 */
-
-.select2-results__option:hover {
-    background-color: #0d6efd;
-    color: white;
-}
-
-.select2-results__option[aria-disabled="true"]:hover {
-    background-color: #e9ecef;
-    color: #c7c7c7;
-}
-
-.select2-selection:before {
-    content: "" !important;
-    position: absolute !important;
-    right: 5px !important;
-    top: 42% !important;
-    border-top: 5px solid #888 !important;
-    border-left: 4px solid transparent !important;
-    border-right: 4px solid transparent !important;
-}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Jabatan;
 use aPP\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -34,8 +35,9 @@ class GuruController extends Controller
     public function create()
     {
         $title = 'Tambah Guru';
+        $jabatan = Jabatan::orderBy('nama_jabatan')->get();
 
-        return view('backend.guru_add', compact(['title']));
+        return view('backend.guru_add', compact(['title', 'jabatan']));
     }
 
     /**
@@ -140,8 +142,9 @@ class GuruController extends Controller
     public function edit(Guru $guru)
     {
         $guru = Guru::where('id', $guru->id)->first();
+        $jabatan = Jabatan::orderBy('nama_jabatan')->get();
 
-        return view('backend.guru_edit', compact('guru'));
+        return view('backend.guru_edit', compact(['guru', 'jabatan']));
     }
 
     /**

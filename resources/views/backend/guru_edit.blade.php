@@ -15,8 +15,8 @@
                                     <label for="nik" class="form-label">NIK
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="number" class="form-control" id="nik" name="nik" required
-                                        value="{{ old('nik', $guru->nik) }}">
+                                    <input type="number" class="form-control text-capitalize" id="nik" name="nik"
+                                        required value="{{ old('nik', $guru->nik) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi NIK
                                     </div>
@@ -28,8 +28,8 @@
                                         Nama Guru
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="nama_guru" name="nama_guru" required
-                                        value="{{ old('nama_guru', $guru->nama_guru) }}">
+                                    <input type="text" class="form-control text-capitalize" id="nama_guru"
+                                        name="nama_guru" required value="{{ old('nama_guru', $guru->nama_guru) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nama guru
                                     </div>
@@ -40,7 +40,7 @@
                                     <label for="gelar" class="form-label">
                                         Gelar
                                     </label>
-                                    <input type="text" class="form-control" id="gelar" name="gelar"
+                                    <input type="text" class="form-control text-capitalize" id="gelar" name="gelar"
                                         value="{{ old('gelar', $guru->gelar) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nama guru
@@ -115,10 +115,10 @@
                                 <div class="mb-3">
                                     <label for="program_studi" class="form-label">Program Studi
                                     </label>
-                                    <input type="text" class="form-control" id="program_studi" name="program_studi"
-                                        value="{{ old('program_studi', $guru->program_studi) }}">
+                                    <input type="text" class="form-control text-capitalize" id="program_studi"
+                                        name="program_studi" value="{{ old('program_studi', $guru->program_studi) }}">
                                     <div class="invalid-feedback">
-                                        Mohon Isi Tempat Lahir
+                                        Mohon Isi Program studi
                                     </div>
                                 </div>
                             </div>
@@ -126,8 +126,8 @@
                                 <div class="mb-3">
                                     <label for="alumni_dari" class="form-label">Alumni Dari
                                     </label>
-                                    <input type="text" class="form-control" id="alumni_dari" name="alumni_dari"
-                                        value="{{ old('alumni_dari', $guru->alumni_dari) }}">
+                                    <input type="text" class="form-control text-capitalize" id="alumni_dari"
+                                        name="alumni_dari" value="{{ old('alumni_dari', $guru->alumni_dari) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Tanggal Lahir
                                     </div>
@@ -138,8 +138,16 @@
                                     <label for="jabatan" class="form-label">Jabatan
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="jabatan" name="jabatan" required
-                                        value="{{ old('jabatan', $guru->jabatan) }}">
+                                    <select class="form-select" id="jabatan" name="jabatan" value="{{ old('jabatan') }}"
+                                        required>
+                                        <option selected value="" disabled>Pilih Jabatan</option>
+                                        @foreach ($jabatan as $item)
+                                            <option
+                                                {{ old('jabatan', $guru->jabatan) == $item->nama_jabatan ? 'selected' : '' }}
+                                                value="{{ $item->nama_jabatan }}">{{ ucfirst($item->nama_jabatan) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     <div class="invalid-feedback">
                                         Mohon Isi Jabatan
                                     </div>
@@ -150,8 +158,20 @@
                                     <label for="tempat_lahir" class="form-label">Tempat Lahir
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                        required value="{{ old('tempat_lahir', $guru->tempat_lahir) }}">
+                                    <select class="form-select select2" name="tempat_lahir" id="tempat_lahir" required
+                                        value="{{ old('tempat_lahir') }}">
+                                        <option selected value="" disabled>Pilih Tempat Lahir</option>
+                                        @foreach (arrayKota() as $item)
+                                            <option
+                                                {{ old('tempat_lahir', $guru->tempat_lahir) == $item ? 'selected' : '' }}
+                                                value="{{ $item }}">
+                                                {{ strtoupper($item) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Mohon Isi Tempat Lahir
+                                    </div>
                                     <div class="invalid-feedback">
                                         Mohon Isi Tempat Lahir
                                     </div>
@@ -162,8 +182,8 @@
                                     <label for="tgl_lahir" class="form-label">Tanggal Lahir
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required
-                                        value="{{ old('tgl_lahir', $guru->tgl_lahir) }}">
+                                    <input type="date" class="form-control text-capitalize" id="tgl_lahir"
+                                        name="tgl_lahir" required value="{{ old('tgl_lahir', $guru->tgl_lahir) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Tanggal Lahir
                                     </div>
@@ -200,8 +220,8 @@
                                     <label for="no_hp" class="form-label">Nomor Hp
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp" required
-                                        value="{{ old('no_hp', $guru->no_hp) }}">
+                                    <input type="number" class="form-control text-capitalize" id="no_hp"
+                                        name="no_hp" required value="{{ old('no_hp', $guru->no_hp) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nomor Handphone
                                     </div>
@@ -211,8 +231,8 @@
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email
                                     </label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        value="{{ old('email', $guru->email) }}">
+                                    <input type="email" class="form-control text-capitalize" id="email"
+                                        name="email" value="{{ old('email', $guru->email) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Email Yang Valid
                                     </div>
@@ -258,8 +278,8 @@
                                 <div class="mb-3">
                                     <label for="nip" class="form-label">NIP
                                     </label>
-                                    <input type="text" class="form-control" id="nip" name="nip"
-                                        value="{{ old('nip', $guru->nip) }}">
+                                    <input type="text" class="form-control text-capitalize" id="nip"
+                                        name="nip" value="{{ old('nip', $guru->nip) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi NIP
                                     </div>
@@ -268,8 +288,8 @@
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="nuptk" class="form-label">NUPTK</label>
-                                    <input type="text" class="form-control" id="nuptk" name="nuptk"
-                                        value=" {{ old('nuptk', $guru->nuptk) }}">
+                                    <input type="text" class="form-control text-capitalize" id="nuptk"
+                                        name="nuptk" value=" {{ old('nuptk', $guru->nuptk) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -287,8 +307,8 @@
                                 <div class="mb-3">
                                     <label for="no_rekening" class="form-label">Nomor Rekening
                                     </label>
-                                    <input type="number" class="form-control" id="no_rekening" name="no_rekening"
-                                        value="{{ old('no_rekening', $guru->no_rekening) }}">
+                                    <input type="number" class="form-control text-capitalize" id="no_rekening"
+                                        name="no_rekening" value="{{ old('no_rekening', $guru->no_rekening) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nomor Rekening
                                     </div>
@@ -298,8 +318,8 @@
                                 <div class="mb-3">
                                     <label for="nama_bank" class="form-label">Nama Bank
                                     </label>
-                                    <input type="text" class="form-control" id="nama_bank" name="nama_bank"
-                                        value="{{ old('nama_bank', $guru->nama_bank) }}">
+                                    <input type="text" class="form-control text-capitalize" id="nama_bank"
+                                        name="nama_bank" value="{{ old('nama_bank', $guru->nama_bank) }}">
                                     <div class="invalid-feedback">
                                         Mohon Isi Nomor Induk guru
                                     </div>
@@ -308,7 +328,8 @@
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="alamat" class="form-label">Alamat</label>
-                                    <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="" required>
+                                    <textarea class="form-control text-capitalize" id="alamat" name="alamat" rows="3" placeholder=""
+                                        required>
                                         {{ old('alamat', $guru->alamat) }}
                                     </textarea>
                                     <div class="invalid-feedback">
@@ -319,7 +340,8 @@
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Foto Guru</label>
-                                    <input type="file" class="form-control" id="image" name="image">
+                                    <input type="file" class="form-control text-capitalize" id="image"
+                                        name="image">
                                 </div>
                             </div>
                             @if ($guru->image)
