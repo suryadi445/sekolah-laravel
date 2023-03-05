@@ -83,8 +83,10 @@ Route::resource('/mapel', MapelController::class);
 Route::resource('/kelas', KelasController::class);
 Route::resource('/user', UserController::class);
 Route::resource('/evaluation', EvaluationController::class);
-Route::resource('/sppSiswa', SppSiswaController::class);
+Route::get('/sppSiswa/getPembayaran', [SppSiswaController::class, 'getPembayaran']);
+Route::get('/sppSiswa/cekPembayaran', [SppSiswaController::class, 'cekPembayaran']);
 Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
+Route::resource('/sppSiswa', SppSiswaController::class);
 Route::resource('/jabatan', JabatanController::class);
 Route::resource('/pembayaran', PaymentController::class);
 

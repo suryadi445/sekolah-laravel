@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Siswa;
 use App\Models\Spp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -57,7 +59,34 @@ class SppSiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "bulan" => 'required',
+            "tahun" => 'required',
+            "kelas" => 'required',
+            "tipe_pembayaran" => 'required',
+            "nominal" => 'numeric',
+        ]);
+
+
+        $insert = Spp::create([
+            "bulan" => $request->bulan,
+            "nama_bulan" => nomorToBulan($request->bulan),
+            "id_siswa" => $request->id_siswa,
+            "tahun" => $request->tahun,
+            "id_kelas" => $request->kelas,
+            "jenis_pembayaran" => $request->jenis_pembayaran ?? '-',
+            "merchant" => $request->merchant ?? '-',
+            "tipe_pembayaran" => $request->tipe_pembayaran,
+            "keterangan" => $request->keterangan,
+            "nominal" => $request->nominal,
+            "user" => Auth::id(),
+        ]);
+
+        if ($insert) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**
@@ -68,18 +97,34 @@ class SppSiswaController extends Controller
      */
     public function show($id_siswa)
     {
-        $title = 'Detail Siswa SPP';
+        $title = 'Detail SPP Siswa';
+
+        $tahun = request('tahun');
+        if (empty($tahun)) {
+            $tahun = date('Y');
+        }
+
+        $payment = Payment::all();
+
+        $biodata = Siswa::join('kelas', 'siswas.kelas', '=', 'kelas.kelas')
+            ->join('kelas as class', 'siswas.sub_kelas', '=', 'class.sub_kelas')
+            ->where('siswas.id', $id_siswa)
+            ->select('siswas.*', 'kelas.biaya_spp', 'kelas.id as id_kelas')
+            ->first();
 
         $dataSiswa = Spp::rightJoin('siswas', 'spps.id_siswa', '=', 'siswas.id')
             ->join('kelas', 'siswas.kelas', '=', 'kelas.kelas')
             ->join('kelas as class', 'siswas.sub_kelas', '=', 'class.sub_kelas')
+            ->leftJoin('payments', 'payments.id', '=', 'spps.merchant')
             ->where('siswas.id', $id_siswa)
-            ->select('siswas.*', 'spps.bulan', 'spps.bulan', 'spps.tahun', 'spps.tipe_pembayaran', 'spps.jenis_pembayaran', 'spps.merchant', 'spps.keterangan', 'kelas.biaya_spp')
+            ->where('spps.tahun', $tahun)
+            ->groupBy('spps.bulan')
+            ->orderBy('spps.tahun')
+            ->orderByDesc('spps.bulan')
+            ->select('siswas.*', 'spps.id as id_spp', 'spps.nama_bulan', 'spps.bulan', 'spps.tahun', 'spps.tipe_pembayaran', 'spps.jenis_pembayaran', 'spps.merchant', 'spps.keterangan', 'kelas.biaya_spp', 'kelas.id as id_kelas', 'payments.nama as nama_bank', 'payments.nomor as no_rek')
             ->get();
 
-        // dd($dataSiswa);
-
-        return view('backend.sppDetail', compact(['title', 'dataSiswa']));
+        return view('backend.sppDetail', compact(['title', 'dataSiswa', 'biodata', 'payment']));
     }
 
     /**
@@ -90,7 +135,9 @@ class SppSiswaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Spp::where('id', $id)->first();
+
+        return response()->json($data);
     }
 
     /**
@@ -102,7 +149,35 @@ class SppSiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "bulan" => 'required',
+            "tahun" => 'required',
+            "kelas" => 'required',
+            "tipe_pembayaran" => 'required',
+            "nominal" => 'numeric',
+        ]);
+
+
+        $update = Spp::where('id', $id)
+            ->update([
+                "bulan" => $request->bulan,
+                "nama_bulan" => nomorToBulan($request->bulan),
+                "id_siswa" => $request->id_siswa,
+                "tahun" => $request->tahun,
+                "id_kelas" => $request->kelas,
+                "jenis_pembayaran" => $request->jenis_pembayaran ?? '-',
+                "merchant" => $request->merchant ?? '-',
+                "tipe_pembayaran" => $request->tipe_pembayaran,
+                "keterangan" => $request->keterangan,
+                "nominal" => $request->nominal,
+                "user" => Auth::id(),
+            ]);
+
+        if ($update) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**
@@ -113,6 +188,33 @@ class SppSiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Spp::destroy($id);
+
+        if ($delete) {
+            return back()->with('success', 'Success! Data successfuly deleted');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to deleted');
+        }
+    }
+
+    public function getPembayaran()
+    {
+        $jenis = request('jenis_pembayaran');
+
+        $data = Payment::where('jenis', $jenis)->get();
+
+        return response()->json($data);
+    }
+
+    public function cekPembayaran()
+    {
+        $tahun = request('tahun');
+        $id_siswa = request('id_siswa');
+
+        $data = Spp::where('tahun', $tahun)
+            ->where('id_siswa', $id_siswa)
+            ->select('bulan', 'tahun')->get();
+
+        return response()->json($data);
     }
 }

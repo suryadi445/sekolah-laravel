@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('id_siswa');
             $table->string('id_kelas');
             $table->string('bulan');
+            $table->string('nama_bulan');
             $table->string('tahun');
             $table->string('tipe_pembayaran');
-            $table->string('jenis_pembayaran');
-            $table->string('merchant');
-            $table->string('keterangan');
+            $table->string('jenis_pembayaran')->nullable();
+            $table->string('merchant')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('nominal');
             $table->string('user');
+            $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });
     }
