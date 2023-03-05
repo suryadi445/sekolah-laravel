@@ -1,26 +1,6 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
-    <style>
-        .tabs.active {
-            background-color: #adb5bd !important;
-            padding-bottom: 10px;
-            font-size: 115%;
-            text-transform: uppercase;
-            color: #0d6efd !important;
-            font-weight: bolder;
-            text-shadow: 1px 1px rgb(193, 193, 193);
-            border-bottom: 2px solid #0d6efd;
-            border-bottom-right-radius: 0px !important;
-            border-bottom-left-radius: 0px !important;
-        }
-
-        .tabs {
-            background-color: #adb5bd !important;
-            padding-bottom: 10px;
-            color: black !important;
-        }
-    </style>
 
     <ul class="nav nav-pills nav-justified rounded mb-3" style="background-color: #adb5bd !important" id="myTab"
         role="tablist">

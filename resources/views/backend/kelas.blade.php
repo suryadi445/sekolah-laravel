@@ -218,13 +218,6 @@
 
     <script>
         $(function() {
-
-            $(document).on('click', '.hapus_gambar', function(e) {
-                e.preventDefault()
-                url = $(this).attr('href')
-                window.location.href = url;
-            })
-
             $(document).on('click', '.btn_edit', function() {
                 var id = $(this).attr('data-id')
                 $.get("{{ route('kelas.index') }}" + '/' + id + '/edit', function(data) {

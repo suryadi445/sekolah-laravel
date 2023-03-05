@@ -34,7 +34,7 @@ use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\SppSiswaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,7 +86,7 @@ Route::resource('/evaluation', EvaluationController::class);
 Route::resource('/sppSiswa', SppSiswaController::class);
 Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
 Route::resource('/jabatan', JabatanController::class);
-Route::resource('/pembayaran', PembayaranController::class);
+Route::resource('/pembayaran', PaymentController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);
