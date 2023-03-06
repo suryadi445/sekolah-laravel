@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Payment;
 use App\Models\Siswa;
 use App\Models\Spp;
@@ -20,9 +21,19 @@ class SppSiswaController extends Controller
     public function index(Request $request)
     {
         $title = 'Spp Siswa';
+        $subKelas = Kelas::select('id', 'kelas', 'sub_kelas')->groupBy('sub_kelas')->get();
 
         if (request()->ajax()) {
-            $data = Siswa::latest()->get();
+            $data = Siswa::select('*')->orderByDesc('id');
+
+            if (!empty($request->kelas)) {
+                $data->where('kelas', '=', $request->kelas);
+            }
+
+            if (!empty($request->subKelas)) {
+                $data->where('sub_kelas', '=', $request->subKelas);
+            }
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('image', function ($row) {
@@ -38,7 +49,7 @@ class SppSiswaController extends Controller
         }
 
 
-        return view('backend.spp', compact(['title']));
+        return view('backend.spp', compact(['title', 'subKelas']));
     }
 
     /**
@@ -106,22 +117,23 @@ class SppSiswaController extends Controller
 
         $payment = Payment::all();
 
-        $biodata = Siswa::join('kelas', 'siswas.kelas', '=', 'kelas.kelas')
-            ->join('kelas as class', 'siswas.sub_kelas', '=', 'class.sub_kelas')
+        $biodata = Siswa::join('kelas', function ($join) {
+            $join->on('siswas.kelas', '=', 'kelas.kelas')
+                ->on('siswas.sub_kelas', '=', 'kelas.sub_kelas');
+        })
             ->where('siswas.id', $id_siswa)
-            ->select('siswas.*', 'kelas.biaya_spp', 'kelas.id as id_kelas')
+            ->select('siswas.*', 'kelas.biaya_spp', 'kelas.sub_kelas', 'kelas.id as id_kelas')
             ->first();
 
+
         $dataSiswa = Spp::rightJoin('siswas', 'spps.id_siswa', '=', 'siswas.id')
-            ->join('kelas', 'siswas.kelas', '=', 'kelas.kelas')
-            ->join('kelas as class', 'siswas.sub_kelas', '=', 'class.sub_kelas')
             ->leftJoin('payments', 'payments.id', '=', 'spps.merchant')
             ->where('siswas.id', $id_siswa)
             ->where('spps.tahun', $tahun)
             ->groupBy('spps.bulan')
             ->orderBy('spps.tahun')
             ->orderByDesc('spps.bulan')
-            ->select('siswas.*', 'spps.id as id_spp', 'spps.nama_bulan', 'spps.bulan', 'spps.tahun', 'spps.tipe_pembayaran', 'spps.jenis_pembayaran', 'spps.merchant', 'spps.keterangan', 'kelas.biaya_spp', 'kelas.id as id_kelas', 'payments.nama as nama_bank', 'payments.nomor as no_rek')
+            ->select('siswas.*', 'spps.id as id_spp', 'spps.nama_bulan', 'spps.bulan', 'spps.tahun', 'spps.tipe_pembayaran', 'spps.jenis_pembayaran', 'spps.merchant', 'spps.keterangan', 'payments.nama as nama_bank', 'payments.nomor as no_rek')
             ->get();
 
         return view('backend.sppDetail', compact(['title', 'dataSiswa', 'biodata', 'payment']));

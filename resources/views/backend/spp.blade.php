@@ -7,36 +7,24 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-3">
-                            <select class="form-select" id="bulan">
-                                <option disabled value="">Pilih Bulan</option>
-                                <option {{ date('m') == 1 ? 'selected' : '' }} value="1">Januari</option>
-                                <option {{ date('m') == 2 ? 'selected' : '' }} value="2">Februari</option>
-                                <option {{ date('m') == 3 ? 'selected' : '' }} value="3">Maret</option>
-                                <option {{ date('m') == 4 ? 'selected' : '' }} value="4">April</option>
-                                <option {{ date('m') == 5 ? 'selected' : '' }} value="5">Mey</option>
-                                <option {{ date('m') == 6 ? 'selected' : '' }} value="6">Juni</option>
-                                <option {{ date('m') == 7 ? 'selected' : '' }} value="7">Juli</option>
-                                <option {{ date('m') == 8 ? 'selected' : '' }} value="8">Agustus</option>
-                                <option {{ date('m') == 9 ? 'selected' : '' }} value="9">September</option>
-                                <option {{ date('m') == 10 ? 'selected' : '' }} value="10">Oktober</option>
-                                <option {{ date('m') == 11 ? 'selected' : '' }} value="11">November</option>
-                                <option {{ date('m') == 12 ? 'selected' : '' }} value="12">Desember</option>
+                            <select class="form-select" id="kelas">
+                                <option selected value="">Semua Kelas</option>
+                                @foreach (arrayKelas() as $item)
+                                    <option value="{{ $item }}">Kelas {{ $item }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-select" id="bulan">
-                                <option disabled value="">Pilih Tahun</option>
-                                <option value="{{ date('Y') - 1 }}">
-                                    {{ date('Y') - 1 }}</option>
-                                <option selected value="{{ date('Y') }}">
-                                    {{ date('Y') }}</option>
-                                <option value="{{ date('Y') + 1 }}">
-                                    {{ date('Y') + 1 }}</option>
+                            <select class="form-select" id="subKelas">
+                                <option selected value="">Semua Sub Kelas</option>
+                                @foreach ($subKelas as $item)
+                                    <option value="{{ $item->sub_kelas }}"> {{ $item->sub_kelas }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="p-2 mt-2 table-responsive">
+                <div class="p-3 mt-2 table-responsive">
                     <table
                         class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden data-table"
                         width="100%">
@@ -61,7 +49,6 @@
         </div>
     </div>
 
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
@@ -74,10 +61,11 @@
 
     <script>
         $(function() {
+            var urlData = "{{ route('sppSiswa.index') }}";
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('sppSiswa.index') }}",
+                ajax: urlData,
                 columnDefs: [{
                     "defaultContent": "-",
                     "targets": "_all"
@@ -123,6 +111,20 @@
                     },
                 ]
             });
+
+            $('#kelas').change(function() {
+                var kelas = $(this).val();
+                var subKelas = $('#subKelas').val();
+                var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
+                table.ajax.url(dataSrc).draw();
+            })
+
+            $('#subKelas').change(function() {
+                var kelas = $('#kelas').val();
+                var subKelas = $(this).val();
+                var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
+                table.ajax.url(dataSrc).draw();
+            })
 
             $(document).on('click', '.btn_delete', function(e) {
                 e.preventDefault()

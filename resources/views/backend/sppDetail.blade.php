@@ -69,7 +69,8 @@
                                 </li>
                                 <li class="list-group-item">
                                     Kelas :
-                                    <span class="fw-bold text-capitalize" id="id_kelas">{{ $biodata->kelas ?? '' }}</span>
+                                    <span class="fw-bold text-capitalize"
+                                        id="id_kelas">{{ $biodata->kelas . ' ' . $biodata->sub_kelas ?? '' }}</span>
                                 </li>
                                 <li class="list-group-item">
                                     Tanggal Lahir :
@@ -334,14 +335,14 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="tipe_pembayaran"
                                             id="tipe_pembayaran_edit" value="tunai">
-                                        <label class="form-check-label" for="tipe_pembayaran">
+                                        <label class="form-check-label" for="tipe_pembayaran_edit">
                                             Tunai
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="tipe_pembayaran"
                                             id="tipe_pembayaran2_edit" value="non tunai">
-                                        <label class="form-check-label" for="tipe_pembayaran2">
+                                        <label class="form-check-label" for="tipe_pembayaran2_edit">
                                             Non Tunai
                                         </label>
                                     </div>
