@@ -112,11 +112,10 @@
                                                     <td>{{ $item->alamat }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                                     <td>
-                                                        <div class="form-check form-switch">
+                                                        <div class="form-switch">
                                                             <input class="form-check-input aktivasi_guru"
                                                                 data-id={{ $item->id }} type="checkbox" role="switch"
                                                                 {{ $item->is_active == '1' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="aktivasi">OFF</label>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -162,7 +161,7 @@
                         <div class="card-body">
                             <div class="p-2 mt-2 table-responsive">
                                 <table
-                                    class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                                    class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden mx-auto">
                                     <thead class="bg-dark text-light">
                                         <tr>
                                             <th scope="col">No.</th>
@@ -187,12 +186,11 @@
                                                     <td>{{ $item->no_hp }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                                     <td>
-                                                        <div class="form-check form-switch">
+                                                        <div class="form-switch">
                                                             <input class="form-check-input aktivasi_wali"
                                                                 data-id={{ $item->id }} type="checkbox"
                                                                 role="switch"
                                                                 {{ $item->is_active == '1' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="aktivasi">OFF</label>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -218,6 +216,7 @@
 
     <script>
         $(function() {
+            // tab Internal
             $(document).on('change', '.aktivasi_guru', function(e) {
                 e.preventDefault()
                 let id = $(this).attr('data-id')
@@ -253,6 +252,7 @@
 
             })
 
+            // tab external
             $(document).on('change', '.aktivasi_wali', function(e) {
                 e.preventDefault()
                 let id = $(this).attr('data-id')

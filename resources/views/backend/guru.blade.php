@@ -7,32 +7,27 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row mt-3">
-                        <div class="col-md-12">
+                        <div class="offset-md-6 col-md-4">
                             <div class="row">
-                                <div class="offset-md-6 col-md-4">
-                                    <div class="row">
-                                        <form action="{{ route('guru.index') }}" method="get">
-                                            <div class="input-group">
-                                                <input type="text" name="cari" id="cari"
-                                                    class="form-control shadow mb-3 bg-body rounded" placeholder="Cari guru"
-                                                    value="{{ request('cari') }}" aria-label="Recipient's username"
-                                                    aria-describedby="basic-addon2">
-                                                <div class="input-group-append">
-                                                    <button type="submit"
-                                                        class="input-group-text bg-info shadow mb-3 rounded"
-                                                        id="basic-addon2">Search</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                <form action="{{ route('guru.index') }}" method="get">
+                                    <div class="input-group">
+                                        <input type="text" name="cari" id="cari"
+                                            class="form-control shadow mb-3 bg-body rounded" placeholder="Cari guru"
+                                            value="{{ request('cari') }}" aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="input-group-text bg-info shadow mb-3 rounded"
+                                                id="basic-addon2">Search</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="{{ route('guru.create') }}" class="btn btn-primary float-end">
-                                        <i class="fa-solid fa-plus"></i>
-                                        Tambah Data
-                                    </a>
-                                </div>
+                                </form>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{{ route('guru.create') }}" class="btn btn-primary float-end">
+                                <i class="fa-solid fa-plus"></i>
+                                Tambah Data
+                            </a>
                         </div>
                     </div>
                 </div>

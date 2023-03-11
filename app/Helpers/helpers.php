@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kelas;
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Siswa;

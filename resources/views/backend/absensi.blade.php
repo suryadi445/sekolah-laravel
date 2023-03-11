@@ -32,18 +32,24 @@
                                             value="{{ date('Y-m-d') }}" required>
                                     </div>
                                     <div class="col-md-3 mt-1 mb-1">
-                                        <select name="id_mapel" id="id_mapel" class="form-select" required>
-                                            <option value="" disabled selected>Pilih Mata Pelajaran</option>
+                                        <select name="id_mapel" id="id_mapel" class="form-select selectTab" required>
+                                            <option value="" disabled selected>
+                                                Pilih Mata Pelajaran
+                                            </option>
                                             @foreach ($mapel as $item)
                                                 <option value="{{ $item->id }}">{{ $item->mata_pelajaran }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="offset-md-3 col-md-3 mt-1 mb-1">
-                                        <select name="kelas" id="kelas" class="form-select" required>
-                                            <option value="" disabled selected>Pilih Kelas</option>
+                                        <select name="kelas" id="kelas" class="form-select selectTab" required>
+                                            <option value="" selected>Semua Kelas</option>
                                             @foreach ($kelas as $item)
-                                                <option value="{{ $item->id }}">{{ $item->sub_kelas }}</option>
+                                                <option
+                                                    {{ request('kelas') == $item->kelas . ' ' . $item->sub_kelas ? 'selected' : '' }}
+                                                    value="{{ $item->kelas . ' ' . $item->sub_kelas }}">
+                                                    {{ $item->kelas . ' ' . $item->sub_kelas }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -56,6 +62,7 @@
                                         <thead class="bg-dark text-light">
                                             <tr>
                                                 <th scope="col">No.</th>
+                                                <th scope="col">Kelas</th>
                                                 <th scope="col">NIS</th>
                                                 <th scope="col">Nama Siswa</th>
                                                 <th scope="col">Jenis Kelamin</th>
@@ -69,6 +76,7 @@
                                                     <input type="hidden" name="id_siswa[]" value="{{ $item->id }}">
                                                     <tr>
                                                         <th>{{ $key + 1 }}</th>
+                                                        <td>{{ $item->kelas . ' ' . $item->sub_kelas }}</td>
                                                         <td>{{ $item->nis }}</td>
                                                         <td>{{ $item->nama_siswa }}</td>
                                                         <td>{{ $item->jenis_kelamin }}</td>
@@ -95,7 +103,7 @@
                                             @endif
 
 
-                                            @if ($siswa->count() == 0)
+                                            @if (count($siswa) == 0)
                                                 <td colspan="8">
                                                     <span class="text-danger">Data Tidak Tersedia </span>
                                                 </td>
@@ -131,23 +139,32 @@
                                 <div class="row">
                                     <div class="col-md-3 mt-1 mb-1">
                                         <input type="date" class="form-control" name="tgl_absensi"
-                                            value="{{ date('Y-m-d') }}" required>
+                                            id="tgl_daftarAbsensi"
+                                            value="{{ request('daftar_tanggal') ? request('daftar_tanggal') : date('Y-m-d') }}"
+                                            required>
                                     </div>
                                     <div class="col-md-3 mt-1 mb-1">
-                                        <select name="id_mapel" id="id_mapel" class="form-select" required>
-                                            <option value="" disabled selected>Pilih Mata Pelajaran</option>
+                                        <select name="id_mapel" id="id_mapel_daftarAbsensi" class="form-select selectTab"
+                                            required>
+                                            <option value="" selected>
+                                                Pilih Mata Pelajaran
+                                            </option>
                                             @foreach ($mapel as $item)
-                                                <option {{ $cek_absensi->id_mapel ?? '' == $item->id ? 'selected' : '' }}
+                                                <option {{ request('daftar_mapel') == $item->id ? 'selected' : '' }}
                                                     value="{{ $item->id }}">{{ $item->mata_pelajaran }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="offset-md-3 col-md-3 mt-1 mb-1">
-                                        <select name="kelas" id="kelas" class="form-select" required>
-                                            <option value="" selected disabled>Pilih Kelas</option>
+                                        <select name="kelas" id="kelas_daftarAbsensi" class="form-select selectTab"
+                                            required>
+                                            <option value="" selected>Pilih Kelas</option>
                                             @foreach ($kelas as $item)
-                                                <option {{ $cek_absensi->kelas ?? '' == $item->id ? 'selected' : '' }}
-                                                    value="{{ $item->id }}">{{ $item->sub_kelas }}</option>
+                                                <option
+                                                    {{ request('daftar_kelas') == $item->kelas . ' ' . $item->sub_kelas ? 'selected' : '' }}
+                                                    value="{{ $item->kelas . ' ' . $item->sub_kelas }}">
+                                                    {{ $item->kelas . ' ' . $item->sub_kelas }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -156,12 +173,12 @@
                             <div class="card-body">
                                 <div class="row container">
                                     <div class="col-sm-3">
-                                        <span class="d-block">Siswa Masuk : </span>
-                                        <span class="d-block">Siswa Sakit : </span>
+                                        <span class="d-block">Siswa Masuk : {{ $jumlah_siswa['masuk'] }} </span>
+                                        <span class="d-block">Siswa Sakit : {{ $jumlah_siswa['izin'] }} </span>
                                     </div>
                                     <div class="col-sm-3">
-                                        <span class="d-block">Siswa Izin : </span>
-                                        <span class="d-block">Siswa Alpha : </span>
+                                        <span class="d-block">Siswa Izin : {{ $jumlah_siswa['sakit'] }} </span>
+                                        <span class="d-block">Siswa Alpha : {{ $jumlah_siswa['alpha'] }}</span>
                                     </div>
                                 </div>
                                 <div class="p-2 mt-2 table-responsive">
@@ -249,6 +266,48 @@
 
     <script>
         $(function() {
+
+
+            $('.tabs').on('click', function() {
+                $('.selectTab').val('')
+                window.history.replaceState(null, null, window.location.pathname);
+            })
+
+            // absensi
+            $(document).on('change', '#kelas', function() {
+                var kelas = $(this).val();
+                window.location = "/absensi?kelas=" + kelas;
+            })
+
+            // daftar absensi
+            $(document).on('change', '#kelas_daftarAbsensi', function() {
+                var kelas = $('#kelas_daftarAbsensi').val();
+                var mapel = $('#id_mapel_daftarAbsensi').val();
+                var tgl = $('#tgl_daftarAbsensi').val();
+
+                window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
+                    "&daftar_tanggal=" + tgl;
+            })
+
+            $(document).on('change', '#id_mapel_daftarAbsensi', function() {
+                var kelas = $('#kelas_daftarAbsensi').val();
+                var mapel = $('#id_mapel_daftarAbsensi').val();
+                var tgl = $('#tgl_daftarAbsensi').val();
+
+                window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
+                    "&daftar_tanggal=" + tgl;
+            })
+
+            $(document).on('change', '#tgl_daftarAbsensi', function() {
+                var kelas = $('#kelas_daftarAbsensi').val();
+                var mapel = $('#id_mapel_daftarAbsensi').val();
+                var tgl = $('#tgl_daftarAbsensi').val();
+
+                window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
+                    "&daftar_tanggal=" + tgl;
+            })
+
+
             $(document).on('click', '.btn_delete', function(e) {
                 e.preventDefault()
                 var form = $(this).closest("form");
