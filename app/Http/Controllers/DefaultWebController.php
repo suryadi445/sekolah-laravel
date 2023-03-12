@@ -12,6 +12,8 @@ class DefaultWebController extends Controller
 {
     public function index()
     {
+        hakAksesController();
+
         $default = DefaultWeb::orderByDesc('id')->paginate(20);
         $title = 'Halaman Default';
 

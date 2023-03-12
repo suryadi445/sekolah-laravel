@@ -17,6 +17,8 @@ class AboutController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'About Us';
         $about = About::orderByDesc('id')->paginate(20);
 

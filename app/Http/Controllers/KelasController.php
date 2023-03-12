@@ -16,6 +16,8 @@ class KelasController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'Kelas';
         $kelas = Kelas::leftJoin('gurus', 'kelas.id_guru', '=', 'gurus.id')
             ->orderBy('kelas.kelas')

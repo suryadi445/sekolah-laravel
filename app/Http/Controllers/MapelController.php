@@ -16,6 +16,8 @@ class MapelController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'Mata Pelajaran';
         $mapel = Mapel::orderBy('mata_pelajaran')->paginate(20);
 

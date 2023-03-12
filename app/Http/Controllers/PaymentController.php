@@ -15,6 +15,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'Payment';
         $payment = Payment::latest()->paginate();
 

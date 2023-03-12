@@ -18,6 +18,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'Gallery';
         $gallery = Gallery::latest()->paginate(20);
 

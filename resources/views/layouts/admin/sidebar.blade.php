@@ -3,7 +3,7 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-1 sidebar-sticky pb-5">
                 <h6
-                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase {{ hakAksesView() }}">
                     <span>Super Admin</span>
                     <a class="link-secondary" href="#" aria-label="Add a new report">
                         <span data-feather="plus-circle" class="align-text-bottom"></span>
@@ -11,7 +11,7 @@
                 </h6>
 
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('rekruitment') ? 'active' : '' }}" href="/rekruitment">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-id-card-clip"></i>
@@ -19,7 +19,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('sppSiswa') ? 'active' : '' }}" href="/sppSiswa">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-wallet"></i>
@@ -27,7 +27,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('setting') ? 'active' : '' }}" href="/settings">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-gear"></i>
@@ -35,7 +35,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="/user">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-users-gear"></i>
@@ -43,7 +43,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('slideshow') ? 'active' : '' }}" data-bs-toggle="collapse"
                             href="#collapseExample" role="button" aria-expanded="false"
                             aria-controls="collapseExample">
@@ -82,7 +82,7 @@
 
                 <h6
                     class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                    <span>Admin</span>
+                    <span>{{ auth()->user()->name ?? '' }}</span>
                     <a class="link-secondary" href="#" aria-label="Add a new report">
                         <span data-feather="plus-circle" class="align-text-bottom"></span>
                     </a>
@@ -125,7 +125,7 @@
                 </h6>
 
                 <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('slideshow') ? 'active' : '' }}" data-bs-toggle="collapse"
                             href="#collapseExample" role="button" aria-expanded="false"
                             aria-controls="collapseExample">
@@ -151,7 +151,7 @@
                         </div>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('introduction') ? 'active' : '' }}" href="/introduction">
                             <span data-feather="shopping-cart" class="align-text-bottom"></span>
                             <i class="fa-solid fa-book-open"></i>
@@ -159,7 +159,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('latestNews') ? 'active' : '' }}" href="/latestNews">
                             <span data-feather="users" class="align-text-bottom"></span>
                             <i class="fa-regular fa-newspaper"></i>
@@ -185,7 +185,7 @@
                 </ul>
 
                 <h6
-                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase {{ hakAksesView() }}">
                     <span>Halaman Navigasi</span>
                     <a class="link-secondary" href="#" aria-label="Add a new report">
                         <span data-feather="plus-circle" class="align-text-bottom"></span>
@@ -193,7 +193,7 @@
                 </h6>
 
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="/about">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-school"></i>
@@ -201,7 +201,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('default') ? 'active' : '' }}" href="/default">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-gear"></i>
@@ -209,7 +209,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('guru') ? 'active' : '' }}" href="/guru">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-person-chalkboard"></i>
@@ -225,7 +225,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('notice') ? 'active' : '' }}" href="/notice">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-circle-info"></i>
@@ -233,7 +233,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('gallery') ? 'active' : '' }}" href="/gallery">
                             <span data-feather="shopping-cart" class="align-text-bottom"></span>
                             <i class="fa-solid fa-images"></i>
@@ -241,7 +241,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('registration') ? 'active' : '' }}" href="/registration">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-id-card"></i>

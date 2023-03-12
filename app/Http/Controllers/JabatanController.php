@@ -15,6 +15,8 @@ class JabatanController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $jabatan = Jabatan::latest()->paginate(20);
 
         return view('backend.jabatan', compact(['jabatan']));

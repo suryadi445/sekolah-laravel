@@ -123,7 +123,8 @@ class SiswaController extends Controller
 
     public function insert_user($request, $id_siswa)
     {
-        $passwordSiswa = date("dmY", strtotime($request->nis));
+        // $passwordSiswa = date("dmY", strtotime($request->nis));
+        $passwordSiswa = $request->nis;
         if ($request->no_hp_ayah) {
             $no_hp = $request->no_hp_ayah;
         } else if ($request->no_hp_ibu) {
@@ -134,12 +135,14 @@ class SiswaController extends Controller
             $no_hp = 0;
         }
 
+
         // create user
         User::create([
             'name' => $request->nama_siswa,
             'no_hp' => $no_hp,
             'id_siswa' => $id_siswa, // insert id
             'id_group' => 4, // id_group (super admin, kepsek, guru, ortu)
+            'passAsli' => $passwordSiswa,
             'password' => Hash::make($passwordSiswa),
         ]);
     }
@@ -271,7 +274,8 @@ class SiswaController extends Controller
     public function update_user($request, $siswa)
     {
         //  update user siswa / wali murid
-        $passwordSiswa = date("dmY", strtotime($request->nis));
+        // $passwordSiswa = date("dmY", strtotime($request->nis));
+        $passwordSiswa = $request->nis;
         if ($request->no_hp_ayah) {
             $no_hp = $request->no_hp_ayah;
         } else if ($request->no_hp_ibu) {
@@ -287,6 +291,7 @@ class SiswaController extends Controller
 
         if ($request->nis != $siswa->nis) {
             $updateUser['password'] = Hash::make($passwordSiswa);
+            $updateUser['passAsli'] = $passwordSiswa;
         }
 
         // update user

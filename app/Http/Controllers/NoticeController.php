@@ -15,6 +15,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
+        hakAksesController();
+
         $title = 'Pengumuman';
         $notice = Notice::latest()->paginate(20);
 

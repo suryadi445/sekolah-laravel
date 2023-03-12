@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Kelas;
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Siswa;
@@ -1012,5 +1011,26 @@ if (!function_exists('arrayKota')) {
             "Ungaran",
             "Waingapu",
         ];
+    }
+}
+
+if (!function_exists('hakAksesView')) {
+    function hakAksesView()
+    {
+        $userGroup = auth()->user()->id_group;
+        if ($userGroup == 3 || $userGroup == 4) {
+            return 'd-none';
+        }
+    }
+}
+
+if (!function_exists('hakAksesController')) {
+    function hakAksesController()
+    {
+        $userGroup = auth()->user()->id_group;
+
+        if ($userGroup == 3 || $userGroup == 4) {
+            abort(redirect('/dashboard')->with('failed', 'Warning! You do not have access that page'));
+        }
     }
 }

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'id_group',
         'password',
         'is_active',
+        'passAsli',
     ];
 
     /**

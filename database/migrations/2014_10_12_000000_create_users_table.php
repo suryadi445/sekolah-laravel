@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('passAsli');
             $table->integer('id_guru');
             $table->integer('id_siswa');
             $table->enum('is_active', ['0', '1']);

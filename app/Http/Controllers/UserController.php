@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        hakAksesController();
 
         $title = 'Users';
         $aktivasi_guru = request('aktivasi_guru');
