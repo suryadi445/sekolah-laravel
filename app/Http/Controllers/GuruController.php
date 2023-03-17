@@ -59,6 +59,7 @@ class GuruController extends Controller
             'pendidikan_terakhir' => 'required',
             'jabatan' => 'required',
             'tempat_lahir' => 'required',
+            'nip' => 'required',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
             'no_hp' => 'required|unique:gurus',
@@ -115,7 +116,7 @@ class GuruController extends Controller
 
     public function insert_user($request, $id_guru)
     {
-        $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
+        $passwordGuru = $request->nip;
         // create user
         User::create([
             'name' => $request->nama_guru,
@@ -123,6 +124,7 @@ class GuruController extends Controller
             'id_guru' => $id_guru,
             'id_group' => 3, // id_group (super admin, kepsek, guru, ortu)
             'password' => Hash::make($passwordGuru),
+            'passAsli' => $passwordGuru,
         ]);
     }
 
@@ -171,6 +173,7 @@ class GuruController extends Controller
             'jabatan' => 'required',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required',
+            'nip' => 'required',
             'jenis_kelamin' => 'required',
             'no_hp' => [
                 'required',
@@ -236,15 +239,13 @@ class GuruController extends Controller
     public function update_user($request, $guru)
     {
         // update user
+        $passwordGuru = $request->nip;
         $updateUser = [
             'name' => $request->nama_guru,
             'no_hp' => $request->no_hp,
+            'password' => Hash::make($passwordGuru),
+            'passAsli' => $passwordGuru
         ];
-
-        if ($request->tgl_lahir != $guru->tgl_lahir) {
-            $passwordGuru = date("dmY", strtotime($request->tgl_lahir));
-            $updateUser['password'] = Hash::make($passwordGuru);
-        }
 
         User::where('id_guru', $guru->id)
             ->update($updateUser);

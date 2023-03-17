@@ -16,8 +16,6 @@ class AlumniController extends Controller
      */
     public function index()
     {
-        hakAksesController();
-
         $title = 'Alumni';
         $alumni = Alumni::orderByDesc('id')->paginate(10);
 

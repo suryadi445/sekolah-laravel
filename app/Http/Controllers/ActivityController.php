@@ -17,7 +17,6 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        hakAksesController();
 
         $title = 'Kegiatan Siswa';
         $activity = Activity::orderByDesc('id')->paginate(10);

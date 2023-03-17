@@ -243,7 +243,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nip" class="form-label">NIP
+                                    <label for="nip" class="form-label">
+                                        NIP
+                                        <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" class="form-control" id="nip" name="nip"
                                         value="{{ old('nip') }}">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_siswa');
             $table->integer('id_mapel');
+            $table->string('kelas');
             $table->decimal('nilai_siswa');
             $table->string('grade', 1)->nullable();
             $table->enum('status', ['no', 'yes']);

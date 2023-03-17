@@ -15,7 +15,7 @@ class AbsensiController extends Controller
     {
         // QUERY ABSENSI--------------------------------
         // query untuk menampilkan filter kelas 
-        $id_guru = auth()->user()->id_guru;
+        $id_guru = userLogin()->id_guru;
         $kelas = Kelas::select('kelas', 'sub_kelas')->where('id_guru', $id_guru)->get();
         // query ubtuk absensi siswa
         $paramKelas = request('kelas');
