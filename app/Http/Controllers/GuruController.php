@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 
 
@@ -70,10 +72,14 @@ class GuruController extends Controller
 
         if ($request->hasFile('image')) {
             $images = $request->file('image');
-
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-
-            $images->move(public_path('images/upload/'), $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $image = '\images/upload/' . $imageName;
         }
@@ -191,10 +197,14 @@ class GuruController extends Controller
             }
 
             $images = $request->file('image');
-
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-
-            $images->move(public_path('images/upload/'), $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $image = '\images/upload/' . $imageName;
         } else {

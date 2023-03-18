@@ -53,13 +53,13 @@ class LatestNewsController extends Controller
 
         $images = $request->file('image');
         $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-        // resize image 
-        $canvas = Image::canvas(1024, 1024);
-        $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $canvas->insert($image, 'center');
-        $canvas->save('images\upload' . '/' . $imageName);
+        $imageResize = Image::make($images);
+        $imageResize->orientate()
+            ->fit(360, 360, function ($constraint) {
+                $constraint->upsize();
+                $constraint->aspectRatio();
+            })
+            ->save('images\upload' . '/' . $imageName);
 
         // insert to db
         $insert = LatestNews::create([
@@ -124,15 +124,14 @@ class LatestNewsController extends Controller
             unlink($file_path);
 
             $images = $request->file('image');
-            $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
-            // resize image 
-            $canvas = Image::canvas(1024, 1024);
-            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $canvas->insert($image, 'center');
-            $canvas->save('images\upload' . '/' . $imageName);
-
+            $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $update_data = [
                 'judul' => $request->judul,

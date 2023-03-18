@@ -165,14 +165,14 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <input type="numeric" class="form-control" placeholder="Angkatan Awal"
-                                        name="angkatan_awal" value="{{ old('angkatan_awal') }}">
+                                        id="angkatan_awal" name="angkatan_awal" value="{{ old('angkatan_awal') }}">
                                     <label for="angkatan_awal">Angkatan Awal</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <input type="numeric" class="form-control" placeholder="Angkatan Akhir"
-                                        name="angkatan_akhir" value="{{ old('angkatan_akhir') }}">
+                                        id="angkatan_akhir" name="angkatan_akhir" value="{{ old('angkatan_akhir') }}">
                                     <label for="angkatan_akhir">Angkatan Akhir</label>
                                 </div>
                             </div>
@@ -200,8 +200,10 @@
                 $.get("{{ route('alumni.index') }}" + '/' + id + '/edit', function(data) {
                     $('#image').attr('src', data.image);
                     $('#id').val(id);
+                    $('#nama_siswa').val(data.nama_siswa);
+                    $('#angkatan_awal').val(data.angkatan_awal);
+                    $('#angkatan_akhir').val(data.angkatan_akhir);
                     $('#text').val(data.text);
-                    $('#judul').val(data.judul);
                     $('#image').removeClass('d-none');
                     $('#form_edit').attr('action', "{{ route('alumni.index') }}" + '/' + id);
 

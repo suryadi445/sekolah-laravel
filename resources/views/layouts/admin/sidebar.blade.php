@@ -60,6 +60,11 @@
                                         Mata Pelajaran
                                     </a>
                                 </li>
+                                <li class="pt-2">
+                                    <a href="/schedule" class="text-decoration-none text-dark">
+                                        Jadwal Pelajaran
+                                    </a>
+                                </li>
                                 <li class="pt-2 ">
                                     <a href="/kelas" class="text-decoration-none text-dark">
                                         Kelas
@@ -248,7 +253,6 @@
                             Pendaftaran
                         </a>
                     </li>
-
                 </ul>
             </div>
         </nav>

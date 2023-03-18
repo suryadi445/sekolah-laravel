@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Mapel;
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Siswa;
@@ -1032,5 +1033,20 @@ if (!function_exists('hakAksesController')) {
         if ($userGroup == 3 || $userGroup == 4) {
             abort(redirect('/dashboard')->with('failed', 'Warning! You do not have access that page'));
         }
+    }
+}
+
+if (!function_exists('getMapel')) {
+    function getMapel($idMapel)
+    {
+        $data = '';
+        if ($idMapel) {
+            $id = explode(',', $idMapel);
+            for ($i = 0; $i < count($id); $i++) {
+                $data .= '- ' . Mapel::where('id', $id[$i])->first()->mata_pelajaran . '<br>';
+            }
+        }
+
+        echo $data;
     }
 }

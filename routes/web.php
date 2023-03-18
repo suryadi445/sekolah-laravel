@@ -35,6 +35,7 @@ use App\Http\Controllers\SppSiswaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,7 +73,6 @@ Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
 Route::get('/siswa/getKota', [SiswaController::class, 'getKota']);
 Route::resource('/siswa', SiswaController::class);
-
 Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
@@ -89,6 +89,7 @@ Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
 Route::resource('/sppSiswa', SppSiswaController::class);
 Route::resource('/jabatan', JabatanController::class);
 Route::resource('/pembayaran', PaymentController::class);
+Route::resource('/schedule', ScheduleController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);
 Route::get('/default/{edit}', [DefaultWebController::class, 'edit']);

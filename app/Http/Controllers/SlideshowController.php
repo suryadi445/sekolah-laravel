@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Slideshow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class SlideshowController extends Controller
 {
@@ -50,14 +51,21 @@ class SlideshowController extends Controller
         $insert = [];
 
         if ($request->hasfile('image')) {
-            foreach ($request->file('image') as $file) {
+            foreach ($request->file('image') as $key => $file) {
+                $images = $request->file('image');
+                $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
+                $imageResize = Image::make($images[$key]);
+                $imageResize->orientate()
+                    ->fit(600, 360, function ($constraint) {
+                        $constraint->upsize();
+                        $constraint->aspectRatio();
+                    })
+                    ->save('images\upload' . '/' . $imageName);
 
-                $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
-
-                if ($file->move(public_path('images\upload'), $name)) {
-                    $files[] = $name;
+                if ($imageName) {
+                    $files[] = $imageName;
                     $insert = Slideshow::create([
-                        "image" => '\images/upload/' . $name,
+                        "image" => '\images/upload/' . $imageName,
                         "user" => Auth::id(),
                     ]);
                 }
@@ -112,12 +120,20 @@ class SlideshowController extends Controller
         $file = $request->file('image');
 
         if ($request->hasfile('image')) {
-            $name = time() . $file->getClientOriginalName() . '.' . $file->extension();
+            $images = $request->file('image');
+            $imageName = time() . $file->getClientOriginalName() . '.' . $file->extension();
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(600, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
-            if ($file->move(public_path('images\upload'), $name)) {
+            if ($imageName) {
                 $update = Slideshow::where('id', $slideshow->id)
                     ->update([
-                        'image' => '\images/upload/' . $name,
+                        'image' => '\images/upload/' . $imageName,
                         "user" => Auth::id(),
                     ]);
             }

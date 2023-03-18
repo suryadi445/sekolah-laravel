@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Settings;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
+use Intervention\Image\Facades\Image;
+
 
 class SettingsController extends Controller
 {
@@ -84,8 +85,13 @@ class SettingsController extends Controller
 
             $images = $request->file('logo');
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-
-            $images->move(public_path('images/upload/'), $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $_POST['logo'] = '\images/upload/' . $imageName;
         }

@@ -51,13 +51,13 @@ class ActivityController extends Controller
 
         $images = $request->file('image');
         $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-        // resize image 
-        $canvas = Image::canvas(1024, 1024);
-        $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $canvas->insert($image, 'center');
-        $canvas->save('images\upload' . '/' . $imageName);
+        $imageResize = Image::make($images);
+        $imageResize->orientate()
+            ->fit(360, 360, function ($constraint) {
+                $constraint->upsize();
+                $constraint->aspectRatio();
+            })
+            ->save('images\upload' . '/' . $imageName);
 
         $insert = Activity::create([
             'judul' => $request->judul,
@@ -120,13 +120,13 @@ class ActivityController extends Controller
 
             $images = $request->file('image');
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-            // resize image 
-            $canvas = Image::canvas(1024, 1024);
-            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $canvas->insert($image, 'center');
-            $canvas->save('images\upload' . '/' . $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $imageName = '\images/upload/' . $imageName;
         } else {

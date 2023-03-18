@@ -56,13 +56,13 @@ class IntroductionController extends Controller
         if ($request->hasFile('image')) {
             $images = $request->file('image');
             $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-            // resize image 
-            $canvas = Image::canvas(1024, 1024);
-            $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $canvas->insert($image, 'center');
-            $canvas->save('images\upload' . '/' . $imageName);
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
 
             $data = [
                 'text' => $request->text,
@@ -123,7 +123,48 @@ class IntroductionController extends Controller
      */
     public function update(Request $request, Introduction $introduction)
     {
-        //
+        $request->validate([
+            'text' => 'required',
+            'image' => 'mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $cek_row = Introduction::first();
+
+        if ($request->hasFile('image')) {
+            $images = $request->file('image');
+            $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+            $imageResize = Image::make($images);
+            $imageResize->orientate()
+                ->fit(360, 360, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                })
+                ->save('images\upload' . '/' . $imageName);
+
+            $data = [
+                'text' => $request->text,
+                'image' => '\images/upload/' . $imageName,
+                "user" => Auth::id(),
+            ];
+
+
+            if (empty($cek_row)) {
+                $insert = Introduction::create($data);
+            } else {
+                $insert = Introduction::where('id', $cek_row->id)->update($data);
+            }
+        } else {
+            $insert = Introduction::where('id', $cek_row->id)->update([
+                'text' => $request->text,
+                "user" => Auth::id(),
+            ]);
+        }
+
+        if ($insert) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**

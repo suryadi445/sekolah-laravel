@@ -51,13 +51,13 @@ class AlumniController extends Controller
 
         $images = $request->file('image');
         $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
-        // resize image 
-        $canvas = Image::canvas(1024, 1024);
-        $image  = Image::make($images->getRealPath())->resize(1024, 1024, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $canvas->insert($image, 'center');
-        $canvas->save('images\upload' . '/' . $imageName);
+        $imageResize = Image::make($images);
+        $imageResize->orientate()
+            ->fit(360, 360, function ($constraint) {
+                $constraint->upsize();
+                $constraint->aspectRatio();
+            })
+            ->save('images\upload' . '/' . $imageName);
 
         $insert = Alumni::create([
             'nama_siswa' => $request->nama_siswa,
@@ -92,9 +92,11 @@ class AlumniController extends Controller
      * @param  \App\Models\Alumni  $alumni
      * @return \Illuminate\Http\Response
      */
-    public function edit(Alumni $alumni)
+    public function edit($id)
     {
-        //
+        $data = Alumni::where('id', $id)->first();
+
+        return response()->json($data);
     }
 
     /**
@@ -106,7 +108,40 @@ class AlumniController extends Controller
      */
     public function update(Request $request, Alumni $alumni)
     {
-        //
+        $request->validate([
+            'nama_siswa' => 'required|max:255',
+            'text' => 'required',
+            'angkatan_awal' => 'required|numeric',
+            'angkatan_akhir' => 'required|numeric',
+            'image' => 'mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $id = $request->id;
+        $images = $request->file('image');
+        $imageName = time() . $images->getClientOriginalName() . '.' . $images->extension();
+        $imageResize = Image::make($images);
+        $imageResize->orientate()
+            ->fit(360, 360, function ($constraint) {
+                $constraint->upsize();
+                $constraint->aspectRatio();
+            })
+            ->save('images\upload' . '/' . $imageName);
+
+        $update = Alumni::where('id', $id)
+            ->update([
+                'nama_siswa' => $request->nama_siswa,
+                'text' => $request->text,
+                'angkatan_awal' => $request->angkatan_awal,
+                'angkatan_akhir' => $request->angkatan_akhir,
+                'image' => 'images\upload' . '/' . $imageName,
+                'user' => Auth::id(),
+            ]);
+
+        if ($update) {
+            return back()->with('success', 'Success! Data saved successfully');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to save');
+        }
     }
 
     /**
@@ -115,8 +150,18 @@ class AlumniController extends Controller
      * @param  \App\Models\Alumni  $alumni
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alumni $alumni)
+    public function destroy($id)
     {
-        //
+        $alumni = Alumni::where('id', $id)->first();
+        $file_path = public_path() . '/' . $alumni->image;
+        unlink($file_path);
+
+        $delete = Alumni::destroy($alumni->id);
+
+        if ($delete) {
+            return back()->with('success', 'Success! Data successfuly deleted');
+        } else {
+            return back()->with('failed', 'Alert! Data failed to deleted');
+        }
     }
 }
