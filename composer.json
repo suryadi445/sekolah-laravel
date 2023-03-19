@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "laravolt/indonesia": "^0.33.0",
+        "maatwebsite/excel": "^3.1",
         "yajra/laravel-datatables-oracle": "^10.3"
     },
     "require-dev": {

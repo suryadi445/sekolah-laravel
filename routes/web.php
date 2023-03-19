@@ -72,6 +72,7 @@ Route::get('about/remove/{id}', [AboutController::class, 'remove'])->name('about
 Route::resource('/settings', SettingsController::class);
 Route::resource('/banner', BannerController::class);
 Route::get('/siswa/getKota', [SiswaController::class, 'getKota']);
+Route::get('/siswa/export', [SiswaController::class, 'export']);
 Route::resource('/siswa', SiswaController::class);
 Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);

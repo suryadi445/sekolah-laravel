@@ -11,6 +11,11 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SiswaExport;
+
+
+
 
 class SiswaController extends Controller
 {
@@ -322,5 +327,12 @@ class SiswaController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function export()
+    {
+        $header = ['Nama Siswa', 'Tempat Lahir', 'Tanggal Lahir', 'Kelas', 'Sub Kelas', 'Jenis Kelamin', 'Alamat', 'Agama', 'NIS', 'NISN', 'Tahun Ajaran', 'Nama Ayah', 'Nama Ibu', 'No Hp Ayah', 'No Hp Ibu', 'Pekerjaan Ayah', 'Pekerjaan Ibu', 'Alamat Orang Tua', 'Nama Wali', 'No Hp Wali', 'Pekerjaan Wali', 'Alamat Wali'];
+
+        return Excel::download(new SiswaExport($header), 'siswa.xlsx');
     }
 }
