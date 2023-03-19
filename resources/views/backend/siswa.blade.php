@@ -9,7 +9,19 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="offset-md-6 col-md-4">
+                                <div class="col-md-6">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="/siswa/exportPdf" target="_blank" class="btn btn-success">
+                                            <span class="me-1">Print PDF</span>
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                        <a href="/siswa/exportExcel" target="_blank" class="btn btn-warning">
+                                            <span class="me-1">Print Excel</span>
+                                            <i class="fa-solid fa-file-excel"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="row">
                                         <form action="{{ route('siswa.index') }}" method="get">
                                             <div class="input-group">

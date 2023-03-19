@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SiswaExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 
@@ -329,10 +330,20 @@ class SiswaController extends Controller
         }
     }
 
-    public function export()
+    public function exportExcel()
     {
         $header = ['Nama Siswa', 'Tempat Lahir', 'Tanggal Lahir', 'Kelas', 'Sub Kelas', 'Jenis Kelamin', 'Alamat', 'Agama', 'NIS', 'NISN', 'Tahun Ajaran', 'Nama Ayah', 'Nama Ibu', 'No Hp Ayah', 'No Hp Ibu', 'Pekerjaan Ayah', 'Pekerjaan Ibu', 'Alamat Orang Tua', 'Nama Wali', 'No Hp Wali', 'Pekerjaan Wali', 'Alamat Wali'];
 
         return Excel::download(new SiswaExport($header), 'siswa.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Siswa;
+        $dataSiswa = $object->printPDF();
+
+        $pdf = PDF::loadview('pdf.siswaPdf', ['siswa' => $dataSiswa]);
+        return $pdf->stream('siswa.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

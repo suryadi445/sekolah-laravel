@@ -13,6 +13,8 @@ class Siswa extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+    protected $hidden = ['id', 'provinsi', 'user', 'created_at', 'updated_at', 'deleted_at'];
+
 
     public function scopeSearch($query)
     {
@@ -21,5 +23,13 @@ class Siswa extends Model
             ->orWhere('tgl_lahir', 'like', '%' . request('cari') . '%')
             ->orWhere('thn_ajaran', 'like', '%' . request('cari') . '%')
             ->orWhere('kelas', 'like', '%' . request('cari') . '%');
+    }
+
+    public function printPDF()
+    {
+        $siswa = Siswa::all();
+        $siswas = $siswa->toArray();
+
+        return $siswas;
     }
 }
