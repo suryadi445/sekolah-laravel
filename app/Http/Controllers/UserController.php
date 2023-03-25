@@ -28,6 +28,7 @@ class UserController extends Controller
             $internal->where('users.is_active', $aktivasi_guru);
         }
         $internal->where('users.id_siswa', 0);
+        $internal->groupBy('users.id_guru');
         $internal->select('gurus.*', 'users.is_active');
         $internal = $internal->paginate(20);
 
