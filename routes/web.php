@@ -36,6 +36,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // BACKEND
+Route::get('/profile/editGuru/{id?}', [ProfileController::class, 'editGuru']);
+Route::get('/profile/editSiswa/{id?}', [ProfileController::class, 'editSiswa']);
+Route::get('/profile/editAdmin/{id?}', [ProfileController::class, 'editAdmin']);
+Route::put('/profile/updateGuru/{id?}', [ProfileController::class, 'updateGuru']);
+Route::put('/profile/updateAdmin/{id?}', [ProfileController::class, 'updateAdmin']);
+Route::put('/profile/updateSiswa/{id?}', [ProfileController::class, 'updateSiswa']);
+Route::resource('/profile', ProfileController::class);
 Route::resource('/slideshow', SlideshowController::class);
 Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
