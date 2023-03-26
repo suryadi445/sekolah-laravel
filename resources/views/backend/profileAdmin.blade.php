@@ -1,59 +1,60 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
+    <style>
+        .img-cover {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic);
+
+        blockquote {
+            font-size: 1.4em;
+            width: 60%;
+            margin: 0px auto;
+            font-family: Open Sans;
+            font-style: italic;
+            color: #555555;
+            padding: 1.2em 20px 0.7em 50px;
+            border-left: 8px solid #78C0A8;
+            line-height: 1.6;
+            position: relative;
+            background: #f7f7f7;
+        }
+
+        blockquote::before {
+            font-family: Arial;
+            content: "\201C";
+            color: #78C0A8;
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+        }
+
+        blockquote::after {
+            content: '';
+        }
+
+        blockquote span {
+            display: block;
+            color: #333333;
+            font-style: normal;
+            font-weight: bold;
+            margin-top: 1em;
+        }
+    </style>
+
+
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <h6>Profile Admin</h6>
                 </div>
-
-                <style>
-                    .img-cover {
-                        width: 200px;
-                        height: 200px;
-                        border-radius: 50%;
-                        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-                    }
-
-                    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic);
-
-                    blockquote {
-                        font-size: 1.4em;
-                        width: 60%;
-                        margin: 0px auto;
-                        font-family: Open Sans;
-                        font-style: italic;
-                        color: #555555;
-                        padding: 1.2em 20px 0.7em 50px;
-                        border-left: 8px solid #78C0A8;
-                        line-height: 1.6;
-                        position: relative;
-                        background: #f7f7f7;
-                    }
-
-                    blockquote::before {
-                        font-family: Arial;
-                        content: "\201C";
-                        color: #78C0A8;
-                        font-size: 4em;
-                        position: absolute;
-                        left: 10px;
-                        top: -10px;
-                    }
-
-                    blockquote::after {
-                        content: '';
-                    }
-
-                    blockquote span {
-                        display: block;
-                        color: #333333;
-                        font-style: normal;
-                        font-weight: bold;
-                        margin-top: 1em;
-                    }
-                </style>
 
                 <div class="card-body">
                     <div class="row">

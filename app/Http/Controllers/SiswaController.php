@@ -61,7 +61,7 @@ class SiswaController extends Controller
             'tempat_lahir' => 'required|max:20',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
-            'nis' => 'required|max:30|unique:siswas,nis,NULL,id,deleted_at,NULL',
+            'nis' => 'required|max:30|unique:siswas,nis,NULL,id,deleted_at,NULL|unique:users,no_hp,NULL,id',
             'agama' => 'required|max:20',
             'kelas' => 'required',
             'alamat' => 'required',
@@ -132,27 +132,16 @@ class SiswaController extends Controller
 
     public function insert_user($request, $id_siswa)
     {
-        // $passwordSiswa = date("dmY", strtotime($request->nis));
-        $passwordSiswa = $request->nis;
-        if ($request->no_hp_ayah) {
-            $no_hp = $request->no_hp_ayah;
-        } else if ($request->no_hp_ibu) {
-            $no_hp = $request->no_hp_ibu;
-        } else if ($request->no_hp_wali) {
-            $no_hp = $request->no_hp_wali;
-        } else {
-            $no_hp = 0;
-        }
-
+        $nis = $request->nis;
 
         // create user
         User::create([
             'name' => $request->nama_siswa,
-            'no_hp' => $no_hp,
+            'no_hp' => $nis,
             'id_siswa' => $id_siswa, // insert id
             'id_group' => 4, // id_group (super admin, kepsek, guru, ortu)
-            'passAsli' => $passwordSiswa,
-            'password' => Hash::make($passwordSiswa),
+            'passAsli' => $nis,
+            'password' => Hash::make($nis),
         ]);
     }
 
@@ -203,7 +192,8 @@ class SiswaController extends Controller
             'nis' => [
                 'required',
                 'max:30',
-                Rule::unique('siswas')->ignore($siswa->id)->whereNull('deleted_at')
+                Rule::unique('siswas')->ignore($siswa->id)->whereNull('deleted_at'),
+                Rule::unique('users', 'no_hp')->ignore($siswa->id, 'id_siswa')
             ],
             'agama' => 'required|max:20',
             'kelas' => 'required',
@@ -287,24 +277,16 @@ class SiswaController extends Controller
     public function update_user($request, $siswa)
     {
         //  update user siswa / wali murid
-        // $passwordSiswa = date("dmY", strtotime($request->nis));
-        $passwordSiswa = $request->nis;
-        if ($request->no_hp_ayah) {
-            $no_hp = $request->no_hp_ayah;
-        } else if ($request->no_hp_ibu) {
-            $no_hp = $request->no_hp_ibu;
-        } else {
-            $no_hp = $request->no_hp_wali;
-        }
+        $nis = $request->nis;
 
         $updateUser = [
             'name' => $request->nama_siswa,
-            'no_hp' => $no_hp,
+            'no_hp' => $nis,
         ];
 
         if ($request->nis != $siswa->nis) {
-            $updateUser['password'] = Hash::make($passwordSiswa);
-            $updateUser['passAsli'] = $passwordSiswa;
+            $updateUser['password'] = Hash::make($nis);
+            $updateUser['passAsli'] = $nis;
         }
 
         // update user
