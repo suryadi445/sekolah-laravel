@@ -10,4 +10,13 @@ class Rekruitment extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+
+    public function printPDF()
+    {
+        $rekruitment = Rekruitment::where('proses', '=', '0')->get();
+        $rekruitments = $rekruitment->toArray();
+
+        return $rekruitments;
+    }
 }

@@ -4,7 +4,21 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="offset-md-5 col-md-3 mt-1">
+                <div class="col-md-5">
+                    <label for="" class="d-block">&nbsp;</label>
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="/rekruitment/exportPdf" target="_blank" class="btn btn-success">
+                            <span class="me-1">Print PDF</span>
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                        <a href="/rekruitment/exportExcel" target="_blank" class="btn btn-warning">
+                            <span class="me-1">Print Excel</span>
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-1">
                     <div class="form-floating">
                         <select class="form-select" id="pilih_jabatan" aria-label="Floating label select example">
                             <option selected value="all">Semua Jabatan</option>

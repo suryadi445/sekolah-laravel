@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Rekruitment;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RekruitmentExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class RekruitmentController extends Controller
 {
@@ -66,5 +70,22 @@ class RekruitmentController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to delete');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Jabatan', 'Nama', 'No Hp', 'Email', 'Tanggal Lahir', 'Proses'];
+
+        return Excel::download(new RekruitmentExport($header), 'rekruitment.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Rekruitment();
+        $data = $object->printPDF();
+
+        $pdf = PDF::loadview('pdf.rekruitmentPdf', ['data' => $data]);
+        return $pdf->stream('rekruitment.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

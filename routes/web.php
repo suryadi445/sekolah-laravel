@@ -112,6 +112,8 @@ Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama
 Route::get('/dashboard/getSiswa/', [DashboardController::class, 'getSiswa']);
 Route::get('/dashboard/getKelas/{slug?}', [DashboardController::class, 'getKelas']);
 
+Route::get('/rekruitment/exportExcel', [RekruitmentController::class, 'exportExcel']);
+Route::get('/rekruitment/exportPdf', [RekruitmentController::class, 'exportPdf']);
 Route::get('/rekruitment/{slug?}', [RekruitmentController::class, 'index']);
 Route::post('/rekruitment/prosesCV', [RekruitmentController::class, 'prosesCV']);
 Route::delete('/rekruitment/delete', [RekruitmentController::class, 'deleteCV']);

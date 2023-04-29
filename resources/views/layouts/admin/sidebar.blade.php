@@ -20,6 +20,14 @@
                     </li>
 
                     <li class="nav-item {{ hakAksesView() }}">
+                        <a class="nav-link {{ Request::is('career') ? 'active' : '' }}" href="/career">
+                            <span data-feather="layers" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-id-card"></i>
+                            Karir
+                        </a>
+                    </li>
+
+                    <li class="nav-item {{ hakAksesView() }}">
                         <a class="nav-link {{ Request::is('sppSiswa') ? 'active' : '' }}" href="/sppSiswa">
                             <span data-feather="layers" class="align-text-bottom"></span>
                             <i class="fa-solid fa-wallet"></i>
