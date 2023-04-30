@@ -96,6 +96,8 @@ Route::resource('/evaluation', EvaluationController::class);
 Route::get('/sppSiswa/getPembayaran', [SppSiswaController::class, 'getPembayaran']);
 Route::get('/sppSiswa/cekPembayaran', [SppSiswaController::class, 'cekPembayaran']);
 Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
+Route::get('/sppSiswa/exportPdf', [SppSiswaController::class, 'exportPdf']);
+Route::get('/sppSiswa/exportExcel', [SppSiswaController::class, 'exportExcel']);
 Route::resource('/sppSiswa', SppSiswaController::class);
 Route::resource('/jabatan', JabatanController::class);
 Route::resource('/pembayaran', PaymentController::class);

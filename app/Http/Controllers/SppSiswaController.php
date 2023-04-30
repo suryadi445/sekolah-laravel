@@ -9,6 +9,10 @@ use App\Models\Spp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\SppExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class SppSiswaController extends Controller
@@ -230,5 +234,23 @@ class SppSiswaController extends Controller
             ->select('bulan', 'tahun')->get();
 
         return response()->json($data);
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Nama Siswa', 'Kelas', 'Sub Kelas', 'Bulan', 'Tahun', 'Tipe Pembayaran', 'Jenis Pembayaran', 'Merchant', 'Keterangan', 'Nominal', 'Created At'];
+
+        return Excel::download(new SppExport($header), 'spp.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Spp();
+        $data = $object->printPDF();
+        // dd($data);
+
+        $pdf = PDF::loadview('pdf.sppPdf', ['data' => $data]);
+        return $pdf->stream('spp.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

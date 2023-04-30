@@ -6,6 +6,18 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group" role="group">
+                                <a href="/sppSiswa/exportPdf" target="_blank" class="btn btn-success">
+                                    <span class="me-1">Print PDF</span>
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </a>
+                                <a href="/sppSiswa/exportExcel" target="_blank" class="btn btn-warning">
+                                    <span class="me-1">Print Excel</span>
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <select class="form-select" id="kelas">
                                 <option selected value="">Semua Kelas</option>
