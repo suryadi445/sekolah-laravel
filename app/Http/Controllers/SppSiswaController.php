@@ -236,18 +236,17 @@ class SppSiswaController extends Controller
         return response()->json($data);
     }
 
-    public function exportExcel()
+    public function exportExcel($kelas = null, $sub_kelas = null)
     {
         $header = ['Nama Siswa', 'Kelas', 'Sub Kelas', 'Bulan', 'Tahun', 'Tipe Pembayaran', 'Jenis Pembayaran', 'Merchant', 'Keterangan', 'Nominal', 'Created At'];
 
-        return Excel::download(new SppExport($header), 'spp.xlsx');
+        return Excel::download(new SppExport($header, $kelas, $sub_kelas), 'spp.xlsx');
     }
 
-    public function exportPdf()
+    public function exportPdf($kelas = null, $sub_kelas = null)
     {
         $object = new Spp();
-        $data = $object->printPDF();
-        // dd($data);
+        $data = $object->printPDF($kelas, $sub_kelas);
 
         $pdf = PDF::loadview('pdf.sppPdf', ['data' => $data]);
         return $pdf->stream('spp.pdf');

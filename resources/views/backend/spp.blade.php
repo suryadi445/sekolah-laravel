@@ -8,17 +8,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group" role="group">
-                                <a href="/sppSiswa/exportPdf" target="_blank" class="btn btn-success">
+                                <a href="/sppSiswa/exportPdf" id="printPdf" target="_blank" class="btn btn-success">
                                     <span class="me-1">Print PDF</span>
                                     <i class="fa-solid fa-file-pdf"></i>
                                 </a>
-                                <a href="/sppSiswa/exportExcel" target="_blank" class="btn btn-warning">
+                                <a href="/sppSiswa/exportExcel" id="printExcel" target="_blank" class="btn btn-warning">
                                     <span class="me-1">Print Excel</span>
                                     <i class="fa-solid fa-file-excel"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-3 mt-sm-0">
                             <select class="form-select" id="kelas">
                                 <option selected value="">Semua Kelas</option>
                                 @foreach (arrayKelas() as $item)
@@ -26,7 +26,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-2 mt-sm-0">
                             <select class="form-select" id="subKelas">
                                 <option selected value="">Semua Sub Kelas</option>
                                 @foreach ($subKelas as $item)
@@ -125,15 +125,31 @@
             });
 
             $('#kelas').change(function() {
+                var linkPdf = '/sppSiswa/exportPdf';
+                var linkExcel = '/sppSiswa/exportExcel';
                 var kelas = $(this).val();
                 var subKelas = $('#subKelas').val();
+
+                // merubah url untuk print excel dan pdf
+                $('#printPdf').attr('href', linkPdf + '/' + kelas + '/' + subKelas)
+                $('#printExcel').attr('href', linkExcel + '/' + kelas + '/' + subKelas)
+
+                //  merubah datatable menggunakan ajax
                 var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
                 table.ajax.url(dataSrc).draw();
             })
 
             $('#subKelas').change(function() {
+                var linkPdf = '/sppSiswa/exportPdf';
+                var linkExcel = '/sppSiswa/exportExcel';
                 var kelas = $('#kelas').val();
                 var subKelas = $(this).val();
+
+                // merubah url untuk print excel dan pdf
+                $('#printPdf').attr('href', linkPdf + '/' + kelas + '/' + subKelas)
+                $('#printExcel').attr('href', linkExcel + '/' + kelas + '/' + subKelas)
+
+
                 var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
                 table.ajax.url(dataSrc).draw();
             })
