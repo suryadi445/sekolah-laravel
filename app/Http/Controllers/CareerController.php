@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CareerExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class CareerController extends Controller
@@ -134,5 +137,22 @@ class CareerController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Jabatan', 'Judul', 'Persyaratan', 'Deadline'];
+
+        return Excel::download(new CareerExport($header), 'career.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Career();
+        $data = $object->printPDF();
+
+        $pdf = PDF::loadview('pdf.careerPdf', ['data' => $data]);
+        return $pdf->stream('career.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

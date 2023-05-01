@@ -6,7 +6,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="offset-md-9 col-md-3">
+                        <div class="col-md-6 col-12 col-sm-12">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="/career/exportPdf" target="_blank" class="btn btn-success">
+                                    <span class="me-1">Print PDF</span>
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </a>
+                                <a href="/career/exportExcel" target="_blank" class="btn btn-warning">
+                                    <span class="me-1">Print Excel</span>
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ms-auto mt-3 mt-sm-0 col-12 col-sm-12">
                             <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                                 data-bs-target="#modal_add">
                                 <i class="fa-solid fa-plus"></i>

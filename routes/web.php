@@ -87,6 +87,8 @@ Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);
 Route::resource('/gallery', GalleryController::class);
+Route::get('/career/exportPdf', [CareerController::class, 'exportPdf']);
+Route::get('/career/exportExcel', [CareerController::class, 'exportExcel']);
 Route::resource('/career', CareerController::class);
 Route::resource('/registration', RegistrationController::class);
 Route::resource('/mapel', MapelController::class);
