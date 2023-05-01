@@ -72,6 +72,20 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
+                                <div class="col-md-9 mt-1 mb-1">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="/user/exportPdf/internal/{{ request('aktivasi_guru') }}" id="pdfInternal"
+                                            target="_blank" class="btn btn-success">
+                                            <span class="me-1">Print PDF</span>
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                        <a href="/user/exportExcel/internal/{{ request('aktivasi_guru') }}"
+                                            id="excelInternal" target="_blank" class="btn btn-warning">
+                                            <span class="me-1">Print Excel</span>
+                                            <i class="fa-solid fa-file-excel"></i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="col-md-3 mt-1 mb-1">
                                     <select name="status_aktivasi" class="form-select status_aktivasi_guru">
                                         <option value="" selected>
@@ -114,7 +128,8 @@
                                                     <td>
                                                         <div class="form-switch">
                                                             <input class="form-check-input aktivasi_guru"
-                                                                data-id={{ $item->id }} type="checkbox" role="switch"
+                                                                data-id={{ $item->id }} type="checkbox"
+                                                                role="switch"
                                                                 {{ $item->is_active == '1' ? 'checked' : '' }}>
                                                         </div>
                                                     </td>
@@ -136,13 +151,27 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="eksternal-tab-pane" role="tabpanel" aria-labelledby="eksternal-tab" tabindex="0">
-
+        <div class="tab-pane fade" id="eksternal-tab-pane" role="tabpanel" aria-labelledby="eksternal-tab"
+            tabindex="0">
             <div class="row mt-2">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
+                                <div class="col-md-9 mt-1 mb-1">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="/user/exportPdf/eksternal/{{ request('aktivasi_siswa') }}"
+                                            id="pdfExternal" target="_blank" class="btn btn-success">
+                                            <span class="me-1">Print PDF</span>
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                        <a href="/user/exportExcel/eksternal/{{ request('aktivasi_siswa') }}"
+                                            id="excelExternal" target="_blank" class="btn btn-warning">
+                                            <span class="me-1">Print Excel</span>
+                                            <i class="fa-solid fa-file-excel"></i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="col-md-3 mt-1 mb-1">
                                     <select name="status_aktivasi" class="form-select status_aktivasi_siswa">
                                         <option value="">
@@ -221,6 +250,7 @@
                 e.preventDefault()
                 let id = $(this).attr('data-id')
                 let value = $(this).is(':checked')
+
                 if (value == true) {
                     value = '1'
                 } else {
@@ -292,6 +322,7 @@
                 e.preventDefault();
                 let value = $(this).val()
 
+                // merubah url
                 if (value == '') {
                     window.location = "/user";
                 } else {

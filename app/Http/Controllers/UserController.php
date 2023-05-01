@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class UserController extends Controller
@@ -129,5 +131,29 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function exportExcel($user = null, $status = null)
+    {
+        if ($user == 'internal') {
+            $header = ['NIP', 'Nama Guru', 'Jenis Kelamin', 'Alamat', 'Status'];
+            $title = 'user-internal.xlsx';
+        } else {
+            $header = ['NIS', 'Nama Siswa', 'Jenis Kelamin', 'Alamat', 'Status'];
+            $title = 'user-eksternal.xlsx';
+        }
+
+
+        return Excel::download(new UserExport($header, $user, $status), $title);
+    }
+
+    public function exportPdf($user = null, $status = null)
+    {
+        $object = new User();
+        $data = $object->printPDF($user, $status);
+
+        $pdf = PDF::loadview('pdf.userPdf', ['data' => $data, 'user' => $user]);
+        return $pdf->stream('user.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

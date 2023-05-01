@@ -91,6 +91,8 @@ Route::resource('/career', CareerController::class);
 Route::resource('/registration', RegistrationController::class);
 Route::resource('/mapel', MapelController::class);
 Route::resource('/kelas', KelasController::class);
+Route::get('/user/exportPdf/{user?}/{status?}', [UserController::class, 'exportPdf']);
+Route::get('/user/exportExcel/{user?}/{status?}', [UserController::class, 'exportExcel']);
 Route::resource('/user', UserController::class);
 Route::resource('/evaluation', EvaluationController::class);
 Route::get('/sppSiswa/getPembayaran', [SppSiswaController::class, 'getPembayaran']);
