@@ -25,7 +25,7 @@
     <table class="table table-bordered" style="table-layout:fixed;">
         <thead class="p-0">
             <tr>
-                {{-- 'Nama Siswa', 'Kelas', 'Sub Kelas', 'Bulan', 'Tahun', 'Tipe Pembayaran', 'Jenis Pembayaran', 'Merchant', 'Keterangan', 'Nominal', 'Created At'] --}}
+                <th>No</th>
                 <th>Nama Siswa</th>
                 <th>Kelas</th>
                 <th>Bulan / Tahun</th>
@@ -38,8 +38,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $row)
+            @foreach ($data as $key => $row)
                 <tr>
+                    <td>{{ $key + 1 }}</td>
                     <td>{{ $row['nama_siswa'] }}</td>
                     <td>{{ $row['kelas'] . ' ' . $row['sub_kelas'] }}</td>
                     <td>{{ $row['nama_bulan'] . '-' . $row['tahun'] }}</td>

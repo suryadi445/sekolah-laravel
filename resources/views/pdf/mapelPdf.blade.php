@@ -26,26 +26,16 @@
         <thead class="p-0">
             <tr>
                 <th>No</th>
-                <th>Jabatan</th>
-                <th>Nama</th>
-                <th>No Hp</th>
-                <th>Email</th>
-                <th>Tgl Lahir</th>
-                <th>Proses</th>
-                <th>Tanggal Mendaftar</th>
+                <th>Mata Pelajaran</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $key => $row)
                 <tr>
                     <th>{{ $key + 1 }}</th>
-                    <td>{{ $row['jabatan'] }}</td>
-                    <td>{{ $row['nama'] }}</td>
-                    <td>{{ $row['no_hp'] }}</td>
-                    <td>{{ $row['email'] }}</td>
-                    <td>{{ $row['tgl_lahir'] }}</td>
-                    <td>{{ $row['proses'] }}</td>
-                    <td>{{ $row['created_at'] }}</td>
+                    <td>{{ $row['mata_pelajaran'] }}</td>
+                    <td>{{ $row['keterangan'] }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -91,6 +91,8 @@ Route::get('/career/exportPdf', [CareerController::class, 'exportPdf']);
 Route::get('/career/exportExcel', [CareerController::class, 'exportExcel']);
 Route::resource('/career', CareerController::class);
 Route::resource('/registration', RegistrationController::class);
+Route::get('/mapel/exportPdf', [MapelController::class, 'exportPdf']);
+Route::get('/mapel/exportExcel', [MapelController::class, 'exportExcel']);
 Route::resource('/mapel', MapelController::class);
 Route::resource('/kelas', KelasController::class);
 Route::get('/user/exportPdf/{user?}/{status?}', [UserController::class, 'exportPdf']);

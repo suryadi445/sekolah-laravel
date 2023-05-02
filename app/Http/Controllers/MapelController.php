@@ -6,6 +6,10 @@ use App\Models\Mapel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MapelExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class MapelController extends Controller
 {
@@ -130,5 +134,22 @@ class MapelController extends Controller
         } else {
             return back()->with('failed', 'Alert! file not deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Mata Pelajaran', 'Keterangan'];
+
+        return Excel::download(new MapelExport($header), 'mapel.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Mapel();
+        $data = $object->printPDF();
+
+        $pdf = PDF::loadview('pdf.mapelPdf', ['data' => $data]);
+        return $pdf->stream('mapel.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

@@ -12,4 +12,12 @@ class Mapel extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function printPDF()
+    {
+        $mapel = Mapel::all();
+        $mapels = $mapel->toArray();
+
+        return $mapels;
+    }
 }
