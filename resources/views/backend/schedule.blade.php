@@ -6,61 +6,72 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="kelas"
-                                            aria-label="Floating label select example">
-                                            <option value="" selected>
-                                                Semua Kelas
-                                            </option>
-                                            @foreach ($kelas as $item)
-                                                <option
-                                                    {{ request('kelas') == $item->kelas . ' ' . $item->sub_kelas ? 'selected' : '' }}
-                                                    value="{{ $item->kelas . ' ' . $item->sub_kelas }}">
-                                                    {{ $item->kelas . ' ' . $item->sub_kelas }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="kelas">Pilih Kelas</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="hari"
-                                            aria-label="Floating label select example">
-                                            <option selected value="">
-                                                Semua Hari
-                                            </option>
-                                            <option {{ request('hari') == 'Senin' ? 'selected' : '' }} value="Senin">Senin
-                                            </option>
-                                            <option {{ request('hari') == 'Selasa' ? 'selected' : '' }} value="Selasa">
-                                                Selasa
-                                            </option>
-                                            <option {{ request('hari') == 'Rabu' ? 'selected' : '' }} value="Rabu">Rabu
-                                            </option>
-                                            <option {{ request('hari') == 'Kamis' ? 'selected' : '' }} value="Kamis">Kamis
-                                            </option>
-                                            <option {{ request('hari') == 'Jumat' ? 'selected' : '' }} value="Jumat">Jumat
-                                            </option>
-                                            <option {{ request('hari') == 'Sabtu' ? 'selected' : '' }} value="Sabtu">Sabtu
-                                            </option>
-                                        </select>
-                                        <label for="hari">Pilih Hari</label>
-                                    </div>
-                                </div>
-                                <div class="offset-md-3 col-md-3">
-                                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                                        data-bs-target="#modal_add">
-                                        <i class="fa-solid fa-plus"></i>
-                                        Tambah Data
-                                    </button>
-                                </div>
+                        <div class="col-md-3 col-sm-6 mt-1 mt-sm-0">
+                            <div class="form-floating">
+                                <select class="form-select" id="kelas" aria-label="Floating label select example">
+                                    <option value="" selected>
+                                        Semua Kelas
+                                    </option>
+                                    @foreach ($kelas as $item)
+                                        <option
+                                            {{ request('kelas') == $item->kelas . ' ' . $item->sub_kelas ? 'selected' : '' }}
+                                            value="{{ $item->kelas . ' ' . $item->sub_kelas }}">
+                                            {{ $item->kelas . ' ' . $item->sub_kelas }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="kelas">Pilih Kelas</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mt-1 mt-sm-0">
+                            <div class="form-floating">
+                                <select class="form-select" id="hari" aria-label="Floating label select example">
+                                    <option selected value="">
+                                        Semua Hari
+                                    </option>
+                                    <option {{ request('hari') == 'Senin' ? 'selected' : '' }} value="Senin">Senin
+                                    </option>
+                                    <option {{ request('hari') == 'Selasa' ? 'selected' : '' }} value="Selasa">
+                                        Selasa
+                                    </option>
+                                    <option {{ request('hari') == 'Rabu' ? 'selected' : '' }} value="Rabu">Rabu
+                                    </option>
+                                    <option {{ request('hari') == 'Kamis' ? 'selected' : '' }} value="Kamis">Kamis
+                                    </option>
+                                    <option {{ request('hari') == 'Jumat' ? 'selected' : '' }} value="Jumat">Jumat
+                                    </option>
+                                    <option {{ request('hari') == 'Sabtu' ? 'selected' : '' }} value="Sabtu">Sabtu
+                                    </option>
+                                </select>
+                                <label for="hari">Pilih Hari</label>
+                            </div>
+                        </div>
+                        <div class="offset-md-3 col-md-3 mt-3 mt-sm-0">
+                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                data-bs-target="#modal_add">
+                                <i class="fa-solid fa-plus"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="/schedule/exportPdf/{{ request('kelas') . '/' . request('hari') }}" id="exportPdf"
+                                    target="_blank" class="btn btn-success">
+                                    <span class="me-1">Print PDF</span>
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </a>
+                                <a href="/schedule/exportExcel/{{ request('kelas') . '/' . request('hari') }}"
+                                    id="exportExcel" target="_blank" class="btn btn-warning">
+                                    <span class="me-1">Print Excel</span>
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -123,7 +134,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

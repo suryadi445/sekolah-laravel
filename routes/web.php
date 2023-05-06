@@ -107,6 +107,8 @@ Route::get('/sppSiswa/exportExcel/{kelas?}/{sub_kelas?}', [SppSiswaController::c
 Route::resource('/sppSiswa', SppSiswaController::class);
 Route::resource('/jabatan', JabatanController::class);
 Route::resource('/pembayaran', PaymentController::class);
+Route::get('/schedule/exportPdf/{kelas?}/{hari?}', [ScheduleController::class, 'exportPdf']);
+Route::get('/schedule/exportExcel/{kelas?}/{hari?}', [ScheduleController::class, 'exportExcel']);
 Route::resource('/schedule', ScheduleController::class);
 
 Route::get('/default', [DefaultWebController::class, 'index']);

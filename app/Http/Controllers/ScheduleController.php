@@ -7,6 +7,11 @@ use App\Models\Schedule;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\ScheduleExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class ScheduleController extends Controller
 {
@@ -142,5 +147,22 @@ class ScheduleController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function exportExcel($kelas = null, $hari = null)
+    {
+        $header = ['Hari', 'Kelas', 'Jadwal Pelajaran'];
+
+        return Excel::download(new ScheduleExport($header, $kelas, $hari), 'schedule.xlsx');
+    }
+
+    public function exportPdf($kelas = null, $hari = null)
+    {
+        $object = new Schedule();
+        $data = $object->printPDF($kelas, $hari);
+
+        $pdf = PDF::loadview('pdf.schedulePdf', ['data' => $data]);
+        return $pdf->stream('schedule.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }
