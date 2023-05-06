@@ -12,4 +12,14 @@ class Kelas extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function printPDF()
+    {
+        $kelas = Kelas::leftJoin('gurus', 'kelas.id_guru', '=', 'gurus.id')
+            ->select('kelas.*', 'gurus.nama_guru')
+            ->get();
+        $kelass = $kelas->toArray();
+
+        return $kelass;
+    }
 }

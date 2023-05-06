@@ -94,6 +94,8 @@ Route::resource('/registration', RegistrationController::class);
 Route::get('/mapel/exportPdf', [MapelController::class, 'exportPdf']);
 Route::get('/mapel/exportExcel', [MapelController::class, 'exportExcel']);
 Route::resource('/mapel', MapelController::class);
+Route::get('/kelas/exportPdf', [KelasController::class, 'exportPdf']);
+Route::get('/kelas/exportExcel', [KelasController::class, 'exportExcel']);
 Route::resource('/kelas', KelasController::class);
 Route::get('/user/exportPdf/{user?}/{status?}', [UserController::class, 'exportPdf']);
 Route::get('/user/exportExcel/{user?}/{status?}', [UserController::class, 'exportExcel']);

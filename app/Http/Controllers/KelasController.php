@@ -6,6 +6,10 @@ use App\Models\Kelas;
 use App\Models\Guru;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Exports\KelasExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class KelasController extends Controller
 {
@@ -141,5 +145,22 @@ class KelasController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Kelas', 'Sub Kelas', 'Keterangan', 'Biaya Spp', 'Wali Kelas'];
+
+        return Excel::download(new KelasExport($header), 'kelas.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Kelas();
+        $data = $object->printPDF();
+
+        $pdf = PDF::loadview('pdf.kelasPdf', ['data' => $data]);
+        return $pdf->stream('kelas.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }
