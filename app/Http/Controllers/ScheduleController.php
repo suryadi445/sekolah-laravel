@@ -160,8 +160,10 @@ class ScheduleController extends Controller
     {
         $object = new Schedule();
         $data = $object->printPDF($kelas, $hari);
+        $title = 'Daftar Jadwal Pelajaran';
 
-        $pdf = PDF::loadview('pdf.schedulePdf', ['data' => $data]);
+
+        $pdf = PDF::loadview('pdf.schedulePdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('schedule.pdf');
         // return $pdf->download('Siswa.pdf');
     }

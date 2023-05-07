@@ -151,8 +151,9 @@ class UserController extends Controller
     {
         $object = new User();
         $data = $object->printPDF($user, $status);
+        $title = 'Daftar User';
 
-        $pdf = PDF::loadview('pdf.userPdf', ['data' => $data, 'user' => $user]);
+        $pdf = PDF::loadview('pdf.userPdf', ['data' => $data, 'user' => $user, 'title' => $title]);
         return $pdf->stream('user.pdf');
         // return $pdf->download('Siswa.pdf');
     }

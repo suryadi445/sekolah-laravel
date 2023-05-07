@@ -83,8 +83,10 @@ class RekruitmentController extends Controller
     {
         $object = new Rekruitment();
         $data = $object->printPDF();
+        $title = 'Daftar Rekruitment';
 
-        $pdf = PDF::loadview('pdf.rekruitmentPdf', ['data' => $data]);
+
+        $pdf = PDF::loadview('pdf.rekruitmentPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('rekruitment.pdf');
         // return $pdf->download('Siswa.pdf');
     }

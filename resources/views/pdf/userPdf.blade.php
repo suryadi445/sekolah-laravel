@@ -22,6 +22,12 @@
         }
     </style>
 
+    <div class="row mb-3">
+        <div class="col-sm-12">
+            <h3 class="text-center">{{ $title }}</h3>
+        </div>
+    </div>
+
     @if ($user == 'internal')
         <table class="table table-bordered" style="table-layout:fixed;">
             <thead class="p-0">

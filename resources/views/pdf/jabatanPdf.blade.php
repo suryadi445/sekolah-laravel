@@ -32,22 +32,21 @@
         <thead class="p-0">
             <tr>
                 <th>No</th>
-                <th>Kelas</th>
-                <th>Hari</th>
-                <th>Jadwal Pelajaran</th>
+                <th>Jabatan</th>
+                <th>Kode Jabatan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $key => $row)
                 <tr>
                     <th>{{ $key + 1 }}</th>
-                    <td>{{ $row['kelas'] }}</td>
-                    <td>{{ $row['hari'] }}</td>
-                    <td>{{ $row['mapel'] }}</td>
+                    <td>{{ $row['nama_jabatan'] }}</td>
+                    <td>{{ $row['kode_jabatan'] }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 
 </body>
 

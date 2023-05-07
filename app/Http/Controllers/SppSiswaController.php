@@ -247,8 +247,10 @@ class SppSiswaController extends Controller
     {
         $object = new Spp();
         $data = $object->printPDF($kelas, $sub_kelas);
+        $title = 'Daftar Spp Siswa';
 
-        $pdf = PDF::loadview('pdf.sppPdf', ['data' => $data]);
+
+        $pdf = PDF::loadview('pdf.sppPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('spp.pdf');
         // return $pdf->download('Siswa.pdf');
     }

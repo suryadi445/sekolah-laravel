@@ -322,9 +322,10 @@ class SiswaController extends Controller
     public function exportPdf()
     {
         $object = new Siswa;
-        $dataSiswa = $object->printPDF();
+        $data = $object->printPDF();
+        $title = 'Daftar Siswa';
 
-        $pdf = PDF::loadview('pdf.siswaPdf', ['siswa' => $dataSiswa]);
+        $pdf = PDF::loadview('pdf.siswaPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('siswa.pdf');
         // return $pdf->download('Siswa.pdf');
     }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\JabatanExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JabatanController extends Controller
 {
@@ -125,5 +128,23 @@ class JabatanController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Jabatan', 'Kode Jabatan'];
+
+        return Excel::download(new JabatanExport($header), 'jabatan.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Jabatan();
+        $data = $object->printPDF();
+        $title = 'Daftar Jabatan';
+
+        $pdf = PDF::loadview('pdf.jabatanPdf', ['data' => $data, 'title' => $title]);
+        return $pdf->stream('jabatan.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

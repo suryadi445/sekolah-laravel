@@ -147,8 +147,9 @@ class MapelController extends Controller
     {
         $object = new Mapel();
         $data = $object->printPDF();
+        $title = 'Daftar Mapel';
 
-        $pdf = PDF::loadview('pdf.mapelPdf', ['data' => $data]);
+        $pdf = PDF::loadview('pdf.mapelPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('mapel.pdf');
         // return $pdf->download('Siswa.pdf');
     }

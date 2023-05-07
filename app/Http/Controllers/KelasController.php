@@ -158,8 +158,10 @@ class KelasController extends Controller
     {
         $object = new Kelas();
         $data = $object->printPDF();
+        $title = 'Daftar Kelas';
 
-        $pdf = PDF::loadview('pdf.kelasPdf', ['data' => $data]);
+
+        $pdf = PDF::loadview('pdf.kelasPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('kelas.pdf');
         // return $pdf->download('Siswa.pdf');
     }

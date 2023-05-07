@@ -150,8 +150,9 @@ class CareerController extends Controller
     {
         $object = new Career();
         $data = $object->printPDF();
+        $title = 'Daftar Karir';
 
-        $pdf = PDF::loadview('pdf.careerPdf', ['data' => $data]);
+        $pdf = PDF::loadview('pdf.careerPdf', ['data' => $data, 'title' => $title]);
         return $pdf->stream('career.pdf');
         // return $pdf->download('Siswa.pdf');
     }

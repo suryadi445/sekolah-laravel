@@ -107,6 +107,8 @@ Route::get('/sppSiswa/show/{id_siswa}', [SppSiswaController::class, 'show']);
 Route::get('/sppSiswa/exportPdf/{kelas?}/{sub_kelas?}', [SppSiswaController::class, 'exportPdf']);
 Route::get('/sppSiswa/exportExcel/{kelas?}/{sub_kelas?}', [SppSiswaController::class, 'exportExcel']);
 Route::resource('/sppSiswa', SppSiswaController::class);
+Route::get('/jabatan/exportPdf', [JabatanController::class, 'exportPdf']);
+Route::get('/jabatan/exportExcel', [JabatanController::class, 'exportExcel']);
 Route::resource('/jabatan', JabatanController::class);
 Route::resource('/pembayaran', PaymentController::class);
 Route::get('/schedule/exportPdf/{kelas?}/{hari?}', [ScheduleController::class, 'exportPdf']);
