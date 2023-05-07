@@ -10,4 +10,12 @@ class Payment extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function printPDF()
+    {
+        $payment = Payment::all();
+        $payments = $payment->toArray();
+
+        return $payments;
+    }
 }

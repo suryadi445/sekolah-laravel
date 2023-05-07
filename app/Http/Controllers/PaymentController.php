@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PaymentExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaymentController extends Controller
 {
@@ -134,5 +137,23 @@ class PaymentController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Nama Pembayaran', 'Jenis Pembayaran', 'Nomor Pembayaran', 'Pemilik Akun'];
+
+        return Excel::download(new PaymentExport($header), 'payment.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Payment();
+        $data = $object->printPDF();
+        $title = 'Daftar Jenis Pembayaran';
+
+        $pdf = PDF::loadview('pdf.paymentPdf', ['data' => $data, 'title' => $title]);
+        return $pdf->stream('payment.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }
