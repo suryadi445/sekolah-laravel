@@ -2,8 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\kelas;
-use App\Models\mapel;
+use App\Models\Kelas;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;

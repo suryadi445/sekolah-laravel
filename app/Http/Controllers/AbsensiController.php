@@ -8,6 +8,9 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AbsensiExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AbsensiController extends Controller
 {
@@ -166,5 +169,25 @@ class AbsensiController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to save');
         }
+    }
+
+    public function exportExcel($kelas = null)
+    {
+
+        $header = ['Kelas', 'Tanggal Absensi', 'Absensi', 'Keterangan', 'Nama Siswa', 'Mata Pelajaran'];
+
+
+        return Excel::download(new AbsensiExport($header, $kelas), 'absensi.xlsx');
+    }
+
+    public function exportPdf($kelas = null)
+    {
+        $object = new Absensi();
+        $data = $object->printPDF($kelas);
+        $title = 'Daftar Absensi';
+
+        $pdf = PDF::loadview('pdf.absensiPdf', ['data' => $data, 'title' => $title]);
+        return $pdf->stream('absensi.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

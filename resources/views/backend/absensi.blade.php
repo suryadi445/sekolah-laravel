@@ -27,6 +27,22 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="/absensi/exportPdf/{{ request('kelas') }}" target="_blank"
+                                                class="btn btn-success">
+                                                <span class="me-1">Print PDF</span>
+                                                <i class="fa-solid fa-file-pdf"></i>
+                                            </a>
+                                            <a href="/absensi/exportExcel/{{ request('kelas') }}" target="_blank"
+                                                class="btn btn-warning">
+                                                <span class="me-1">Print Excel</span>
+                                                <i class="fa-solid fa-file-excel"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-md-3 mt-1 mb-1">
                                         <input type="date" class="form-control" name="tgl_absensi"
                                             value="{{ date('Y-m-d') }}" required>
@@ -220,7 +236,8 @@
                                                             <select name="keterangan[]" id="keterangan"
                                                                 class="form-select">
                                                                 <option {{ $item->keterangan == '' ? 'selected' : '' }}
-                                                                    value="">Pilih Keterangan</option>
+                                                                    value="">
+                                                                    Pilih Keterangan</option>
                                                                 <option
                                                                     {{ $item->keterangan == 'Sakit' ? 'selected' : '' }}
                                                                     value="Sakit">Sakit</option>

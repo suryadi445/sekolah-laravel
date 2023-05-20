@@ -2,8 +2,8 @@
 
 namespace App\Exports;
 
-use App\Models\schedule;
-use App\Models\mapel;
+use App\Models\Schedule;
+use App\Models\Mapel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;

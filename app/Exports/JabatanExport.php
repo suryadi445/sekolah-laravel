@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
