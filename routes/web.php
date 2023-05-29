@@ -85,6 +85,8 @@ Route::get('/siswa/exportPdf', [SiswaController::class, 'exportPdf']);
 Route::resource('/siswa', SiswaController::class);
 Route::get('/absensi/exportPdf/{kelas?}', [AbsensiController::class, 'exportPdf']);
 Route::get('/absensi/exportExcel/{kelas?}', [AbsensiController::class, 'exportExcel']);
+Route::get('/absensi/exportPdfList/{kelas?}', [AbsensiController::class, 'exportPdfList']);
+Route::get('/absensi/exportExcelList/{kelas?}', [AbsensiController::class, 'exportExcelList']);
 Route::resource('/absensi', AbsensiController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/notice', NoticeController::class);

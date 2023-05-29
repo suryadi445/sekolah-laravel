@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AbsensiExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\AbsensiListExport;
 
 class AbsensiController extends Controller
 {
@@ -72,7 +73,7 @@ class AbsensiController extends Controller
         $absensi->orderByRaw('absensis.tgl_absensi, siswas.nama_siswa')->get();
         $absensis = $absensi->get();
 
-        // meghitung jumlah siswa yg absens
+        // meghitung jumlah siswa yg absen
         $masuk = 0;
         $izin = 0;
         $sakit = 0;
@@ -171,22 +172,41 @@ class AbsensiController extends Controller
         }
     }
 
-    public function exportExcel($kelas = null)
+    public function exportExcel()
     {
+        $kelas = request('kelas');
+        $tipe = request('tipe');
 
-        $header = ['Kelas', 'Tanggal Absensi', 'Absensi', 'Keterangan', 'Nama Siswa', 'Mata Pelajaran'];
+        if ($tipe == 'absensi') {
+
+            $header = ['Kelas', 'Tanggal Absensi', 'Absensi', 'Keterangan', 'Nama Siswa', 'Mata Pelajaran'];
+        } else {
+
+            $header = ['Nama Siswa', 'Masuk', 'Tidak Masuk', 'Sakit', 'Izin', 'Alpha'];
+        }
 
 
-        return Excel::download(new AbsensiExport($header, $kelas), 'absensi.xlsx');
+        return Excel::download(new AbsensiExport($header, $kelas, $tipe), 'absensi.xlsx');
     }
 
-    public function exportPdf($kelas = null)
+    public function exportPdf()
     {
-        $object = new Absensi();
-        $data = $object->printPDF($kelas);
+        $kelas = request('kelas');
+        $tipe = request('tipe');
         $title = 'Daftar Absensi';
 
-        $pdf = PDF::loadview('pdf.absensiPdf', ['data' => $data, 'title' => $title]);
+        $object = new Absensi();
+        if ($tipe == 'absensi') {
+            $data = $object->printPDF($kelas);
+
+            $pdf = PDF::loadview('pdf.absensiPdf', ['data' => $data, 'title' => $title]);
+        } else {
+            $data = $object->printListPDF($kelas);
+
+            $pdf = PDF::loadview('pdf.absensiListPdf', ['data' => $data, 'title' => $title]);
+        }
+
+
         return $pdf->stream('absensi.pdf');
         // return $pdf->download('Siswa.pdf');
     }

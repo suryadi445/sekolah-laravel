@@ -29,13 +29,13 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="/absensi/exportPdf/{{ request('kelas') }}" target="_blank"
-                                                class="btn btn-success">
+                                            <a href="/absensi/exportPdf?kelas={{ request('kelas') }}&tipe=absensi"
+                                                target="_blank" class="btn btn-success">
                                                 <span class="me-1">Print PDF</span>
                                                 <i class="fa-solid fa-file-pdf"></i>
                                             </a>
-                                            <a href="/absensi/exportExcel/{{ request('kelas') }}" target="_blank"
-                                                class="btn btn-warning">
+                                            <a href="/absensi/exportExcel?kelas={{ request('kelas') }}&tipe=absensi"
+                                                target="_blank" class="btn btn-warning">
                                                 <span class="me-1">Print Excel</span>
                                                 <i class="fa-solid fa-file-excel"></i>
                                             </a>
@@ -153,6 +153,22 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="/absensi/exportPdf?kelas={{ request('daftar_kelas') }}&tipe=list"
+                                                target="_blank" class="btn btn-success">
+                                                <span class="me-1">Print PDF</span>
+                                                <i class="fa-solid fa-file-pdf"></i>
+                                            </a>
+                                            <a href="/absensi/exportExcel?kelas={{ request('daftar_kelas') }}&tipe=list"
+                                                target="_blank" class="btn btn-warning">
+                                                <span class="me-1">Print Excel</span>
+                                                <i class="fa-solid fa-file-excel"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-md-3 mt-1 mb-1">
                                         <input type="date" class="form-control" name="tgl_absensi"
                                             id="tgl_daftarAbsensi"
