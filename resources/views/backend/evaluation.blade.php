@@ -26,7 +26,24 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="offset-md-3 col-md-3 mt-1">
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mt-2">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="/evaluation/exportPdf?kelas={{ request('kelas') . '&id_mapel=' . request('id_mapel') . '&tgl=' . request('tgl') }}"
+                                                target="_blank" class="btn btn-success">
+                                                <span class="me-1">Print PDF</span>
+                                                <i class="fa-solid fa-file-pdf"></i>
+                                            </a>
+                                            <a href="/evaluation/exportExcel?kelas={{ request('kelas') . '&id_mapel=' . request('id_mapel') . '&tgl=' . request('tgl') }}"
+                                                target="_blank" class="btn btn-warning">
+                                                <span class="me-1">Print Excel</span>
+                                                <i class="fa-solid fa-file-excel"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
                                         <div class="form-floating">
                                             <select class="form-select" name="kelas" id="kelas" required>
                                                 <option selected value="">Pilih Kelas</option>
@@ -46,7 +63,8 @@
                                             <select class="form-select" name="id_mapel" id="id_mapel" required>
                                                 <option selected value="">Pilih Mata Pelajaran</option>
                                                 @foreach ($mapel as $item)
-                                                    <option value="{{ old('id_mapel', $item->id) }}">
+                                                    <option {{ request('id_mapel') == $item->id ? 'selected' : '' }}
+                                                        value="{{ old('id_mapel', $item->id) }}">
                                                         {{ $item->mata_pelajaran }}
                                                     </option>
                                                 @endforeach
@@ -105,7 +123,8 @@
                                                                 </td>
                                                                 <td>
                                                                     <select class="form-select" name="grade[]">
-                                                                        <option selected disabled value="">Pilih Grade
+                                                                        <option selected disabled value="">Pilih
+                                                                            Grade
                                                                         </option>
                                                                         <option value="A">A</option>
                                                                         <option value="B">B</option>
@@ -334,7 +353,30 @@
             // kelas
             $(document).on('change', '#kelas', function() {
                 var kelas = $(this).val();
-                window.location = "/evaluation?kelas=" + kelas;
+                var id_mapel = $('#id_mapel').val();
+                var tgl = $('#tanggal_penilaian').val();
+
+
+                window.location = "/evaluation?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl=' + tgl;
+
+                return false;
+            })
+
+            $(document).on('change', '#id_mapel', function() {
+                var kelas = $('#kelas').val();
+                var id_mapel = $(this).val();
+                var tgl = $('#tanggal_penilaian').val();
+
+                window.location = "/evaluation?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl=' + tgl;
+                return false;
+            })
+
+            $(document).on('change', '#tanggal_penilaian', function() {
+                var kelas = $('#kelas').val();
+                var id_mapel = $('#id_mapel').val();
+                var tgl = $(this).val();
+
+                window.location = "/evaluation?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl=' + tgl;
                 return false;
             })
 

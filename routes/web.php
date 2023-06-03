@@ -104,6 +104,8 @@ Route::resource('/kelas', KelasController::class);
 Route::get('/user/exportPdf/{user?}/{status?}', [UserController::class, 'exportPdf']);
 Route::get('/user/exportExcel/{user?}/{status?}', [UserController::class, 'exportExcel']);
 Route::resource('/user', UserController::class);
+Route::get('/evaluation/exportPdf/{user?}', [EvaluationController::class, 'exportPdf']);
+Route::get('/evaluation/exportExcel/{user?}', [EvaluationController::class, 'exportExcel']);
 Route::resource('/evaluation', EvaluationController::class);
 Route::get('/sppSiswa/getPembayaran', [SppSiswaController::class, 'getPembayaran']);
 Route::get('/sppSiswa/cekPembayaran', [SppSiswaController::class, 'cekPembayaran']);

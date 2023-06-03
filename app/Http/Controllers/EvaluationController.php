@@ -8,6 +8,9 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EvaluationExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EvaluationController extends Controller
 {
@@ -190,5 +193,32 @@ class EvaluationController extends Controller
     public function destroy(Evaluation $evaluation)
     {
         //
+    }
+
+    public function exportExcel()
+    {
+        $kelas = request('kelas');
+        $id_mapel = request('id_mapel');
+        $tgl = request('tgl');
+
+        $header = ['Nama Siswa', 'Mata Pelajaran', 'Kelas', 'Nilai Siswa', 'Kedatangan', 'Tanggal Penilaian'];
+
+        return Excel::download(new EvaluationExport($header, $kelas, $id_mapel, $tgl), 'penilaian.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $kelas = request('kelas');
+        $id_mapel = request('id_mapel');
+        $tgl = request('tgl');
+
+        $object = new Evaluation();
+        $data = $object->printPDF($kelas, $id_mapel, $tgl);
+        $title = 'Daftar Penilaian';
+
+
+        $pdf = PDF::loadview('pdf.penilaianPdf', ['data' => $data, 'title' => $title]);
+        return $pdf->stream('penilaian.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

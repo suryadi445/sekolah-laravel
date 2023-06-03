@@ -19,4 +19,35 @@ class Evaluation extends Model
             ->orWhere('thn_ajaran', 'like', '%' . request('cari') . '%')
             ->orWhere('kelas', 'like', '%' . request('cari') . '%');
     }
+
+    public function printPDF($kelas, $id_mapel, $tgl)
+    {
+        $kelas = $this->kelas;
+        $id_mapel = $this->id_mapel;
+        $tgl = $this->tgl;
+
+        $evaluation = Evaluation::join('siswas', 'evaluations.id_siswa', '=', 'siswas.id')
+            ->join('mapels', 'evaluations.id_mapel', '=', 'mapels.id')
+            ->select('siswas.nama_siswa', 'mapels.mata_pelajaran', 'evaluations.kelas', 'evaluations.nilai_siswa', 'evaluations.status', 'evaluations.tanggal_penilaian')
+            ->orderBy('tanggal_penilaian')
+            ->orderBy('nama_siswa');
+
+        if ($kelas) {
+            $evaluation->where('evaluations.kelas', $kelas);
+        }
+
+        if ($id_mapel) {
+            $evaluation->where('evaluations.id_mapel', $id_mapel);
+        }
+
+        if ($tgl) {
+            $evaluation->where('evaluations.tanggal_penilaian', $tgl);
+        }
+
+
+        $evaluation = $evaluation->get();
+        $evaluation = $evaluation->toArray();
+
+        return $evaluation;
+    }
 }
