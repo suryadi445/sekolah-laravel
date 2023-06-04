@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AbsensiExport;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\AbsensiListExport;
 
 class AbsensiController extends Controller
 {

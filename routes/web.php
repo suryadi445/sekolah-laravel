@@ -73,6 +73,8 @@ Route::resource('/profile', ProfileController::class);
 Route::resource('/slideshow', SlideshowController::class);
 Route::resource('/introduction', IntroductionController::class);
 Route::resource('/latestNews', LatestNewsController::class);
+Route::get('/activity/exportExcel', [ActivityController::class, 'exportExcel']);
+Route::get('/activity/exportPdf', [ActivityController::class, 'exportPdf']);
 Route::resource('/activity', ActivityController::class);
 Route::resource('/alumni', AlumniController::class);
 Route::resource('/about', AboutController::class);

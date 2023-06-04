@@ -6,6 +6,10 @@ use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ActivityExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 class ActivityController extends Controller
@@ -167,5 +171,24 @@ class ActivityController extends Controller
         } else {
             return back()->with('failed', 'Alert! Data failed to deleted');
         }
+    }
+
+    public function exportExcel()
+    {
+        $header = ['Judul', 'Text'];
+
+        return Excel::download(new ActivityExport($header), 'activity.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $object = new Activity();
+        $data = $object->printPDF();
+        $title = 'Daftar Kegiatan';
+
+
+        $pdf = PDF::loadview('pdf.activityPdf', ['data' => $data, 'title' => $title]);
+        return $pdf->stream('activity.pdf');
+        // return $pdf->download('Siswa.pdf');
     }
 }

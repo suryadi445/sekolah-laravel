@@ -31,7 +31,6 @@ class EvaluationExport implements FromCollection, WithHeadings, ShouldAutoSize, 
      */
     public function collection()
     {
-        $hidden = $this->hidden;
         $kelas = $this->kelas;
         $id_mapel = $this->id_mapel;
         $tgl = $this->tgl;
