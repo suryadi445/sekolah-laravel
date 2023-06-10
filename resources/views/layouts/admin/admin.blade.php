@@ -26,18 +26,24 @@
     {{-- style select2 bs5 --}}
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-
-    @vite(['resources/css/admin.css', 'resources/js/admin.js'])
-
+    {{-- select2 --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
     {{-- jquery --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- select2 --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+
+    @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+
+
+
     {{-- swal --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- select2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 </head>
 
@@ -99,38 +105,40 @@
 
         // active tabs bootstrap
         const pillsTab = document.querySelector('#myTab');
-        const pills = pillsTab.querySelectorAll('button[data-bs-toggle="tab"]');
+        if (pillsTab) {
+            const pills = pillsTab.querySelectorAll('button[data-bs-toggle="tab"]');
 
-        pills.forEach(pill => {
-            pill.addEventListener('shown.bs.tab', (event) => {
-                const {
-                    target
-                } = event;
-                const {
-                    id: targetId
-                } = target;
+            pills.forEach(pill => {
+                pill.addEventListener('shown.bs.tab', (event) => {
+                    const {
+                        target
+                    } = event;
+                    const {
+                        id: targetId
+                    } = target;
 
-                savePillId(targetId);
+                    savePillId(targetId);
+                });
             });
-        });
 
-        const savePillId = (selector) => {
-            localStorage.setItem('activePillId', selector);
-        };
+            const savePillId = (selector) => {
+                localStorage.setItem('activePillId', selector);
+            };
 
-        const getPillId = () => {
-            const activePillId = localStorage.getItem('activePillId');
+            const getPillId = () => {
+                const activePillId = localStorage.getItem('activePillId');
 
-            if (!activePillId) return;
+                if (!activePillId) return;
 
-            // call 'show' function
-            const someTabTriggerEl = document.querySelector(`#${activePillId}`)
-            const tab = new bootstrap.Tab(someTabTriggerEl);
+                // call 'show' function
+                const someTabTriggerEl = document.querySelector(`#${activePillId}`)
+                const tab = new bootstrap.Tab(someTabTriggerEl);
 
-            tab.show();
-        };
+                tab.show();
+            };
 
-        getPillId();
+            getPillId();
+        }
     </script>
 
 </body>

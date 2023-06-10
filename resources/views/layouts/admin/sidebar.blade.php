@@ -1,10 +1,3 @@
-<style>
-    .sidebar .nav-link .fa-angle-down {
-        padding-top: 0.5em;
-        float: right;
-    }
-</style>
-
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -44,7 +37,7 @@
                     </li>
 
                     <li class="nav-item  {{ hakAksesView() }}">
-                        <a class="nav-link nav-single {{ Request::is('setting') ? 'active' : '' }}" href="/settings">
+                        <a class="nav-link nav-single {{ Request::is('settings') ? 'active' : '' }}" href="/settings">
                             <span data-feather="file-text" class="align-text-bottom"></span>
                             <i class="fa-solid fa-gear"></i>
                             Pengaturan
@@ -294,70 +287,3 @@
         @include('layouts.admin.main')
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('.nav-link.has-child').click(function(e) {
-            e.stopPropagation();
-
-            var childMenu = $(this).next('.nav-child');
-
-            // Toggle class "show" untuk menampilkan/sembunyikan child menu
-            childMenu.toggleClass('show');
-            childMenu.addClass('active');
-
-            if (childMenu.hasClass('show')) {
-                childMenu.removeClass('show');
-            } else {
-                childMenu.addClass('show');
-            }
-
-            // cek local storage
-            var childSlideshow = localStorage.getItem('childMenuOpen_slideshow');
-            var childMaster = localStorage.getItem('childMenuOpen_master');
-            if (childSlideshow === 'true') {
-                localStorage.removeItem('childMenuOpen_slideshow');
-                $('.parent2').addClass('active')
-                $('.parent1').removeClass('active')
-
-            }
-            if (childMaster === 'true') {
-                localStorage.removeItem('childMenuOpen_master');
-                $('.parent1').addClass('active')
-                $('.parent2').removeClass('active')
-            }
-
-            var parentId = $(this).data('parent-id');
-            var isChildMenuOpen = childMenu.hasClass('active');
-            localStorage.setItem('childMenuOpen_' + parentId, isChildMenuOpen);
-        });
-
-
-        // Cek status child menu dari localStorage saat halaman dimuat kembali
-        $('.nav-link.has-child').each(function() {
-            var parentId = $(this).data('parent-id');
-            var isChildMenuOpen = localStorage.getItem('childMenuOpen_' + parentId);
-            if (isChildMenuOpen === 'true') {
-                $(this).next('.nav-child').addClass('show');
-            }
-        });
-
-
-        $('.nav-link.nav-single').click(function() {
-
-            // Cari elemen parent nya
-            var childMenu = $(this).next('.has-child');
-
-            childMenu.toggleClass('collapse');
-
-            var childSlideshow = localStorage.getItem('childMenuOpen_slideshow');
-            var childMaster = localStorage.getItem('childMenuOpen_master');
-            if (childSlideshow === 'true') {
-                localStorage.removeItem('childMenuOpen_slideshow');
-            }
-            if (childMaster === 'true') {
-                localStorage.removeItem('childMenuOpen_master');
-            }
-        });
-    });
-</script>

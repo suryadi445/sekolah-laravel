@@ -53,6 +53,11 @@ body {
     font-size: .75rem;
 }
 
+.sidebar .nav-link .fa-angle-down {
+    padding-top: 0.5em;
+    float: right;
+}
+
 .navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
