@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\Jabatan;
-use aPP\Models\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -270,6 +270,10 @@ class GuruController extends Controller
     {
 
         $delete = Guru::destroy($guru->id);
+        if ($delete) {
+            User::where('id_guru', $guru->id)
+                ->update(['is_active' => '0']);
+        }
 
         if ($delete) {
             return back()->with('success', 'Success! file deleted');

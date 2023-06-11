@@ -303,7 +303,10 @@ class SiswaController extends Controller
     public function destroy(Siswa $siswa)
     {
         $delete = Siswa::destroy($siswa->id);
-        $delete = User::where('id_siswa', $siswa->id)->delete();
+        if ($delete) {
+            User::where('id_siswa', $siswa->id)
+                ->update(['is_active' => '0']);
+        }
 
         if ($delete) {
             return back()->with('success', 'Success! Data successfuly deleted');
