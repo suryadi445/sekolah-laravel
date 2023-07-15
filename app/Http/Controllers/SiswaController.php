@@ -79,6 +79,10 @@ class SiswaController extends Controller
             'image' => 'mimes:png,jpg,jpeg|max:2048'
         ]);
 
+        $ajaran_awal = getTahunAjaran()->thn_ajaran_awal;
+        $ajaran_akhir = getTahunAjaran()->thn_ajaran_akhir;
+
+
         if ($request->hasFile('image')) {
             $images = $request->file('image');
 
@@ -118,6 +122,8 @@ class SiswaController extends Controller
             'alamat_wali' => $request->alamat_wali,
             'image' => $image ?? '',
             'user' => Auth::id(),
+            'thn_ajaran_berjalan_awal' => $ajaran_awal,
+            'thn_ajaran_berjalan_akhir' => $ajaran_akhir,
         ]);
         $id_siswa = $insert->id;
 

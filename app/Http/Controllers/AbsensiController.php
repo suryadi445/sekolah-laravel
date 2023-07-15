@@ -108,6 +108,9 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $cek_absensi = Absensi::where('tgl_absensi', date('Y-m-d'))->where('id_mapel', $request->id_mapel)->where('kelas', $request->kelas)->orderByDesc('id')->first();
+        $ajaran_awal = getTahunAjaran()->thn_ajaran_awal;
+        $ajaran_akhir = getTahunAjaran()->thn_ajaran_akhir;
+
 
 
         for ($i = 0; $i < count($request->id_siswa); $i++) {
@@ -126,6 +129,8 @@ class AbsensiController extends Controller
                         'tgl_absensi' => $request->tgl_absensi,
                         'absensi' => $request->absensi[$i],
                         'keterangan' => $request->keterangan[$i],
+                        'tahun_ajaran_awal' => $ajaran_awal,
+                        'tahun_ajaran_akhir' => $ajaran_akhir,
                         'user' => Auth::id(),
                     ]);
             } else {
@@ -137,6 +142,8 @@ class AbsensiController extends Controller
                     'tgl_absensi' => $request->tgl_absensi,
                     'absensi' => $request->absensi[$i],
                     'keterangan' => $request->keterangan[$i],
+                    'tahun_ajaran_awal' => $ajaran_awal,
+                    'tahun_ajaran_akhir' => $ajaran_akhir,
                     'user' => Auth::id(),
                 ]);
             }

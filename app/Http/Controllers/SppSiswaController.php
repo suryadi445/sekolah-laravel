@@ -84,6 +84,9 @@ class SppSiswaController extends Controller
             "nominal" => 'numeric',
         ]);
 
+        $ajaran_awal = getTahunAjaran()->thn_ajaran_awal;
+        $ajaran_akhir = getTahunAjaran()->thn_ajaran_akhir;
+
 
         $insert = Spp::create([
             "bulan" => $request->bulan,
@@ -96,6 +99,8 @@ class SppSiswaController extends Controller
             "tipe_pembayaran" => $request->tipe_pembayaran,
             "keterangan" => $request->keterangan,
             "nominal" => $request->nominal,
+            'tahun_ajaran_awal' => $ajaran_awal,
+            'tahun_ajaran_akhir' => $ajaran_akhir,
             "user" => Auth::id(),
         ]);
 

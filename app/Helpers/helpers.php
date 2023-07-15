@@ -4,6 +4,7 @@ use App\Models\Mapel;
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Siswa;
+use App\Models\Th_ajaran;
 use Carbon\Carbon;
 
 /**
@@ -14,7 +15,11 @@ use Carbon\Carbon;
 if (!function_exists('rupiah')) {
     function rupiah($number)
     {
-        return number_format("$number", 0, ",", ".");
+        if ($number) {
+            return number_format("$number", 0, ",", ".");
+        } else {
+            return 0;
+        }
     }
 }
 
@@ -144,6 +149,13 @@ if (!function_exists('getUser')) {
     function getUser($id_user)
     {
         return User::where('id', $id_user)->first() ?? '';
+    }
+}
+
+if (!function_exists('getTahunAjaran')) {
+    function getTahunAjaran()
+    {
+        return Th_ajaran::first() ?? '';
     }
 }
 

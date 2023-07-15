@@ -106,8 +106,8 @@ class EvaluationController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request);
-
+        $ajaran_awal = getTahunAjaran()->thn_ajaran_awal;
+        $ajaran_akhir = getTahunAjaran()->thn_ajaran_akhir;
         $jumlah_siswa = count($request->id_siswa);
 
         for ($i = 0; $i < $jumlah_siswa; $i++) {
@@ -120,6 +120,8 @@ class EvaluationController extends Controller
                 'grade' => $request->grade[$i] ?? '',
                 'user' => Auth::id(),
                 'status' => $request->status[$i],
+                'tahun_ajaran_awal' => $ajaran_awal,
+                'tahun_ajaran_akhir' => $ajaran_akhir,
             ]);
         }
 

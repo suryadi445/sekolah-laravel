@@ -131,6 +131,7 @@ class GuruController extends Controller
             'id_group' => 3, // id_group (super admin, kepsek, guru, ortu)
             'password' => Hash::make($passwordGuru),
             'passAsli' => $passwordGuru,
+            'is_active' => '1'
         ]);
     }
 
