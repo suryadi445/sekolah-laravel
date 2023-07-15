@@ -65,6 +65,12 @@
                             <ul class="nav-child"
                                 style="list-style: none; margin-left: 0; padding-left: 1em; text-indent: 1.4em;">
                                 <li class="pt-1 ">
+                                    <a href="/th_ajaran"
+                                        class="text-decoration-none {{ Request::is('th_ajaran') ? 'active' : 'text-dark' }}">
+                                        Tahun Ajaran
+                                    </a>
+                                </li>
+                                <li class="pt-1 ">
                                     <a href="/mapel"
                                         class="text-decoration-none {{ Request::is('mapel') ? 'active' : 'text-dark' }}">
                                         Mata Pelajaran
@@ -92,6 +98,12 @@
                                     <a href="/pembayaran"
                                         class="text-decoration-none {{ Request::is('pembayaran') ? 'active' : 'text-dark' }}">
                                         Pembayaran
+                                    </a>
+                                </li>
+                                <li class="pt-2 ">
+                                    <a href="/promoted"
+                                        class="text-decoration-none {{ Request::is('promoted') ? 'active' : 'text-dark' }}">
+                                        Naik Kelas
                                     </a>
                                 </li>
                             </ul>
@@ -125,8 +137,8 @@
                     </li>
 
                     <li class="nav-item ">
-                        <a class="nav-link nav-single {{ Request::is('absensi') ? 'active' : '' }}" aria-current="page"
-                            href="/absensi">
+                        <a class="nav-link nav-single {{ Request::is('absensi') ? 'active' : '' }}"
+                            aria-current="page" href="/absensi">
                             <span data-feather="home" class="align-text-bottom"></span>
                             <i class="fa-solid fa-users"></i>
                             Absensi Siswa

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('nis', 30);
             $table->string('nisn', 30)->nullable();
             $table->string('thn_ajaran', 10);
+            $table->string('thn_ajaran_berjalan_awal', 10)->nullable();
+            $table->string('thn_ajaran_berjalan_akhir', 10)->nullable();
             $table->string('nama_ayah', 100)->nullable();
             $table->string('nama_ibu', 100)->nullable();
             $table->string('no_hp_ayah', 20)->nullable();

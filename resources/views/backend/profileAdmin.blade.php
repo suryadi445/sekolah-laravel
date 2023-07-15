@@ -80,8 +80,8 @@
 
                         <div class="col-sm-8">
                             <blockquote>
-                                {{ $kataPengantar->text }}
-                                <span class="text-capitalize">{{ getUser($kataPengantar->user)->name }}</span>
+                                {{ $kataPengantar->text ?? '' }}
+                                <span class="text-capitalize">{{ getUser($kataPengantar->user ?? '')->name ?? '' }}</span>
                             </blockquote>
                         </div>
                     </div>

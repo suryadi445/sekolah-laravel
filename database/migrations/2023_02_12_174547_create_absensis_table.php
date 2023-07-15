@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('absensi');
             $table->string('keterangan')->nullable();
             $table->string('user');
+            $table->string('tahun_ajaran_awal');
+            $table->string('tahun_ajaran_akhir');
             $table->timestamps();
         });
     }

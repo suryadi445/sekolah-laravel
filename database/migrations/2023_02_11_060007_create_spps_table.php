@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('nominal');
             $table->string('user');
+            $table->string('tahun_ajaran_awal');
+            $table->string('tahun_ajaran_akhir');
             $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });

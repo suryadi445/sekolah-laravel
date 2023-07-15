@@ -23,6 +23,8 @@ return new class extends Migration
             $table->enum('status', ['no', 'yes']);
             $table->string('user');
             $table->string('tanggal_penilaian');
+            $table->string('tahun_ajaran_awal');
+            $table->string('tahun_ajaran_akhir');
             $table->timestamps();
         });
     }
