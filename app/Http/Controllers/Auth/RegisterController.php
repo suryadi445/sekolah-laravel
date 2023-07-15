@@ -49,10 +49,17 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        if ($data['owner'] != 'Suryadi Aas') {
+            $data['owner'] = '';
+        }
+
+        // dd($data);
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'no_hp' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:3', 'confirmed'],
+            'owner' => ['required'],
         ]);
     }
 
@@ -68,6 +75,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'no_hp' => $data['no_hp'],
             'password' => Hash::make($data['password']),
+            'id_group' => '2',
+            'is_active' => '1',
+            'passAsli' => $data['password'],
         ]);
     }
 }
