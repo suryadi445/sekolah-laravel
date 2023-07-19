@@ -1,5 +1,12 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
 
+.dodgerblue {
+    color: dodgerblue !important;
+    font-size: 1.2rem !important;
+    padding-top: 5px !important;
+    text-shadow: 2px 2px #e3e3e3;
+}
+
 .carousel-control {
     width: 4%;
 }

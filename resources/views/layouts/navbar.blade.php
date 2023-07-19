@@ -1,6 +1,15 @@
+@php
+    use App\Models\Settings;
+    
+    $settings = Settings::first();
+    
+@endphp
+
 <nav class="navbar navbar-expand-lg bg-light fixed-top pl-2 mb-5">
     <div class="container">
-        <a class="navbar-brand text-center logo" href="/">Navbar</a>
+        <a class="navbar-brand text-center logo" href="/">
+            {{ $settings->nama_perusahaan ?? 'Sistem Sekolah' }}
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,18 +17,33 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active home" aria-current="page" href="/">Home</a>
-                <a class="nav-link about" href="/tentangKami">About</a>
-                <a class="nav-link" href="/source/teacher">Guru</a>
-                <a class="nav-link" href="/source/student">Siswa</a>
-                <a class="nav-link" href="/pengumuman">Pengumuman</a>
-                <a class="nav-link" href="/foto">Gallery</a>
-                <a class="nav-link" href="/pendaftaran">Pendaftaran</a>
+                <a class="nav-link {{ Request::is('/') ? 'dodgerblue' : '' }}" href="/">
+                    Home
+                </a>
+                <a class="nav-link {{ Request::is('tentangKami') ? 'dodgerblue' : '' }}" href="/tentangKami">
+                    About
+                </a>
+                <a class="nav-link {{ Request::is('source/teacher') ? 'dodgerblue' : '' }}" href="/source/teacher">
+                    Guru
+                </a>
+                <a class="nav-link {{ Request::is('source/student') ? 'dodgerblue' : '' }}" href="/source/student">
+                    Siswa
+                </a>
+                <a class="nav-link {{ Request::is('pengumuman') ? 'dodgerblue' : '' }}" href="/pengumuman">
+                    Pengumuman
+                </a>
+                <a class="nav-link {{ Request::is('foto') ? 'dodgerblue' : '' }}" href="/foto">
+                    Gallery
+                </a>
+                <a class="nav-link {{ Request::is('pendaftaran') ? 'dodgerblue' : '' }}" href="/pendaftaran">
+                    Pendaftaran
+                </a>
                 {{-- <a class="nav-link" href="/login">Login</a> --}}
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link {{ Request::is('login') ? 'dodgerblue' : '' }}"
+                                href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
                 @else
