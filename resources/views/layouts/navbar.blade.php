@@ -5,9 +5,9 @@
     
 @endphp
 
-<nav class="navbar navbar-expand-lg bg-light fixed-top pl-2 mb-5">
+<nav class="navbar navbar-expand-lg fixed-top pl-2 mb-5" style="background-color: #13603b">
     <div class="container">
-        <a class="navbar-brand text-center logo" href="/">
+        <a class="navbar-brand text-center logo navColors" href="/">
             {{ $settings->nama_perusahaan ?? 'Sistem Sekolah' }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -17,32 +17,32 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link {{ Request::is('/') ? 'dodgerblue' : '' }}" href="/">
+                <a class="nav-link {{ Request::is('/') ? 'navColor' : '' }}" href="/">
                     Home
                 </a>
-                <a class="nav-link {{ Request::is('tentangKami') ? 'dodgerblue' : '' }}" href="/tentangKami">
+                <a class="nav-link {{ Request::is('tentangKami') ? 'navColor' : '' }}" href="/tentangKami">
                     About
                 </a>
-                <a class="nav-link {{ Request::is('source/teacher') ? 'dodgerblue' : '' }}" href="/source/teacher">
+                <a class="nav-link {{ Request::is('source/teacher') ? 'navColor' : '' }}" href="/source/teacher">
                     Guru
                 </a>
-                <a class="nav-link {{ Request::is('source/student') ? 'dodgerblue' : '' }}" href="/source/student">
+                <a class="nav-link {{ Request::is('source/student') ? 'navColor' : '' }}" href="/source/student">
                     Siswa
                 </a>
-                <a class="nav-link {{ Request::is('pengumuman') ? 'dodgerblue' : '' }}" href="/pengumuman">
+                <a class="nav-link {{ Request::is('pengumuman') ? 'navColor' : '' }}" href="/pengumuman">
                     Pengumuman
                 </a>
-                <a class="nav-link {{ Request::is('foto') ? 'dodgerblue' : '' }}" href="/foto">
+                <a class="nav-link {{ Request::is('foto') ? 'navColor' : '' }}" href="/foto">
                     Gallery
                 </a>
-                <a class="nav-link {{ Request::is('pendaftaran') ? 'dodgerblue' : '' }}" href="/pendaftaran">
+                <a class="nav-link {{ Request::is('pendaftaran') ? 'navColor' : '' }}" href="/pendaftaran">
                     Pendaftaran
                 </a>
                 {{-- <a class="nav-link" href="/login">Login</a> --}}
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('login') ? 'dodgerblue' : '' }}"
+                            <a class="nav-link {{ Request::is('login') ? 'navColor' : '' }}"
                                 href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif

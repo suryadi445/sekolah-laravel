@@ -1,3 +1,13 @@
+@php
+    $textWelcome = 'Selamat datang di website resmi sekolah kami! Dengan sukacita dan penuh kebanggaan, saya sebagai Kepala Sekolah mengucapkan selamat datang kepada seluruh siswa, orangtua, guru, karyawan, dan seluruh anggota komunitas sekolah kami.Website ini merupakan wadah interaktif yang kami persembahkan untuk memberikan informasi terkini mengenai segala hal tentang sekolah kami. Di sini, Anda akan menemukan beragam informasi seputar program akademik, kegiatan ekstrakurikuler, prestasi siswa, dan berita terbaru dari sekolah. Kami mengundang Anda semua untuk menjelajahi website ini dengan antusiasme. Jangan ragu untuk menghubungi kami apabila ada pertanyaan, saran, atau dukungan yang ingin Anda berikan. Keterbukaan komunikasi adalah kunci utama dalam meningkatkan mutu dan kemajuan sekolah kita. Terima kasih telah menjadi bagian dari perjalanan pendidikan di sekolah kami. Bersama, mari kita wujudkan masa depan yang gemilang bagi generasi penerus bangsa ini.';
+    
+    $textNews = 'Setiap informasi terkini adalah sebuah undangan untuk terus berpetualang dalam perjalanan menuju pengetahuan dan kemajuan diri. Jadilah seperti spons yang meresapi ilmu, perubahan, dan pengalaman baru dengan antusiasme tanpa batas. Dalam setiap peristiwa, ada potensi besar untuk mengukir prestasi dan meraih impian tertinggi. Jangan pernah takut beradaptasi, karena siswa tangguh adalah yang mampu menaklukkan dunia yang terus berubah dengan bijaksana dan penuh semangat.
+    Semakin cepat kita memperoleh informasi, semakin luas pula wawasan kita. Oleh karena itu, sebagai siswa yang cerdas, janganlah engkau malas untuk selalu mengikuti perkembangan terkini. Pastikanlah selalu mengandalkan sumber informasi yang terpercaya dan sahih agar pengetahuanmu benar-benar berkualitas dan terus relevan dengan tuntutan zaman.';
+    
+    $kegiatan = 'Di setiap kegiatan siswa terdapat ruang untuk menggapai mimpi dan mewujudkan cita-cita. Dalam setiap langkah yang kau pilih, janganlah sekali pun engkau mengabaikan arti dari kesungguhan dan ketekunan. Hiasi perjalananmu dengan senyuman, karena ketulusan hati akan menumbuhkan kebaikan dan kemesraan di antara teman-temanmu. Ingatlah, bahwa kegiatan bukan sekadar rutinitas, tetapi simbol dari perjuangan tak kenal lelah menuju puncak kejayaan. Kau adalah penulis cerita hidupmu sendiri, dan kegiatan adalah bagian penting dari setiap bab dalam buku itu. Jadi, berani dan percayalah, dan biarkan kegiatanmu menerangi dunia dengan keunikan dan kebahagiaan yang hanya kau miliki.';
+@endphp
+
+
 @extends('layouts.landing')
 
 @section('container')
@@ -7,11 +17,23 @@
     <section id="carousel" class="pt-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
-                @foreach ($slideshow as $key => $slide)
-                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                        <img src="{{ $slide->image }}" class="d-block w-100" alt="image">
+                @if (count($slideshow) > 0)
+                    @foreach ($slideshow as $key => $slide)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img src="{{ $slide->image }}" class="d-block w-100" alt="image">
+                        </div>
+                    @endforeach
+                @else
+                    <div class="carousel-item active">
+                        <img src="{{ asset('/images/default/board.jpg') }}" class="d-block w-100" alt="image">
                     </div>
-                @endforeach
+                    <div class="carousel-item">
+                        <img src="{{ asset('/images/default/img.jpg') }}" class="d-block w-100" alt="image">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('/images/default/class.jpg') }}" class="d-block w-100" alt="image">
+                    </div>
+                @endif
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">
@@ -34,11 +56,11 @@
                         <div class="row">
                             <div class="col-sm-8" data-aos="fade-right" data-aos-duration="1500">
                                 <h1>Welcome</h1>
-                                {{ $introduction->text ?? '' }}
+                                {{ $introduction->text ?? $textWelcome }}
                             </div>
                             <div class="col-sm-4" data-aos="fade-left" data-aos-duration="1500">
-                                <img src="{{ $introduction->image ?? '' }}" class="rounded img-fluid img-thumbnail"
-                                    alt="image">
+                                <img src="{{ $introduction->image ?? asset('/images/default/profiles.jpg') }}"
+                                    class="rounded img-fluid img-thumbnail" alt="image">
                             </div>
                         </div>
                     </div>
@@ -102,16 +124,32 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row mt-5 d-flex justify-content-center">
+                        <a href="/latest" class="col-sm-3 btn btn-info">
+                            <span>Berita Selengkapnya
+                                <i class="fa-solid fa-right-long"></i>
+                            </span>
+                        </a>
+                    </div>
+                @else
+                    <div class="row mt-5">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4" data-aos="zoom-out-up" data-aos-duration="1500">
+                                    <img src="{{ asset('/images/default/info.jpg') }}"
+                                        class="d-block w-100 rounded img-fluid img-thumbnail" alt="image">
+                                </div>
+                                <div class="col-sm-8" data-aos="zoom-out-up" data-aos-delay="1000"
+                                    data-aos-duration="1500">
+                                    <p>
+                                        {{ $textNews }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endif
-
-
-                <div class="row mt-5 d-flex justify-content-center">
-                    <a href="/latest" class="col-sm-3 btn btn-info">
-                        <span>Berita Selengkapnya
-                            <i class="fa-solid fa-right-long"></i>
-                        </span>
-                    </a>
-                </div>
             </div>
         </section>
 
@@ -159,6 +197,26 @@
                                     <a href="/aktifitas" class="d-flex align-items-center justify-content-center h-100">
                                         Baca Selengkapnya
                                     </a>
+                                </div>
+                            @else
+                                <div class="col-sm-6">
+                                    <div class="card mb-3" style="min-width: 880px;">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="{{ asset('/images/default/school.jpg') }}"
+                                                    class="img-fluid rounded-start h-100" alt="image"
+                                                    data-aos="flip-left" data-aos-duration="2500">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body" data-aos="fade-zoom-in" data-aos-duration="1500"
+                                                    data-aos-delay="1000">
+                                                    <p class="card-text">
+                                                        {{ $kegiatan }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -227,6 +285,62 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                @else
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('/images/default/alumni.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('/images/default/alumni2.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('/images/default/alumni3.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('/images/default/student.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('/images/default/students.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-12 mb-3" data-aos="fade-right"
+                                                data-aos-duration="1500">
+                                                <div class="shadow p-3 mb-5 bg-body">
+                                                    <img class="img-fluid" src="{{ asset('/images/default/murid.jpg') }}"
+                                                        style="width: 100%; height: 25vw; object-fit: contain;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                         </div>

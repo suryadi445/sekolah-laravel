@@ -2,7 +2,7 @@
 
 
 @section('container')
-    @include('layouts.jumbotron', $jumbotron)
+    @include('layouts.jumbotron', $jumbotron, $data)
     @include('components.toast')
 
 
@@ -40,8 +40,8 @@
                                 <div class="row row-cols-1 row-cols-md-2 g-4">
                                     <div class="col">
                                         <div class="card">
-                                            <img src="{{ $profile->image ?? '' }}" class="card-img-top w-100 h-50"
-                                                alt="image">
+                                            <img src="{{ $profile->image ?? asset('/images/default/abc.jpg') }}"
+                                                class="card-img-top w-100 h-50" alt="image">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Profile Kami</h5>
                                                 <a href="/tentangKami/profile">
@@ -52,7 +52,8 @@
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            <img src="{{ $sejarah->image ?? '' }}" class="card-img-top" alt="image">
+                                            <img src="{{ $sejarah->image ?? asset('/images/default/about.png') }}"
+                                                class="card-img-top" alt="image">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Sejarah Kami</h5>
                                                 <a href="/tentangKami/sejarah">

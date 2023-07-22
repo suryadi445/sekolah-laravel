@@ -20,7 +20,7 @@ class TentangKamiController extends Controller
         $sejarah    = DefaultWeb::where('url', 'like', 'tentangKami/sejarah%')->first();
         $karir      = Career::orderBy('deadline')->paginate(9);
         $jenis_jabatan = Career::groupBy('jabatan')->get();
-
+        $data = $this->default();
 
         if (empty($jumbotron)) {
             $jumbotron = [];
@@ -29,13 +29,15 @@ class TentangKamiController extends Controller
         if ($slug) {
             if ($slug == 'profile') {
                 $detail = About::where('slug', 'profile')->first();
+                $data = $this->default_profile();
             } elseif ($slug == 'sejarah') {
                 $detail = About::where('slug', 'sejarah')->first();
+                $data = $this->default_sejarah();
             }
 
-            return view('frontend.detailTentangKami', compact(['jumbotron', 'profile', 'sejarah', 'detail', 'jenis_jabatan', 'karir']));
+            return view('frontend.detailTentangKami', compact(['jumbotron', 'profile', 'sejarah', 'detail', 'jenis_jabatan', 'karir', 'data']));
         } else {
-            return view('frontend.tentangKami', compact(['jumbotron', 'profile', 'sejarah', 'jenis_jabatan', 'karir']));
+            return view('frontend.tentangKami', compact(['jumbotron', 'profile', 'sejarah', 'jenis_jabatan', 'karir', 'data']));
         }
     }
 
@@ -84,5 +86,32 @@ class TentangKamiController extends Controller
         }
 
         return redirect('tentangKami');
+    }
+
+    public function default()
+    {
+
+        $data['judul']      = 'Tentang Kami';
+        $data['text']       = 'Kami adalah sekolah yang berdedikasi untuk menciptakan lingkungan belajar yang menginspirasi dan mendukung pertumbuhan holistik setiap siswa. Dengan fokus pada pembelajaran kolaboratif, pengembangan karakter, dan penerimaan terhadap keberagaman, kami berkomitmen untuk menciptakan iklim yang inklusif dan menghargai perspektif beragam. Guru kami tidak hanya sebagai pendidik, tetapi juga sebagai mentor yang memberdayakan siswa untuk mencapai potensi penuh mereka. Di sini, siswa kami dipersiapkan untuk menghadapi tantangan dunia dengan kepercayaan diri, integritas, dan semangat berinovasi. Selamat datang di sekolah kami, di mana mimpi-mimpi menjadi nyata dan prestasi merayakan keberhasilan!';
+
+        return $data;
+    }
+
+    public function default_profile()
+    {
+
+        $data['judul_profile']      = 'Profile Sekolah Kami';
+        $data['profile'] = 'Kami adalah sekolah yang berdedikasi untuk menciptakan lingkungan belajar yang menginspirasi dan mendukung pertumbuhan holistik setiap siswa. Dengan fokus pada pembelajaran kolaboratif, pengembangan karakter, dan penerimaan terhadap keberagaman, kami berkomitmen untuk menciptakan iklim yang inklusif dan menghargai perspektif beragam. Guru kami tidak hanya sebagai pendidik, tetapi juga sebagai mentor yang memberdayakan siswa untuk mencapai potensi penuh mereka. Di sini, siswa kami dipersiapkan untuk menghadapi tantangan dunia dengan kepercayaan diri, integritas, dan semangat berinovasi. Selamat datang di sekolah kami, di mana mimpi-mimpi menjadi nyata dan prestasi merayakan keberhasilan!';
+
+        return $data;
+    }
+
+    public function default_sejarah()
+    {
+
+        $data['judul_profile']      = 'Sejarah Sekolah Kami';
+        $data['profile'] = 'Sejarah sekolah kami kaya akan perjalanan panjang yang berakar kuat. Sejak berdirinya sekolah kami, kami telah tumbuh menjadi lembaga pendidikan yang dihormati, menempuh berbagai tantangan dan pencapaian yang mengesankan. Selama perjalanan ini, kami telah memberikan kontribusi yang berarti bagi pendidikan dan masyarakat. Dengan dedikasi guru dan staf yang luar biasa, serta dukungan penuh dari orang tua dan siswa, sekolah kami terus berkembang sebagai tempat di mana mimpi-mimpi menjadi nyata, dan setiap siswa meraih prestasi gemilang untuk masa depan yang cerah.';
+
+        return $data;
     }
 }

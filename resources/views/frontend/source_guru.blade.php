@@ -1,8 +1,7 @@
 @extends('layouts.landing')
 
-
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $data)
 
     <div class="container mb-5">
         <section id="teacher">
@@ -37,10 +36,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row justify-content-center">
-                        @foreach ($data as $item)
+                        @foreach ($datas as $item)
                             <div class="col-sm-4 mt-5 justify-content-center d-flex">
                                 <div class="card" style="width: 18rem;">
-                                    <img src="{{ $item->image == '' ? asset('images/upload/image.png') : $item->image }}"
+                                    <img src="{{ $item->image == '' ? asset('images/default/avatar.png') : $item->image }}"
                                         class="card-img-top" alt="image">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-capitalize">{{ $item->nama_guru . ' ' . $item->gelar }}
@@ -64,7 +63,7 @@
 
 
             <div class="d-flex justify-content-center mt-5">
-                {!! $data->links() !!}
+                {!! $datas->links() !!}
             </div>
         </section>
     </div>

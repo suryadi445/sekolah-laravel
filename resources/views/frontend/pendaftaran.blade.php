@@ -2,7 +2,7 @@
 
 
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $data)
 
     <div class="container">
         <div class="row mt-5">

@@ -4,15 +4,15 @@
 @section('container')
     <section id="history">
         <div class="container mt-5 pt-5">
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-sm-8">
-                    <h2>{{ $detail->judul ?? '' }}</h2>
+                    <h2>{{ $detail->judul ?? $data['judul_profile'] }}</h2>
                     <p>
-                        {{ $detail->text }}
+                        {{ $detail->text ?? $data['profile'] }}
                     </p>
                 </div>
                 <div class="col-sm-4">
-                    <img src="{{ $detail->image }}" class="img-fluid" alt="image">
+                    <img src="{{ $detail->image ?? asset('/images/default/schools.jpg') }}" class="img-fluid" alt="image">
                 </div>
             </div>
         </div>

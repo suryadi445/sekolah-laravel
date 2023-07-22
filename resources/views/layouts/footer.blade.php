@@ -6,8 +6,8 @@
                     <div class="col-sm-12">
                         <div class="row text-center text-light ">
                             <div class="col-sm-4 text-capitalize">
-                                <img src="{{ asset('images/upload/image.png') }}" class="d-block w-100 mb-2"
-                                    alt="image">
+                                <img src="{{ $identity['logo'] ?? asset('/images/default/dikbud.png') }}" class=" mb-2"
+                                    style="height: 130px; width: 130px;" alt="image">
                                 <h4>
                                     @if ($identity['nama_perusahaan'] ?? '')
                                         {{ $identity['nama_perusahaan'] }}
@@ -62,40 +62,73 @@
                             </div>
                             <div class="col-sm-4">
                                 <h4>Ikuti Kami</h4>
-                                @if ($identity['facebook'] ?? '')
+                                @if (!empty($identity['facebook']))
                                     <p>
                                         <a href="{{ $identity['facebook'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-facebook"></i>
                                             Facebook
                                         </a>
                                     </p>
+                                @else
+                                    <p>
+                                        <a href="javascript:void(0)" class="text-decoration-none">
+                                            <i class="me-1 fa-brands fa-square-facebook"></i>
+                                            Facebook
+                                        </a>
+                                    </p>
                                 @endif
-                                @if ($identity['ig'] ?? '')
+                                @if (!empty($identity['ig']))
                                     <p>
                                         <a href="{{ $identity['ig'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-instagram"></i> Instagram
                                         </a>
                                     </p>
+                                @else
+                                    <p>
+                                        <a href="javascript:void(0)" class="text-decoration-none">
+                                            <i class="me-1 fa-brands fa-square-instagram"></i> Instagram
+                                        </a>
+                                    </p>
                                 @endif
-                                @if ($identity['twitter'] ?? '')
+                                @if (!empty($identity['twitter']))
                                     <p>
                                         <a href="{{ $identity['twitter'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-twitter"></i>
                                             Twitter
                                         </a>
                                     </p>
+                                @else
+                                    <p>
+                                        <a href="javascript:void(0)" class="text-decoration-none">
+                                            <i class="me-1 fa-brands fa-square-twitter"></i>
+                                            Twitter
+                                        </a>
+                                    </p>
                                 @endif
-                                @if ($identity['youtube'] ?? '')
+                                @if (!empty($identity['youtube']))
                                     <p>
                                         <a href="{{ $identity['youtube'] }}" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-square-youtube"></i>
                                             Youtube
                                         </a>
                                     </p>
+                                @else
+                                    <p>
+                                        <a href="javascript:void(0)" class="text-decoration-none">
+                                            <i class="me-1 fa-brands fa-square-youtube"></i>
+                                            Youtube </a>
+                                    </p>
                                 @endif
-                                @if ($identity['linkedin'] ?? '')
+                                @if (!empty($identity['linkedin']))
                                     <p>
                                         <a href="{{ $identity['linkedin'] }}" class="text-decoration-none">
+                                            <i class="me-1 fa-brands fa-linkedin"></i>
+                                            Linked In
+                                        </a>
+                                    </p>
+                                @else
+                                    <p>
+                                        <a href="javascript:void(0)" class="text-decoration-none">
                                             <i class="me-1 fa-brands fa-linkedin"></i>
                                             Linked In
                                         </a>
@@ -110,8 +143,10 @@
             <div class="footer-copyright mt-5">
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-12">
-                        <p class="copyright text-center text-light text-capitalize">&copy; 2022
-                            {{ $identity['nama_perusahaan'] ?? '' }}</p>
+                        <p class="copyright text-center text-light text-capitalize">&copy; 2022 - {{ date('Y') }}
+                            {{ $identity['nama_perusahaan'] ?? 'Suryadi' }}
+                            | All Rights Reserved
+                        </p>
                     </div>
                 </div>
             </div>

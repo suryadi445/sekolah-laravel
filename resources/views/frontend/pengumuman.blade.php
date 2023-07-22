@@ -2,7 +2,7 @@
 
 
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $data)
 
     <div class="container">
         <div class="row mt-5">
@@ -12,25 +12,46 @@
         </div>
         <div class="row mt-3 mb-5">
             <div class="col-sm-12">
-                @foreach ($pengumuman as $item)
+                @if (count($pengumuman))
+                    @foreach ($pengumuman as $item)
+                        <div class="row mt-5">
+                            <div class="col-sm-3 bg-success text-center">
+                                <h1 style="font-size: 9em">
+                                    {{ date('d', strtotime($item->tanggal)) }}
+                                </h1>
+                                <h3 class="text-capitalize">
+                                    {{ bulan('m', strtotime($item->tanggal)) }}
+                                </h3>
+                                <h3>
+                                    {{ date('Y', strtotime($item->tanggal)) }}
+                                </h3>
+                            </div>
+                            <div class="offset-sm-1 col-sm-8">
+                                <h1 class="text-uppercase">{{ $item->judul }}</h1>
+                                <p>{{ $item->text }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
                     <div class="row mt-5">
                         <div class="col-sm-3 bg-success text-center">
                             <h1 style="font-size: 9em">
-                                {{ date('d', strtotime($item->tanggal)) }}
+                                01
                             </h1>
                             <h3 class="text-capitalize">
-                                {{ bulan('m', strtotime($item->tanggal)) }}
+                                {{ date('F') }}
                             </h3>
                             <h3>
-                                {{ date('Y', strtotime($item->tanggal)) }}
+                                {{ date('Y') }}
                             </h3>
                         </div>
                         <div class="offset-sm-1 col-sm-8">
-                            <h1 class="text-uppercase">{{ $item->judul }}</h1>
-                            <p>{{ $item->text }}</p>
+                            <h1 class="text-uppercase">{{ $data['judul_pengumuman'] }}</h1>
+                            <p>{{ $data['text_pengumuman'] }}</p>
                         </div>
                     </div>
-                @endforeach
+                @endif
+
 
             </div>
         </div>
