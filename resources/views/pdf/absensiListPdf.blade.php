@@ -28,30 +28,40 @@
         </div>
     </div>
 
-    <table class="table table-bordered" style="table-layout:fixed;">
+    <table class="table table-bordered text-center" style="table-layout:fixed;">
         <thead class="p-0">
             <tr>
                 <th>No</th>
                 <th>Nama Siswa</th>
+                <th>Kelas</th>
                 <th>Jumlah Masuk</th>
                 <th>Jumlah Tidak Masuk</th>
                 <th>Jumlah Sakit</th>
                 <th>Jumlah Izin</th>
                 <th>Jumlah Alpha</th>
+                <th>Tanpa Keterangan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $key => $row)
+            @if (!empty($data))
+                @foreach ($data as $key => $row)
+                    <tr>
+                        <th>{{ $key + 1 }}</th>
+                        <td>{{ ucwords($row['nama_siswa']) }}</td>
+                        <td>{{ $row['kelas'] }}</td>
+                        <td>{{ $row['jumlahMasuk'] }}</td>
+                        <td class="text-danger">{{ $row['jumlahGaMasuk'] }}</td>
+                        <td>{{ $row['jumlahSakit'] }}</td>
+                        <td>{{ $row['jumlahIzin'] }}</td>
+                        <td>{{ $row['jumlahAlpha'] }}</td>
+                        <td>{{ $row['tanpaKeterangan'] }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <th>{{ $key + 1 }}</th>
-                    <td>{{ $row['nama_siswa'] }}</td>
-                    <td>{{ $row['jumlahMasuk'] }}</td>
-                    <td>{{ $row['jumlahGaMasuk'] }}</td>
-                    <td>{{ $row['jumlahSakit'] }}</td>
-                    <td>{{ $row['jumlahIzin'] }}</td>
-                    <td>{{ $row['jumlahAlpha'] }}</td>
+                    <td class="text-danger" colspan="100%">Data Tidak Tersedia</td>
                 </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
 

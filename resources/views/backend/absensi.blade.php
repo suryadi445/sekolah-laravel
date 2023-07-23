@@ -27,25 +27,42 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="/absensi/exportPdf?kelas={{ request('kelas') }}&tipe=absensi"
+                                    <div class="col-md-4">
+                                        <div class="btn-group w-100" role="group" aria-label="Basic example">
+                                            <a href="/absensi/exportPdf?kelas={{ request('kelas') . '&tipe=absensi' . '&tgl_absensi=' . request('tgl_absensi') . '&id_mapel=' . request('id_mapel') . '&thn_ajaran=' . request('thn_ajaran') }}"
                                                 target="_blank" class="btn btn-success">
                                                 <span class="me-1">Print PDF</span>
                                                 <i class="fa-solid fa-file-pdf"></i>
                                             </a>
-                                            <a href="/absensi/exportExcel?kelas={{ request('kelas') }}&tipe=absensi"
+                                            <a href="/absensi/exportExcel?kelas={{ request('kelas') . '&tipe=absensi' . '&tgl_absensi=' . request('tgl_absensi') . '&id_mapel=' . request('id_mapel') . '&thn_ajaran=' . request('thn_ajaran') }}"
                                                 target="_blank" class="btn btn-warning">
                                                 <span class="me-1">Print Excel</span>
                                                 <i class="fa-solid fa-file-excel"></i>
                                             </a>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <select name="thn_ajaran" id="thn_ajaran_absensi" class="form-select selectTab">
+                                            <option value="{{ $ajaran_awal . '-' . $ajaran_akhir }}" selected>
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal . '-' . $ajaran_akhir }}
+                                            </option>
+                                            <option
+                                                {{ request('thn_ajaran') == $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 ? 'selected' : '' }}
+                                                value="{{ $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 }}">
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 }}
+                                            </option>
+                                            <option
+                                                {{ request('thn_ajaran') == $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 ? 'selected' : '' }}
+                                                value="{{ $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 }}">
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 }}
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-3 mt-1 mb-1">
-                                        <input type="date" class="form-control" name="tgl_absensi"
-                                            value="{{ date('Y-m-d') }}" required>
+                                        <input type="date" class="form-control" name="tgl_absensi" id="tgl_absensi"
+                                            value="{{ request('tgl_absensi') ? request('tgl_absensi') : '' }}" required>
                                     </div>
                                     <div class="col-md-3 mt-1 mb-1">
                                         <select name="id_mapel" id="id_mapel" class="form-select selectTab" required>
@@ -53,7 +70,8 @@
                                                 Pilih Mata Pelajaran
                                             </option>
                                             @foreach ($mapel as $item)
-                                                <option value="{{ $item->id }}">{{ $item->mata_pelajaran }}</option>
+                                                <option {{ request('id_mapel') == $item->id ? 'selected' : '' }}
+                                                    value="{{ $item->id }}">{{ $item->mata_pelajaran }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -153,27 +171,44 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="/absensi/exportPdf?kelas={{ request('daftar_kelas') }}&tipe=list"
+                                    <div class="col-md-4">
+                                        <div class="btn-group w-100" role="group" aria-label="Basic example">
+                                            <a href="/absensi/exportPdf?kelas={{ request('daftar_kelas') . '&tipe=list' . '&daftar_tanggal=' . request('daftar_tanggal') . '&daftar_mapel=' . request('daftar_mapel') . '&thn_ajaran=' . request('thn_ajaran') }}"
                                                 target="_blank" class="btn btn-success">
                                                 <span class="me-1">Print PDF</span>
                                                 <i class="fa-solid fa-file-pdf"></i>
                                             </a>
-                                            <a href="/absensi/exportExcel?kelas={{ request('daftar_kelas') }}&tipe=list"
+                                            <a href="/absensi/exportExcel?kelas={{ request('daftar_kelas') . '&tipe=list' . '&daftar_tanggal=' . request('daftar_tanggal') . '&daftar_mapel=' . request('daftar_mapel') . '&thn_ajaran=' . request('thn_ajaran') }}"
                                                 target="_blank" class="btn btn-warning">
                                                 <span class="me-1">Print Excel</span>
                                                 <i class="fa-solid fa-file-excel"></i>
                                             </a>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <select name="thn_ajaran" id="thn_ajaran_daftarAbsensi"
+                                            class="form-select selectTab">
+                                            <option value="{{ $ajaran_awal . '-' . $ajaran_akhir }}" selected>
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal . '-' . $ajaran_akhir }}
+                                            </option>
+                                            <option
+                                                {{ request('thn_ajaran') == $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 ? 'selected' : '' }}
+                                                value="{{ $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 }}">
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal - 1 . '-' . $ajaran_akhir - 1 }}
+                                            </option>
+                                            <option
+                                                {{ request('thn_ajaran') == $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 ? 'selected' : '' }}
+                                                value="{{ $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 }}">
+                                                {{ 'Tahun Ajaran : ' . $ajaran_awal - 2 . '-' . $ajaran_akhir - 2 }}
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-3 mt-1 mb-1">
                                         <input type="date" class="form-control" name="tgl_absensi"
                                             id="tgl_daftarAbsensi"
-                                            value="{{ request('daftar_tanggal') ? request('daftar_tanggal') : date('Y-m-d') }}"
-                                            required>
+                                            value="{{ request('daftar_tanggal') ? request('daftar_tanggal') : '' }}">
                                     </div>
                                     <div class="col-md-3 mt-1 mb-1">
                                         <select name="id_mapel" id="id_mapel_daftarAbsensi" class="form-select selectTab"
@@ -206,10 +241,10 @@
                                 <div class="row container">
                                     <div class="col-sm-3">
                                         <span class="d-block">Siswa Masuk : {{ $jumlah_siswa['masuk'] }} </span>
-                                        <span class="d-block">Siswa Sakit : {{ $jumlah_siswa['izin'] }} </span>
+                                        <span class="d-block">Siswa Sakit : {{ $jumlah_siswa['sakit'] }} </span>
                                     </div>
                                     <div class="col-sm-3">
-                                        <span class="d-block">Siswa Izin : {{ $jumlah_siswa['sakit'] }} </span>
+                                        <span class="d-block">Siswa Izin : {{ $jumlah_siswa['izin'] }} </span>
                                         <span class="d-block">Siswa Alpha : {{ $jumlah_siswa['alpha'] }}</span>
                                     </div>
                                 </div>
@@ -300,44 +335,85 @@
     <script>
         $(function() {
 
-
             $('.tabs').on('click', function() {
                 $('.selectTab').val('')
                 window.history.replaceState(null, null, window.location.pathname);
             })
 
+            $('#absensi-tab').on('click', function() {
+                $('#thn_ajaran_absensi option:first').prop('selected', true);
+            })
+
+            $('#list-tab').on('click', function() {
+                $('#thn_ajaran_daftarAbsensi option:first').prop('selected', true);
+            })
+
             // absensi
             $(document).on('change', '#kelas', function() {
                 var kelas = $(this).val();
-                window.location = "/absensi?kelas=" + kelas;
+                var id_mapel = $('#id_mapel').val();
+                var tgl_absensi = $('#tgl_absensi').val();
+                window.location = "/absensi?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl_absensi=' +
+                    tgl_absensi;
+            })
+
+            $(document).on('change', '#id_mapel', function() {
+                var id_mapel = $(this).val();
+                var tgl_absensi = $('#tgl_absensi').val();
+                var kelas = $('#kelas').val();
+                window.location = "/absensi?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl_absensi=' +
+                    tgl_absensi;
+            })
+
+            $(document).on('change', '#tgl_absensi', function() {
+                var tgl_absensi = $(this).val();
+                var kelas = $('#kelas').val();
+                var id_mapel = $('#id_mapel').val();
+                window.location = "/absensi?kelas=" + kelas + '&id_mapel=' + id_mapel + '&tgl_absensi=' +
+                    tgl_absensi;
+            })
+
+            $(document).on('change', '#thn_ajaran_absensi', function() {
+                var thn_ajaran_daftarAbsensi = $(this).val();
+                window.location = "/absensi?thn_ajaran=" + thn_ajaran_daftarAbsensi;
             })
 
             // daftar absensi
+            $(document).on('change', '#thn_ajaran_daftarAbsensi', function() {
+                var thn_ajaran_daftarAbsensi = $(this).val();
+                window.location = "/absensi?thn_ajaran=" + thn_ajaran_daftarAbsensi;
+            })
+
             $(document).on('change', '#kelas_daftarAbsensi', function() {
                 var kelas = $('#kelas_daftarAbsensi').val();
                 var mapel = $('#id_mapel_daftarAbsensi').val();
+                var thn_ajaran_daftarAbsensi = $('#thn_ajaran_daftarAbsensi').val();
                 var tgl = $('#tgl_daftarAbsensi').val();
 
+
                 window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
-                    "&daftar_tanggal=" + tgl;
+                    "&daftar_tanggal=" + tgl + "&thn_ajaran=" + thn_ajaran_daftarAbsensi;
             })
 
             $(document).on('change', '#id_mapel_daftarAbsensi', function() {
                 var kelas = $('#kelas_daftarAbsensi').val();
                 var mapel = $('#id_mapel_daftarAbsensi').val();
+                var thn_ajaran_daftarAbsensi = $('#thn_ajaran_daftarAbsensi').val();
                 var tgl = $('#tgl_daftarAbsensi').val();
 
                 window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
-                    "&daftar_tanggal=" + tgl;
+                    "&daftar_tanggal=" + tgl + "&thn_ajaran=" + thn_ajaran_daftarAbsensi;
             })
 
             $(document).on('change', '#tgl_daftarAbsensi', function() {
                 var kelas = $('#kelas_daftarAbsensi').val();
                 var mapel = $('#id_mapel_daftarAbsensi').val();
+                var thn_ajaran_daftarAbsensi = $('#thn_ajaran_daftarAbsensi').val();
                 var tgl = $('#tgl_daftarAbsensi').val();
 
+
                 window.location = "/absensi?daftar_kelas=" + kelas + "&daftar_mapel=" + mapel +
-                    "&daftar_tanggal=" + tgl;
+                    "&daftar_tanggal=" + tgl + "&thn_ajaran=" + thn_ajaran_daftarAbsensi;
             })
 
 

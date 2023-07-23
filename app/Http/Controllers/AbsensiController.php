@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
-use App\Models\Mapel;
-use App\Models\Siswa;
-use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -14,70 +11,33 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class AbsensiController extends Controller
 {
+    protected $model;
+
+    public function __construct(Absensi $modelAbsensi)
+    {
+        $this->model = $modelAbsensi;
+    }
+
     public function index()
     {
-        // QUERY ABSENSI--------------------------------
-        // query untuk menampilkan filter kelas 
         $id_guru = userLogin()->id_guru;
-        $kelas = Kelas::select('kelas', 'sub_kelas')->where('id_guru', $id_guru)->get();
-        // query ubtuk absensi siswa
         $paramKelas = request('kelas');
-        if ($paramKelas) {
-            $string = urldecode($paramKelas);
-            $array = explode(" ", $string);
-            $class = $array[0];
-            $subClass = $array[1];
-        }
-        $murid = Siswa::orderByRaw('kelas asc, sub_kelas asc, nama_siswa asc');
-        if ($paramKelas) {
-            $murid->where('kelas', $class);
-            $murid->where('sub_kelas', $subClass);
-        }
-        $murid = $murid->get();
-
-        $siswa = [];
-        foreach ($murid as $value) {
-            $kelasSiswa = $value->kelas;
-            $subKelasSiswa = $value->sub_kelas;
-            foreach ($kelas as  $val) {
-                $kelasKelas = $val->kelas;
-                $subKelasKelas = $val->sub_kelas;
-                if ($kelasSiswa == $kelasKelas && $subKelasKelas == $subKelasSiswa) {
-                    $siswa[] = $value;
-                }
-            }
-        }
-
-        // QUERY DAFTAR ABSENSI--------------------------------
-        $cek_absensi = Absensi::where('tgl_absensi', date('Y-m-d'))->groupBy('id_mapel')->orderByDesc('id')->first();
         $tanggal = request('daftar_tanggal');
         $mapel = request('daftar_mapel');
         $kls = request('daftar_kelas');
-        $absensi = Absensi::join('siswas', 'absensis.id_siswa', '=', 'siswas.id');
-        // filter mata pelajaran 
-        if (!empty($mapel)) {
-            $absensi->where('absensis.id_mapel', $mapel);
-        }
-        // filter kelas 
-        if (!empty($kls)) {
-            $absensi->where('absensis.kelas', $kls);
-        }
-        // filter tanggal
-        if (empty($tanggal)) {
-            $absensi->where('tgl_absensi', date('Y-m-d'));
-        } else {
-            $absensi->where('tgl_absensi', $tanggal);
-        }
-        $absensi->select('absensis.*', 'siswas.nama_siswa', 'siswas.jenis_kelamin', 'siswas.nis');
-        $absensi->orderByRaw('absensis.tgl_absensi, siswas.nama_siswa')->get();
-        $absensis = $absensi->get();
+
+        $kelas = $this->model->getKelas($id_guru);
+        $siswa = $this->model->absensi($id_guru, $paramKelas);
+        $absensis = $this->model->daftarAbsensi($tanggal, $mapel, $kls);
+        $cek_absensi = $this->model->cekAbsensi();
+        $getMapel = $this->model->mapel();
 
         // meghitung jumlah siswa yg absen
         $masuk = 0;
         $izin = 0;
         $sakit = 0;
         $alpha = 0;
-        foreach ($absensis as $key => $value) {
+        foreach ($absensis as $value) {
             if ($value->absensi == 'yes') {
                 $masuk += 1;
             }
@@ -99,7 +59,9 @@ class AbsensiController extends Controller
         $data['absensi'] = $absensis;
         $data['jumlah_all'] = count($data['absensi']);
         $data['jumlah_siswa'] = ['masuk' => $masuk, 'izin' => $izin, 'sakit' => $sakit, 'alpha' => $alpha];
-        $data['mapel'] = Mapel::orderBy('mata_pelajaran')->get();
+        $data['mapel'] = $getMapel;
+        $data['ajaran_awal'] = getTahunAjaran()->thn_ajaran_awal;
+        $data['ajaran_akhir'] = getTahunAjaran()->thn_ajaran_akhir;
 
 
         return view('backend.absensi', $data);
@@ -107,12 +69,12 @@ class AbsensiController extends Controller
 
     public function store(Request $request)
     {
-        $cek_absensi = Absensi::where('tgl_absensi', date('Y-m-d'))->where('id_mapel', $request->id_mapel)->where('kelas', $request->kelas)->orderByDesc('id')->first();
+        $id_mapel = $request->id_mapel;
+        $kelas = $request->kelas;
         $ajaran_awal = getTahunAjaran()->thn_ajaran_awal;
         $ajaran_akhir = getTahunAjaran()->thn_ajaran_akhir;
 
-
-
+        $cek_absensi = $this->model->absensiToday($id_mapel, $kelas);
         for ($i = 0; $i < count($request->id_siswa); $i++) {
 
             if ($cek_absensi) {
@@ -183,31 +145,60 @@ class AbsensiController extends Controller
         $kelas = request('kelas');
         $tipe = request('tipe');
 
+        $paramThnAjaranAwal = explode('-', request('thn_ajaran'))[0] ?? '';
+        $paramThnAjaranAkhir = explode('-', request('thn_ajaran'))[1] ?? '';
+        $thnAwalDefault = getTahunAjaran()->thn_ajaran_awal;
+        $thnAkhirDefault = getTahunAjaran()->thn_ajaran_akhir;
+
+        // menentukan parameter default
+        $ajaran_awal = empty(request('thn_ajaran')) ? $thnAwalDefault : $paramThnAjaranAwal;
+        $ajaran_akhir = empty(request('thn_ajaran')) ? $thnAkhirDefault : $paramThnAjaranAkhir;
+
+
         if ($tipe == 'absensi') {
 
-            $header = ['Kelas', 'Tanggal Absensi', 'Absensi', 'Keterangan', 'Nama Siswa', 'Mata Pelajaran'];
+            $daftar_mapel = request('id_mapel');
+            $daftar_tanggal = request('tgl_absensi');
+
+            $header = ['Kelas', 'Nama Siswa', 'Absensi', 'Keterangan', 'Tanggal Absensi',  'Mata Pelajaran', 'Tahun Ajaran Awal', 'Tahun Ajaran Akhir'];
         } else {
 
-            $header = ['Nama Siswa', 'Masuk', 'Tidak Masuk', 'Sakit', 'Izin', 'Alpha'];
+            $daftar_mapel = request('daftar_mapel');
+            $daftar_tanggal = request('daftar_tanggal');
+
+            $header = ['Nama Siswa', 'Kelas', 'Jumlah Masuk', 'Jumlah Tidak Masuk', 'Jumlah Sakit', 'Jumlah Izin', 'Jumlah Alpha', 'Tanpa Keterangan'];
         }
 
-
-        return Excel::download(new AbsensiExport($header, $kelas, $tipe), 'absensi.xlsx');
+        return Excel::download(new AbsensiExport($header, $kelas, $tipe, $daftar_tanggal, $daftar_mapel, $ajaran_awal, $ajaran_akhir), 'absensi.xlsx');
     }
 
     public function exportPdf()
     {
         $kelas = request('kelas');
         $tipe = request('tipe');
+
+        $paramThnAjaranAwal = explode('-', request('thn_ajaran'))[0] ?? '';
+        $paramThnAjaranAkhir = explode('-', request('thn_ajaran'))[1] ?? '';
+        $thnAwalDefault = getTahunAjaran()->thn_ajaran_awal;
+        $thnAkhirDefault = getTahunAjaran()->thn_ajaran_akhir;
+
+        // menentukan parameter default
+        $ajaran_awal = empty(request('thn_ajaran')) ? $thnAwalDefault : $paramThnAjaranAwal;
+        $ajaran_akhir = empty(request('thn_ajaran')) ? $thnAkhirDefault : $paramThnAjaranAkhir;
         $title = 'Daftar Absensi';
 
-        $object = new Absensi();
         if ($tipe == 'absensi') {
-            $data = $object->printPDF($kelas);
+            $id_mapel = request('id_mapel');
+            $tgl_absensi = request('tgl_absensi');
+
+            $data = $this->model->printPDF($kelas, $tgl_absensi, $id_mapel, $ajaran_awal, $ajaran_akhir);
 
             $pdf = PDF::loadview('pdf.absensiPdf', ['data' => $data, 'title' => $title]);
         } else {
-            $data = $object->printListPDF($kelas);
+            $daftar_mapel = request('daftar_mapel');
+            $daftar_tanggal = request('daftar_tanggal');
+
+            $data = $this->model->printListPDF($kelas, $daftar_tanggal, $daftar_mapel, $ajaran_awal, $ajaran_akhir);
 
             $pdf = PDF::loadview('pdf.absensiListPdf', ['data' => $data, 'title' => $title]);
         }

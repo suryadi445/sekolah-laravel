@@ -28,30 +28,37 @@
         </div>
     </div>
 
-    <table class="table table-bordered" style="table-layout:fixed;">
+    <table class="table table-bordered text-center" style="table-layout:fixed;">
         <thead class="p-0">
             <tr>
                 <th>No</th>
+                <th>Nama Siswa</th>
                 <th>Kelas</th>
                 <th>Tanggal Absensi</th>
                 <th>Absensi</th>
                 <th>Keterangan</th>
-                <th>Nama Siswa</th>
                 <th>Mata Pelajaran</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $key => $row)
+            @if (!empty($data))
+                @foreach ($data as $key => $row)
+                    <tr>
+                        <th>{{ $key + 1 }}</th>
+                        <td>{{ ucwords($row['nama_siswa']) }}</td>
+                        <td>{{ $row['kelas'] }}</td>
+                        <td>{{ $row['tgl_absensi'] }}</td>
+                        <td class="text-danger">{{ $row['absensi'] }}</td>
+                        <td>{{ $row['keterangan'] }}</td>
+                        <td>{{ $row['mata_pelajaran'] }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <th>{{ $key + 1 }}</th>
-                    <td>{{ $row['kelas'] }}</td>
-                    <td>{{ $row['tgl_absensi'] }}</td>
-                    <td>{{ $row['absensi'] }}</td>
-                    <td>{{ $row['keterangan'] }}</td>
-                    <td>{{ $row['nama_siswa'] }}</td>
-                    <td>{{ $row['mata_pelajaran'] }}</td>
+                    <td class="text-danger" colspan="100%">Data Tidak Tersedia</td>
                 </tr>
-            @endforeach
+            @endif
+
         </tbody>
     </table>
 
