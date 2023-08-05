@@ -18,8 +18,6 @@ class BannerController extends Controller
      */
     public function index()
     {
-        hakAksesController();
-
         $banners = Banner::orderByDesc('id')->paginate(10);
         $title = 'Banner';
 

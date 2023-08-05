@@ -16,8 +16,6 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        hakAksesController();
-
         $title = 'Registrasi Siswa';
         $registration = Registration::latest()->paginate(20);
 

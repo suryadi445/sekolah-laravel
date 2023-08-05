@@ -18,8 +18,6 @@ class LatestNewsController extends Controller
      */
     public function index()
     {
-        hakAksesController();
-
         $title = 'Berita Terkini';
         $latestNews = LatestNews::orderByDesc('updated_at')->paginate(10);
 

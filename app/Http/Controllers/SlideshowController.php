@@ -16,8 +16,6 @@ class SlideshowController extends Controller
      */
     public function index()
     {
-        hakAksesController();
-
         $title = 'Slideshow';
         $slideshow = Slideshow::orderByDesc('id')->paginate(5);
 

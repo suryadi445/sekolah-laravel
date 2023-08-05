@@ -170,7 +170,10 @@ class ProfileController extends Controller
             $dataGuru['image'] = $image;
 
             $file_path = public_path() .  $guru->image;
-            unlink($file_path);
+
+            if (!empty($guru->image)) {
+                unlink($file_path);
+            }
         }
 
         $update = Guru::where('id', $id)

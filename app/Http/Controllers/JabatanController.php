@@ -18,7 +18,6 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        hakAksesController();
 
         $jabatan = Jabatan::latest()->paginate(20);
 

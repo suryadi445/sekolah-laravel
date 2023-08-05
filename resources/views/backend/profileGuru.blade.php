@@ -12,7 +12,8 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="card text-capitalize text-center">
-                                <img src="{{ $profile->image ?? '' }}" class="card-img-top" alt="...">
+                                <img src="{{ empty($profile->image) ? asset('/images/default/avatar.png') : $profile->image }}"
+                                    class="card-img-top" alt="image">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         {{ $profile->nama_guru . ' ' . $profile->gelar }}

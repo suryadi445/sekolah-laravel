@@ -23,7 +23,6 @@ class GuruController extends Controller
      */
     public function index()
     {
-        hakAksesController();
 
         $title = 'Guru';
         $guru = Guru::latest()->search()->paginate(20);
@@ -38,7 +37,6 @@ class GuruController extends Controller
      */
     public function create()
     {
-        hakAksesController();
 
         $title = 'Tambah Guru';
         $jabatan = Jabatan::orderBy('nama_jabatan')->get();

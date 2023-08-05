@@ -20,7 +20,6 @@ class IntroductionController extends Controller
      */
     public function index()
     {
-        hakAksesController();
 
         $title = 'Kata Pengantar';
         $introduction = Introduction::first();

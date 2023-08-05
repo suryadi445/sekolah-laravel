@@ -16,7 +16,6 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        hakAksesController();
 
         $title = 'Pengaturan';
         $settings = Settings::first();

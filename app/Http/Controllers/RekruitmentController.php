@@ -13,8 +13,6 @@ class RekruitmentController extends Controller
 {
     public function index()
     {
-        hakAksesController();
-
         $title = 'Rekruitment';
         $jabatan = Rekruitment::select('jabatan')->groupBy('jabatan')->get();
         $get_jabatan = request('jabatan');

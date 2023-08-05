@@ -24,8 +24,6 @@ class SppSiswaController extends Controller
      */
     public function index(Request $request)
     {
-        hakAksesController();
-
         $title = 'Spp Siswa';
         $subKelas = Kelas::select('id', 'kelas', 'sub_kelas')->groupBy('sub_kelas')->get();
 
