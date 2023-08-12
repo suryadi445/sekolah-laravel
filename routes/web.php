@@ -179,8 +179,9 @@ Route::middleware('auth')->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/dashboard/getAgama/{slug?}', [DashboardController::class, 'getAgama']);
-    Route::get('/dashboard/getSiswa/', [DashboardController::class, 'getSiswa']);
-    Route::get('/dashboard/getKelas/{slug?}', [DashboardController::class, 'getKelas']);
+    Route::get('/dashboard/getSiswa/{slug?}', [DashboardController::class, 'getSiswa']);
+    Route::get('/dashboard/getSpp/{slug?}', [DashboardController::class, 'getSpp']);
+    Route::get('/dashboard/get_data', [DashboardController::class, 'get_data']);
 
     // profile
     Route::get('/profile/editGuru/{id?}', [ProfileController::class, 'editGuru']);

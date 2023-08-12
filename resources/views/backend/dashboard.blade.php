@@ -7,17 +7,77 @@
         <div class="card-header">
             Dashboard Siswa
         </div>
+
         <div class="card-body">
             <div class="row">
+                <div class="col-12 col-sm-4 col-xxl-4 d-flex">
+                    <div class="card flex-fill" style="background-color: #0dcaf0">
+                        <div class="card-body p-0 d-flex flex-fill">
+                            <div class="row g-0 w-100">
+                                <div class="col-12 text-end">
+                                    <div class="p-3 m-1">
+                                        <button class="btn button_tab" style="background-color: #0dcaf0;" type="button"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                                            aria-controls="offcanvasScrolling" data-id="guru">
+                                            <h3 class="">{{ $jml_guru['all'] }}</h3>
+                                            <h6 class="mb-0">Jumlah Guru</h6>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-xxl-4 d-flex">
+                    <div class="card flex-fill" style="background-color: #ffc107">
+                        <div class="card-body p-0 d-flex flex-fill">
+                            <div class="row g-0 w-100">
+                                <div class="col-12 text-end">
+                                    <div class=" p-3 m-1">
+                                        <button class="btn button_tab" style="background-color: #ffc107;" type="button"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                                            aria-controls="offcanvasScrolling" data-id="kelas">
+                                            <h3 class="">{{ $jml_kelas }}</h3>
+                                            <h6 class="mb-0">Jumlah Kelas</h6>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-xxl-4 d-flex">
+                    <div class="card flex-fill" style="background-color: #74dc2e">
+                        <div class="card-body p-0 d-flex flex-fill">
+                            <div class="row g-0 w-100">
+                                <div class="col-12 text-end">
+                                    <div class=" p-3 m-1">
+                                        <button class="btn button_tab" style="background-color: #74dc2e;" type="button"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                                            aria-controls="offcanvasScrolling" data-id="siswa">
+                                            <h3 class="">{{ $total_siswa }}</h3>
+                                            <h6 class="mb-0">Jumlah Siswa</h6>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
                 <div class="col-sm-12">
                     <div class="row" style="min-height: 20rem">
                         <div class="col-sm-12">
                             <div class="card h-100">
                                 <div class="card-header">
-                                    Jumlah Siswa Baru
+                                    Jumlah Spp
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="siswa"></canvas>
+                                    <canvas id="spp"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -36,10 +96,10 @@
                         <div class="col-sm-6 mt-3">
                             <div class="card h-100">
                                 <div class="card-header">
-                                    Jumlah Kelas Siswa
+                                    Jumlah Siswa
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="kelas"></canvas>
+                                    <canvas id="siswa"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -59,13 +119,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table
-                            class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                        <table class="table table-striped text-center text-capitalize  rounded rounded-1 overflow-hidden"
+                            id="data-table" width="100%">
                             <thead class="bg-dark text-light " id="tbl_head">
-                                {{-- dinamis --}}
+                                <tr>
+                                    <td>Nama Siswa</td>
+                                    <td>Tanggal Lahir</td>
+                                    <td>Kelas</td>
+                                    <td>Jenis Kelamin</td>
+                                    <td>Alamat</td>
+                                    <td>Tahun Ajaran</td>
+                                </tr>
                             </thead>
-                            <tbody class="table-group-divider" id="tbl_body">
-                                {{-- dinamis --}}
+                            <tbody>
+                                {{-- ajax --}}
                             </tbody>
                         </table>
                     </div>
@@ -77,118 +144,153 @@
         </div>
     </div>
 
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-capitalize" id="offcanvasScrollingLabel">List <span id="list_tipe"></span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="row_table">
 
-    <script type="text/javascript">
-        // chart jumlah siswa
-        var chart_siswa = document.getElementById("siswa").getContext('2d');
-        var data_siswa = {
-            datasets: [{
-                    data: {{ Js::from($pria) }},
-                    label: "Laki-Laki",
-                    backgroundColor: [
-                        '#68B984',
-                        '#DAE2B6',
-                        '#FFD56F',
-                        '#F0997D',
-                        '#FA7070',
-                        '#483838',
-                        '#5BB318',
-                        '#3F4E4F',
-                        '#B9F3FC',
-                        '#554994',
-                        '#678983',
-                        '#f39c12',
-                    ],
-                },
-                {
-                    data: {{ Js::from($perempuan) }},
-                    label: "Perempuan",
-                    backgroundColor: [
-                        '#61764B',
-                        '#F2DEBA',
-                        '#FFEFD6',
-                        '#BA94D1',
-                        '#FBFACD',
-                        '#F5D5AE',
-                        '#E8C4C4',
-                        '#CE7777',
-                        '#678983',
-                        '#EDEDED',
-                        '#F2D388',
-                        '#96E5D1',
-                    ],
-                }
-            ],
-            labels: {{ Js::from($bulan) }},
-        };
-        var siswaChart = new Chart(chart_siswa, {
-            type: 'bar',
-            data: data_siswa,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 12
+        </div>
+
+    </div>
+
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            const spinner =
+                '<div class="text-center"><div class="spinner-border text-secondary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+
+
+            $(document).on('click', '.button_tab', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('data-id')
+                $('#list_tipe').text(id)
+
+                $('#row_table').html(spinner)
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "/dashboard/get_data?id=" + id,
+                    dataType: "json",
+                    success: function(response) {
+                        // console.log(response);
+                        $('#row_table').html(response)
                     }
-                },
-                onClick: (e, activeEls, chart) => {
-                    let datasetIndex = activeEls[0].datasetIndex;
-                    let dataIndex = activeEls[0].index;
-                    let jenis_kelamin = e.chart.data.datasets[datasetIndex].label;
-                    let bulan = e.chart.data.labels[dataIndex];
-                    let jumlah = e.chart.data.datasets[datasetIndex].data[dataIndex];
+                });
+            })
 
-                    if (activeEls[0]) {
+            $(document).on('click', '.tab_detail', function(e) {
+                e.preventDefault();
+                let tipe = $(this).attr('data-id')
+                let id = $('#id_tipe').val()
+
+                $('#row_table').html(spinner)
+
+                $.ajax({
+                    type: "GET",
+                    url: "/dashboard/get_data?id=" + id + "&tipe=" + tipe,
+                    dataType: "json",
+                    success: function(response) {
+                        // console.log(response);
+                        $('#row_table').html(response)
+                    }
+                });
+            })
+        });
+    </script>
+
+    {{-- script datatbale --}}
+    <script>
+        function initializeDataTable(data) {
+
+            $('#data-table').DataTable({
+                data: data,
+                columns: [{
+                        data: 'nama_siswa'
+                    },
+                    {
+                        data: 'tgl_lahir'
+                    },
+                    {
+                        data: 'kelas'
+                    },
+                    {
+                        data: 'jenis_kelamin'
+                    },
+                    {
+                        data: 'alamat'
+                    },
+                    {
+                        data: 'thn_ajaran'
+                    },
+                ],
+                bDestroy: true,
+                bInfo: false,
+            });
+        }
+    </script>
+
+    {{-- script chart --}}
+    <script type="text/javascript">
+        // chart spp
+        var chart_spp = document.getElementById("spp");
+        var data_spp = {
+            labels: {{ Js::from($bulan) }},
+            datasets: [{
+                data: {{ Js::from($jml_spp) }},
+                label: "Total Spp",
+                backgroundColor: [
+                    "#B70404",
+                    "#B799FF",
+                    "#FFB84C",
+                    "#1D267D",
+                    "#D291BC",
+                    "#38E54D",
+                    "#F86F03",
+                    "#A1C2F1",
+                    "#F1C27B",
+                    "#1E5128",
+                    "#2B2A4C",
+                    "#4C4B16",
+                ]
+            }]
+        };
+
+        var sppChart = new Chart(chart_spp, {
+            type: 'line',
+            data: data_spp,
+            options: {
+                maintainAspectRatio: false,
+                onClick: (event, elements, chart) => {
+                    if (elements[0]) {
+                        const i = elements[0].index;
                         $.ajax({
                             type: "GET",
-                            url: "/dashboard/getSiswa?bulan=" + bulan + '&jenis_kelamin=' +
-                                jenis_kelamin,
+                            url: "/dashboard/getSpp/" + chart.data.labels[i],
                             dataType: "json",
                             success: function(response) {
-                                $('#tbl_head').html('')
-                                let header = '<tr>' +
-                                    '<th scope="col">Nama Siswa</th>' +
-                                    '<th scope="col">Tanggal Lahir</th>' +
-                                    '<th scope="col">Kelas</th>' +
-                                    '<th scope="col">Jenis Kelamin</th>' +
-                                    '<th scope="col">Alamat</th>' +
-                                    '<th scope="col">Tahun Ajaran</th>' +
-                                    '</tr>';
-                                $('#tbl_head').html(header)
-
-                                $('#tbl_body').html('')
-                                var table = '';
-                                for (var i = 0; i < response.length; i++) {
-                                    table = '<tr>' +
-                                        '<td>' + response[i].nama_siswa +
-                                        '</td>' +
-                                        '<td>' + response[i].tgl_lahir +
-                                        '</td>' +
-                                        '<td>' + response[i].kelas +
-                                        '</td>' +
-                                        '<td>' + response[i].jenis_kelamin +
-                                        '</td>' +
-                                        '<td>' + response[i].alamat +
-                                        '</td>' +
-                                        '<td>' + response[i].thn_ajaran +
-                                        '</td>' +
-                                        '</tr>';
-
-                                    $("#tbl_body").append(table);
-                                }
-
+                                initializeDataTable(response.data);
                             }
                         });
-                    }
 
-                    $('#staticBackdropLabel').text('Siswa ' + jenis_kelamin)
-                    $('#staticBackdrop').modal('show')
+                        $('#staticBackdropLabel').text('Spp ' + chart.data.labels[i])
+                        $('#staticBackdrop').modal('show')
+                    }
                 }
             }
         });
-
 
         // chart agama
         var chart_agama = document.getElementById("agama");
@@ -216,45 +318,12 @@
                 onClick: (event, elements, chart) => {
                     if (elements[0]) {
                         const i = elements[0].index;
-                        // alert(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
-
                         $.ajax({
                             type: "GET",
                             url: "/dashboard/getAgama/" + chart.data.labels[i],
                             dataType: "json",
                             success: function(response) {
-                                $('#tbl_head').html('')
-                                let header = '<tr>' +
-                                    '<th scope="col">Nama Siswa</th>' +
-                                    '<th scope="col">Tanggal Lahir</th>' +
-                                    '<th scope="col">Kelas</th>' +
-                                    '<th scope="col">Jenis Kelamin</th>' +
-                                    '<th scope="col">Alamat</th>' +
-                                    '<th scope="col">Tahun Ajaran</th>' +
-                                    '</tr>';
-                                $('#tbl_head').html(header)
-
-                                $('#tbl_body').html('')
-                                var table = '';
-                                for (var i = 0; i < response.length; i++) {
-                                    table = '<tr>' +
-                                        '<td>' + response[i].nama_siswa +
-                                        '</td>' +
-                                        '<td>' + response[i].tgl_lahir +
-                                        '</td>' +
-                                        '<td>' + response[i].kelas +
-                                        '</td>' +
-                                        '<td>' + response[i].jenis_kelamin +
-                                        '</td>' +
-                                        '<td>' + response[i].alamat +
-                                        '</td>' +
-                                        '<td>' + response[i].thn_ajaran +
-                                        '</td>' +
-                                        '</tr>';
-
-                                    $("#tbl_body").append(table);
-                                }
-
+                                initializeDataTable(response.data);
                             }
                         });
 
@@ -265,81 +334,48 @@
             }
         });
 
-        // chart kelas
-        var chart_kelas = document.getElementById("kelas").getContext('2d');
-        var data_kelas = {
+        // chart siswa
+        var chart_siswa = document.getElementById("siswa");
+        var data_siswa = {
+            labels: {{ Js::from($jenis_siswa) }},
             datasets: [{
-                data: {{ Js::from($kelas) }},
-                label: "Kelas",
+                data: {{ Js::from($jml_siswa) }},
+                label: "Chart Siswa",
                 backgroundColor: [
-                    '#AFE2B6',
-                    '#DAE2B6',
-                    '#FFD56F',
-                    '#B0997D',
-                    '#FA7070',
-                    '#483838',
-                    '#B9F3FC',
-                ],
-            }],
-            labels: {{ Js::from($nama_kelas) }},
+                    "#75C2F6",
+                    "#4E4FEB",
+                    "#435B66",
+                ]
+            }]
         };
-        var kelasChart = new Chart(chart_kelas, {
-            type: 'pie',
-            data: data_kelas,
+
+        var siswaChart = new Chart(chart_siswa, {
+            type: 'bar',
+            data: data_siswa,
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 12
+                scales: {
+                    y: {
+                        beginAtZero: false, // Memulai sumbu Y dari nilai bukan 0
+                        ticks: {
+                            stepSize: 1, // Langkah antara setiap nilai pada sumbu Y
+                            precision: 0 // Jumlah desimal yang ditampilkan pada label sumbu Y
+                        }
                     }
                 },
+                maintainAspectRatio: false,
                 onClick: (event, elements, chart) => {
                     if (elements[0]) {
                         const i = elements[0].index;
-
                         $.ajax({
                             type: "GET",
-                            url: "/dashboard/getKelas/" + chart.data.labels[i],
+                            url: "/dashboard/getSiswa/" + chart.data.labels[i],
                             dataType: "json",
                             success: function(response) {
-                                $('#tbl_head').html('')
-                                let header = '<tr>' +
-                                    '<th scope="col">Nama Siswa</th>' +
-                                    '<th scope="col">Tanggal Lahir</th>' +
-                                    '<th scope="col">Kelas</th>' +
-                                    '<th scope="col">Jenis Kelamin</th>' +
-                                    '<th scope="col">Alamat</th>' +
-                                    '<th scope="col">Tahun Ajaran</th>' +
-                                    '</tr>';
-                                $('#tbl_head').html(header)
-
-                                $('#tbl_body').html('')
-                                var table = '';
-                                for (var i = 0; i < response.length; i++) {
-                                    table = '<tr>' +
-                                        '<td>' + response[i].nama_siswa +
-                                        '</td>' +
-                                        '<td>' + response[i].tgl_lahir +
-                                        '</td>' +
-                                        '<td>' + response[i].kelas +
-                                        '</td>' +
-                                        '<td>' + response[i].jenis_kelamin +
-                                        '</td>' +
-                                        '<td>' + response[i].alamat +
-                                        '</td>' +
-                                        '<td>' + response[i].thn_ajaran +
-                                        '</td>' +
-                                        '</tr>';
-
-                                    $("#tbl_body").append(table);
-                                }
-
+                                initializeDataTable(response.data);
                             }
                         });
 
-                        $('#staticBackdropLabel').text(chart.data.labels[i])
+                        $('#staticBackdropLabel').text('Agama ' + chart.data.labels[i])
                         $('#staticBackdrop').modal('show')
                     }
                 }
