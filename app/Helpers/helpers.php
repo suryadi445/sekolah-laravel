@@ -37,6 +37,34 @@ if (!function_exists('bulan')) {
     }
 }
 
+if (!function_exists('jam')) {
+    function jam($created_at)
+    {
+        return $created_at->format('H:i:s');
+    }
+}
+
+if (!function_exists('hari')) {
+    function hari($created_at)
+    {
+        $englishDay = $created_at->format('l');
+
+        $daysInIndonesian = [
+            'Sunday' => 'Minggu',
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+        ];
+
+        $hari = $daysInIndonesian[$englishDay];
+
+        return $hari;
+    }
+}
+
 if (!function_exists('nomorToBulan')) {
     function nomorToBulan($bulan)
     {

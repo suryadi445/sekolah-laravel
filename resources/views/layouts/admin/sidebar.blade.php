@@ -137,6 +137,15 @@
                     </li>
 
                     <li class="nav-item ">
+                        <a class="nav-link nav-single {{ Request::is('absensi_guru') ? 'active' : '' }}"
+                            aria-current="page" href="/absensi_guru">
+                            <span data-feather="home" class="align-text-bottom"></span>
+                            <i class="fa-solid fa-user-tie"></i>
+                            Absensi Guru
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
                         <a class="nav-link nav-single {{ Request::is('absensi') ? 'active' : '' }}"
                             aria-current="page" href="/absensi">
                             <span data-feather="home" class="align-text-bottom"></span>

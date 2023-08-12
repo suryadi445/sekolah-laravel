@@ -203,11 +203,11 @@ Route::middleware('auth')->group(function () {
 
     // Siswa
     Route::get('/siswa/getKota', [SiswaController::class, 'getKota']);
-    Route::get('/siswa/exportExcel', [SiswaController::class, 'exportExcel']);
-    Route::get('/siswa/exportPdf', [SiswaController::class, 'exportPdf']);
     Route::resource('/siswa', SiswaController::class);
 
     // absensi guru
+    Route::get('/absensi_guru/exportExcel/{bulan?}', [AbsensiGuruController::class, 'exportExcel']);
+    Route::get('/absensi_guru/exportPdf/{bulan?}', [AbsensiGuruController::class, 'exportPdf']);
     Route::resource('/absensi_guru', AbsensiGuruController::class);
 
     // absensi
