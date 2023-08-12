@@ -181,8 +181,46 @@
         </div>
     </div>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ empty($cek_absensi) ? 'modalAbsensi' : '' }}" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Absensi Guru</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('absensi_guru.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input" type="checkbox" value="yes" name="keterangan"
+                                            required>
+                                    </div>
+                                    <input type="text" class="form-control" value="{{ userLogin()->name }}" readonly>
+                                    <input type="date" name="tgl_absensi" class="form-control"
+                                        value="{{ date('Y-m-d') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
+
+            $('#modalAbsensi').modal('show')
 
             $('#editPorfile').on('click', function() {
 

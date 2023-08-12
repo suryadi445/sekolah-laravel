@@ -25,13 +25,15 @@ class ProfileController extends Controller
         $id_group = userLogin()->id_group ?? '';
 
         if ($id_group == 3) {
+            $profileModel = new Profile();
             $id_guru = userLogin()->id_guru ?? '';
             $profile = Guru::join('users', 'gurus.id', '=', 'users.id_guru')
                 ->where('gurus.id', $id_guru)
                 ->select('gurus.*', 'users.no_hp as username')
                 ->first();
+            $cek_absensi = $profileModel->cek_absensi($id_guru);
 
-            return view('backend.profileGuru', compact(['title', 'profile', 'id_guru']));
+            return view('backend.profileGuru', compact(['title', 'profile', 'id_guru', 'cek_absensi']));
         } elseif ($id_group == 4) {
             $id_siswa = userLogin()->id_siswa ?? '';
             $profile = Siswa::join('users', 'siswas.id', '=', 'users.id_siswa')
@@ -44,7 +46,6 @@ class ProfileController extends Controller
             $id_user = userLogin()->id ?? '';
             $profile = User::where('id', $id_user)->first();
             $kataPengantar = Introduction::first();
-
 
             return view('backend.profileAdmin', compact(['title', 'profile', 'id_user', 'kataPengantar']));
         }

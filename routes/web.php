@@ -19,6 +19,7 @@ use App\Http\Controllers\DefaultWebController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\AbsensiGuruController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\NoticeController;
@@ -39,6 +40,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
+use App\Models\AbsensiGuru;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -182,6 +184,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/getSiswa/{slug?}', [DashboardController::class, 'getSiswa']);
     Route::get('/dashboard/getSpp/{slug?}', [DashboardController::class, 'getSpp']);
     Route::get('/dashboard/get_data', [DashboardController::class, 'get_data']);
+    Route::get('/dashboard/get_data_guru', [DashboardController::class, 'get_data_guru']);
+    Route::get('/dashboard/getAbsensi/{slug?}', [DashboardController::class, 'getAbsensi']);
 
     // profile
     Route::get('/profile/editGuru/{id?}', [ProfileController::class, 'editGuru']);
@@ -202,6 +206,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/siswa/exportExcel', [SiswaController::class, 'exportExcel']);
     Route::get('/siswa/exportPdf', [SiswaController::class, 'exportPdf']);
     Route::resource('/siswa', SiswaController::class);
+
+    // absensi guru
+    Route::resource('/absensi_guru', AbsensiGuruController::class);
 
     // absensi
     Route::get('/absensi/exportPdf/{kelas?}', [AbsensiController::class, 'exportPdf']);
