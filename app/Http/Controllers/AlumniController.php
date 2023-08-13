@@ -6,6 +6,8 @@ use App\Models\Alumni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class AlumniController extends Controller
 {
@@ -17,9 +19,48 @@ class AlumniController extends Controller
     public function index()
     {
         $title = 'Alumni';
-        $alumni = Alumni::orderByDesc('id')->paginate(10);
 
-        return view('backend.alumni', compact(['title', 'alumni']));
+        if (request()->ajax()) {
+
+            $data = Alumni::orderByDesc('id')->get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('image', function ($row) {
+                    $image = '<img src="' . $row->image . '" class="img-fluid" width="50px">';
+                    return $image;
+                })
+                ->editColumn('angkatan', function ($row) {
+                    $angkatan = $row->angkatan_awal . '-' . $row->angkatan_akhir;
+                    return $angkatan;
+                })
+                ->editColumn('created_at', function ($row) {
+                    $date = date('Y-m-d', strtotime($row->created_at));
+                    return $date;
+                })
+                ->editColumn('user', function ($row) {
+                    $user = getUser($row->user)->name;
+                    return $user;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<button type="button" class="btn btn-sm btn-warning btn_edit"
+                        data-id="' . $row->id . '" data-bs-toggle="modal"
+                        data-bs-target="#modal_edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Edit
+                    </button>
+                    <form method="POST" action="' . route('alumni.destroy', $row->id) . '"> ' . method_field('DELETE') . csrf_field() . '<button type="button" class="btn btn-sm btn-danger btn_delete mt-2" data-bs-toggle="modal" data-bs-target="#modal_confirm_delete">
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+                        </button>
+                    </form>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'image'])
+                ->make(true);
+        }
+
+        return view('backend.alumni', compact(['title']));
     }
 
     /**
