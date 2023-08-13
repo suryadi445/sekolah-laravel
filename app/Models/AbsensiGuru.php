@@ -37,7 +37,7 @@ class AbsensiGuru extends Model
         if ($id_guru) {
             $result->where('gurus.id', $id_guru);
         }
-        if ($bulan) {
+        if ($bulan != null) {
             $result->whereMonth('absensi_gurus.created_at', $bulan);
         } else {
             $result->whereMonth('absensi_gurus.created_at', date('m'));

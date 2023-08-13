@@ -37,7 +37,7 @@ class AbsensiGuruExport implements FromCollection, WithHeadings, ShouldAutoSize,
         if ($id_guru) {
             $result->where('gurus.id', $id_guru);
         }
-        if ($bulan) {
+        if ($bulan != null) {
             $result->whereMonth('absensi_gurus.created_at', $bulan);
         } else {
             $result->whereMonth('absensi_gurus.created_at', date('m'));
@@ -52,13 +52,11 @@ class AbsensiGuruExport implements FromCollection, WithHeadings, ShouldAutoSize,
             function ($res) {
                 $res->hari = hari($res->created_at);
                 $res->jam = jam($res->created_at);
+
+                unset($res->created_at);
                 return $res;
             }
         );
-
-        foreach ($formatted as $value) {
-            unset($value->created_at);
-        }
 
         return $formatted;
     }

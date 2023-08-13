@@ -100,14 +100,14 @@ class AbsensiGuruController extends Controller
         //
     }
 
-    public function exportExcel($bulan)
+    public function exportExcel($bulan = null)
     {
         $header = ['Nama Guru', 'Nik', 'Tanggal Absensi', 'Hari', 'Jam Absensi'];
 
         return Excel::download(new AbsensiGuruExport($header, $bulan), 'absensi-guru.xlsx');
     }
 
-    public function exportPdf($bulan)
+    public function exportPdf($bulan = null)
     {
         $object = new AbsensiGuru();
         $id_guru = userLogin()->id_guru;

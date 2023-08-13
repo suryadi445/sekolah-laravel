@@ -106,6 +106,12 @@
                                         Naik Kelas
                                     </a>
                                 </li>
+                                <li class="pt-2 ">
+                                    <a href="/graduation"
+                                        class="text-decoration-none {{ Request::is('graduation') ? 'active' : 'text-dark' }}">
+                                        Kelulusan / Pindah Siswa
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

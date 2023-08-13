@@ -40,7 +40,8 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
-use App\Models\AbsensiGuru;
+use App\Http\Controllers\GraduationController;
+use App\Models\Graduation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,6 +79,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/promoted/store', [PromotedController::class, 'store'])->middleware('group_access');
     Route::get('/promoted/exportPdf/{kelas?}/{subKelas?}/{param?}', [PromotedController::class, 'exportPdf'])->middleware('group_access');
     Route::get('/promoted/exportExcel/{kelas?}/{subKelas?}/{param?}', [PromotedController::class, 'exportExcel'])->middleware('group_access');
+
+    // kelulusan
+    Route::get('/graduation/exportPdf/', [GraduationController::class, 'exportPdf']);
+    Route::get('/graduation/exportExcel/', [GraduationController::class, 'exportExcel']);
+    Route::resource('/graduation', GraduationController::class);
+
 
     // slideshow
     Route::resource('/slideshow', SlideshowController::class)->middleware('group_access');
