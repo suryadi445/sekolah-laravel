@@ -149,8 +149,8 @@
                                     </label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                            id="jenis_kelamin" value="laki-laki" checked
-                                            {{ old('jenis_kelamin') == 'laki-laki' ? 'checked' : '' }}>
+                                            id="jenis_kelamin" value="laki-laki"
+                                            {{ old('jenis_kelamin') == 'laki-laki' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="jenis_kelamin">
                                             Laki-Laki
                                         </label>
@@ -158,7 +158,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="jenis_kelamin"
                                             id="perempuan" value="perempuan"
-                                            {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }}>
+                                            {{ old('jenis_kelamin') == 'perempuan' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="perempuan">
                                             Perempuan
                                         </label>
@@ -236,16 +236,22 @@
                         <div class="row pt-3">
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                    <label for="nama_ayah" class="form-label">
+                                        Nama Ayah
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
-                                        value="{{ old('nama_ayah') }}">
+                                        value="{{ old('nama_ayah') }}" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="no_hp_ayah" class="form-label">No Hp Ayah</label>
+                                    <label for="no_hp_ayah" class="form-label">
+                                        No Hp Ayah
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="number" class="form-control" id="no_hp_ayah" name="no_hp_ayah"
-                                        value="{{ old('no_hp_ayah') }}">
+                                        value="{{ old('no_hp_ayah') }}" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -257,16 +263,22 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                    <label for="nama_ibu" class="form-label">
+                                        Nama Ibu
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
-                                        value="{{ old('nama_ibu') }}">
+                                        value="{{ old('nama_ibu') }}" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="no_hp_ibu" class="form-label">No Hp Ibu</label>
+                                    <label for="no_hp_ibu" class="form-label">
+                                        No Hp Ibu
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="number" class="form-control" id="no_hp_ibu" name="no_hp_ibu"
-                                        value="{{ old('no_hp_ibu') }}">
+                                        value="{{ old('no_hp_ibu') }}" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -278,8 +290,20 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="alamat_ortu" class="form-label">Alamat Orang Tua</label>
-                                    <textarea class="form-control" id="alamat_ortu" name="alamat_ortu" rows="3">{{ old('alamat_ortu') }}</textarea>
+                                    <label for="email" class="form-label">
+                                        Email
+                                        <i class="text-danger">*</i>
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ old('email') }}" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="alamat_ortu" class="form-label">Alamat Orang Tua
+                                        <i class="text-danger">*</i>
+                                    </label>
+                                    <textarea class="form-control" id="alamat_ortu" name="alamat_ortu" rows="3" required>{{ old('alamat_ortu') }}</textarea>
                                 </div>
                             </div>
                         </div>

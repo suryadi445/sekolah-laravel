@@ -238,14 +238,20 @@
                         <div class="row pt-3">
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nama_ayah" class="form-label">Nama Ayah</label>
+                                    <label for="nama_ayah" class="form-label">
+                                        Nama Ayah
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
                                         value="{{ old('nama_ayah', $siswa->nama_ayah) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="no_hp_ayah" class="form-label">No Hp Ayah</label>
+                                    <label for="no_hp_ayah" class="form-label">
+                                        No Hp Ayah
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="number" class="form-control" id="no_hp_ayah" name="no_hp_ayah"
                                         value="{{ old('no_hp_ayah', $siswa->no_hp_ayah) }}">
                                 </div>
@@ -259,14 +265,20 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                    <label for="nama_ibu" class="form-label">
+                                        Nama Ibu
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
                                         value="{{ old('nama_ibu', $siswa->nama_ibu) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="no_hp_ibu" class="form-label">No Hp Ibu</label>
+                                    <label for="no_hp_ibu" class="form-label">
+                                        No Hp Ibu
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <input type="number" class="form-control" id="no_hp_ibu" name="no_hp_ibu"
                                         value="{{ old('no_hp_ibu', $siswa->no_hp_ibu) }}">
                                 </div>
@@ -280,7 +292,20 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label for="alamat_ortu" class="form-label">Alamat Orang Tua</label>
+                                    <label for="email" class="form-label">
+                                        Email
+                                        <i class="text-danger">*</i>
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ old('email', $siswa->email) }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="alamat_ortu" class="form-label">
+                                        Alamat Orang Tua
+                                        <i class="text-danger">*</i>
+                                    </label>
                                     <textarea class="form-control" id="alamat_ortu" name="alamat_ortu" rows="3">{{ old('alamat_ortu', $siswa->alamat_ortu) }}</textarea>
                                 </div>
                             </div>

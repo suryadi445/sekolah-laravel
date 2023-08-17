@@ -41,9 +41,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GraduationController;
-use App\Models\Graduation;
+use App\Http\Controllers\SendEmailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 
 // front end
 Route::group(['middleware' => 'guest'], function () {
@@ -223,4 +224,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/absensi/exportPdfList/{kelas?}', [AbsensiController::class, 'exportPdfList']);
     Route::get('/absensi/exportExcelList/{kelas?}', [AbsensiController::class, 'exportExcelList']);
     Route::resource('/absensi', AbsensiController::class);
+    // kirim email
+    Route::get('/send-email', [SendEmailController::class, 'kirim']);
 });

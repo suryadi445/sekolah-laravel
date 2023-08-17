@@ -32,4 +32,15 @@ class Siswa extends Model
 
         return $siswas;
     }
+
+    public function getSiswaAbsensi()
+    {
+        return Siswa::join('absensis', 'absensis.id_siswa', '=', 'siswas.id')
+            ->join('mapels', 'mapels.id', '=', 'absensis.id_mapel')
+            ->where('tgl_absensi', date('Y-m-d'))
+            ->where('absensis.absensi', 'no')
+            ->select('siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
+            ->orderBy('mapels.mata_pelajaran')
+            ->get();
+    }
 }

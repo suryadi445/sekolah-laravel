@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('no_hp_wali', 20)->nullable();
             $table->string('pekerjaan_wali')->nullable();
             $table->text('alamat_wali')->nullable();
+            $table->string('email', 100)->nullable();
             $table->string('user', 100);
             $table->softDeletes('deleted_at', 0);
             $table->timestamps();
