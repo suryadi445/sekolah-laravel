@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AbsensiExport;
+use App\Jobs\EmailAbsensiHarian;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class AbsensiController extends Controller
@@ -110,6 +111,10 @@ class AbsensiController extends Controller
                 ]);
             }
         }
+
+        // kirim email melalui sistem queue
+        EmailAbsensiHarian::dispatch();
+
 
         if ($insert) {
             return back()->with('success', 'Success! Data saved successfully');

@@ -39,7 +39,7 @@ class Siswa extends Model
             ->join('mapels', 'mapels.id', '=', 'absensis.id_mapel')
             ->where('tgl_absensi', date('Y-m-d'))
             ->where('absensis.absensi', 'no')
-            ->select('siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
+            ->select('siswas.email', 'siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
             ->orderBy('mapels.mata_pelajaran')
             ->get();
     }
