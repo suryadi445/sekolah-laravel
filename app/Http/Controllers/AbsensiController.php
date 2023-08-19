@@ -113,7 +113,7 @@ class AbsensiController extends Controller
         }
 
         // kirim email melalui sistem queue
-        EmailAbsensiHarian::dispatch();
+        EmailAbsensiHarian::dispatch($kelas);
 
 
         if ($insert) {
