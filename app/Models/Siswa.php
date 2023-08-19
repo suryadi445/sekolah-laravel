@@ -39,7 +39,23 @@ class Siswa extends Model
             ->join('mapels', 'mapels.id', '=', 'absensis.id_mapel')
             ->where('tgl_absensi', date('Y-m-d'))
             ->where('absensis.absensi', 'no')
-            ->select('siswas.email', 'siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
+            ->select('siswas.email', 'siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.keterangan', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
+            ->orderBy('absensis.kelas')
+            ->orderBy('absensis.tgl_absensi')
+            ->orderBy('siswas.nama_siswa')
+            ->orderBy('mapels.mata_pelajaran')
+            ->get();
+    }
+
+    public function getSiswaMonthly()
+    {
+        return Siswa::join('absensis', 'absensis.id_siswa', '=', 'siswas.id')
+            ->join('mapels', 'mapels.id', '=', 'absensis.id_mapel')
+            ->whereMonth('tgl_absensi', date('m'))
+            ->select('siswas.email', 'siswas.nama_siswa', 'mapels.mata_pelajaran', 'absensis.tgl_absensi', 'absensis.keterangan', 'absensis.absensi', 'absensis.kelas', 'absensis.created_at')
+            ->orderBy('absensis.kelas')
+            ->orderBy('absensis.tgl_absensi')
+            ->orderBy('siswas.nama_siswa')
             ->orderBy('mapels.mata_pelajaran')
             ->get();
     }
