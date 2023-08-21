@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alumni;
-
+use App\Models\Banner;
 
 class AlumniKamiController extends Controller
 {
@@ -13,6 +13,7 @@ class AlumniKamiController extends Controller
     {
         $angkatan = $request->angkatan;
         $angkatans = Alumni::groupBy('angkatan_awal')->get();
+        $banner = Banner::where('kategori', 'Alumni')->get();
 
         if ($angkatan != null) {
 
@@ -24,6 +25,6 @@ class AlumniKamiController extends Controller
             $alumnis = Alumni::orderByDesc('id')->paginate(18);
         }
 
-        return view('frontend.alumniKami', compact(['angkatans', 'alumnis', 'angkatan']));
+        return view('frontend.alumniKami', compact(['angkatans', 'alumnis', 'angkatan', 'banner']));
     }
 }

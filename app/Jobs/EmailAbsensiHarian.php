@@ -18,9 +18,11 @@ class EmailAbsensiHarian implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $kelas;
-    public function __construct($kelas)
+    protected $id_mapel;
+    public function __construct($kelas, $id_mapel)
     {
         $this->kelas = $kelas;
+        $this->id_mapel = $id_mapel;
     }
 
     /**
@@ -31,11 +33,10 @@ class EmailAbsensiHarian implements ShouldQueue
     public function handle()
     {
         $model_siswa = new Siswa;
-        // $kelas = 1;
         $kelas = $this->kelas;
+        $id_mapel = $this->id_mapel;
 
-
-        $data = $model_siswa->getSiswaAbsensi($kelas);
+        $data = $model_siswa->getSiswaAbsensi($kelas, $id_mapel);
 
         foreach ($data as $key => $value) {
             $email = $value->email;

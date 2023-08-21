@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pendaftaran;
 use App\Models\Registration;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class PendaftaranController extends Controller
@@ -11,7 +12,10 @@ class PendaftaranController extends Controller
     public function index()
     {
         $pendaftaran = Registration::where('tgl_penutupan', '>=', date('Y-m-d'))->first();
-        $data = $this->default();
+        $data = Banner::where('kategori', 'Agenda')->first();
+        if (empty($data)) {
+            $data = $this->default();
+        }
 
         return view('frontend.pendaftaran', compact('pendaftaran', 'data'));
     }

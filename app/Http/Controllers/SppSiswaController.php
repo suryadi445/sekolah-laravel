@@ -12,8 +12,8 @@ use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\SppExport;
 use Maatwebsite\Excel\Facades\Excel;
-
-
+use App\Jobs\EmailSpp;
+use App\Jobs\EmailSppBulanan;
 
 class SppSiswaController extends Controller
 {
@@ -101,6 +101,9 @@ class SppSiswaController extends Controller
             'tahun_ajaran_akhir' => $ajaran_akhir,
             "user" => Auth::id(),
         ]);
+
+        // proses queue
+        EmailSppBulanan::dispatch($insert->id);
 
         if ($insert) {
             return back()->with('success', 'Success! Data saved successfully');

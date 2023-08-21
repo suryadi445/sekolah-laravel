@@ -264,11 +264,6 @@
                                                             <h4 class="card-title">{{ $item->nama_siswa }}
                                                             </h4>
                                                             <p class="card-text">{{ $item->text }}</p>
-                                                            <p class="card-text">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Minus quam voluptas earum porro dolore
-                                                                perferendis, aperiam illum, sunt dolorem quod ex iusto
-                                                                deserunt, nihil recusandae! Hic minus quisquam tempore eum!
-                                                            </p>
                                                         </div>
                                                         <div class="card-footer text-muted">
                                                             <span>

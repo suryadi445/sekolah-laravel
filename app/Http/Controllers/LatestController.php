@@ -42,7 +42,7 @@ class LatestController extends Controller
 
 
         if ($id) {
-            $latestNews = LatestNews::where('id', $id)->paginate(1);
+            $latestNews = LatestNews::where('id', $id)->get();
         }
 
 

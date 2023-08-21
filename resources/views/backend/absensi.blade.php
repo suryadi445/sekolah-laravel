@@ -147,10 +147,6 @@
                                 </div>
                             </div>
                             <div class="card-footer py-2">
-                                <a href="{{ route('siswa.create') }}" class="btn btn-success">
-                                    <i class="fa-brands fa-whatsapp"></i>
-                                    Kirim Pesan
-                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa-solid fa-floppy-disk"></i>
                                     Simpan
@@ -314,11 +310,6 @@
                                 </div>
                             </div>
                             <div class="card-footer py-2">
-                                <a href="{{ route('siswa.create') }}"
-                                    class="btn btn-success {{ $cek_absensi ? '' : 'disabled' }}">
-                                    <i class="fa-brands fa-whatsapp"></i>
-                                    Kirim Pesan
-                                </a>
                                 <button type="submit" class="btn btn-primary {{ $cek_absensi ? '' : 'disabled' }}">
                                     <i class="fa-solid fa-floppy-disk"></i>
                                     Simpan

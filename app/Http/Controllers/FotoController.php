@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class FotoController extends Controller
@@ -10,7 +11,10 @@ class FotoController extends Controller
     public function index()
     {
         $gallery = Gallery::latest()->paginate(24);
-        $data = $this->default();
+        $data = Banner::where('kategori', 'Gallery')->first();
+        if (empty($data)) {
+            $data = $this->default();
+        }
 
         return view('frontend.gallery', compact(['gallery', 'data']));
     }

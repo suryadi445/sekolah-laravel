@@ -105,27 +105,28 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('career.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('career.store') }}" method="POST" enctype="multipart/form-data"
+                    class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Judul" name="judul"
-                                value="{{ old('judul') }}">
+                                value="{{ old('judul') }}" required>
                             <label for="judul">Judul Lowongan</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Jabatan" name="jabatan"
-                                value="{{ old('jabatan') }}">
+                                value="{{ old('jabatan') }}" required>
                             <label for="jabatan">Jabatan</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control" placeholder="deadline" name="deadline"
-                                value="{{ old('deadline') }}">
+                                value="{{ old('deadline') }}" required>
                             <label for="deadline">Deadline</label>
                         </div>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="persyaratan"
-                                value="{{ old('persyaratan') }}" style="height: 100px"></textarea>
+                                value="{{ old('persyaratan') }}" style="height: 100px" required></textarea>
                             <label for="floatingTextarea2">Persyaratan</label>
                         </div>
                     </div>
@@ -145,7 +146,8 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" id="form_edit">
+                <form action="" method="POST" enctype="multipart/form-data" id="form_edit"
+                    class="row g-3 needs-validation" novalidate>
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -153,22 +155,22 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="judul" placeholder="Judul"
-                                name="judul" value="{{ old('judul') }}">
+                                name="judul" value="{{ old('judul') }}" required>
                             <label for="judul">Judul Lowongan</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="jabatan" placeholder="jabatan"
-                                name="jabatan" value="{{ old('jabatan') }}">
+                                name="jabatan" value="{{ old('jabatan') }}" required>
                             <label for="jabatan">Jabatan</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control" placeholder="deadline" name="deadline"
-                                id="deadline" value="{{ old('deadline') }}">
+                                id="deadline" value="{{ old('deadline') }}" required>
                             <label for="deadline">Deadline</label>
                         </div>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="persyaratan" name="persyaratan"
-                                style="height: 100px"></textarea>
+                                style="height: 100px" required></textarea>
                             <label for="text">Persyaratan</label>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\Siswa;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class SourceController extends Controller
@@ -12,13 +13,19 @@ class SourceController extends Controller
     {
         if ($slug == 'student') {
             $datas = $this->student();
-            $data = $this->default_siswa();
+            $data = Banner::where('kategori', 'Siswa')->first();
+            if (empty($data)) {
+                $data = $this->default_siswa();
+            }
 
             return view('frontend.source_siswa', compact(['data', 'datas']));
         } else {
             // teacher
             $datas = $this->guru();
-            $data = $this->default_guru();
+            $data = Banner::where('kategori', 'Guru')->first();
+            if (empty($data)) {
+                $data = $this->default_guru();
+            }
 
             return view('frontend.source_guru', compact(['data', 'datas']));
         }

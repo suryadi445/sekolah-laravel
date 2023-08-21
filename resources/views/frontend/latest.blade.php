@@ -2,7 +2,7 @@
 
 
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $latestNews[0])
 
     <div class="container">
         <div class="row mt-5">
@@ -100,7 +100,9 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-center mt-5">
-                {!! $latestNews->links() !!}
+                @if (count($latestNews) > 1)
+                    {!! $latestNews->links() !!}
+                @endif
             </div>
         </div>
     </div>
@@ -115,7 +117,7 @@
                     <p id="text_modal"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="modal_close btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -123,6 +125,11 @@
 
     <script>
         $(document).ready(function() {
+
+            $(document).on('click', '.modal_close', function() {
+                $('#modal_detail').modal('hide')
+            })
+
             $(document).on('change', '.select_tahun', function() {
                 let tahun = $(this).val()
                 let bulan = $('.select_bulan').val()

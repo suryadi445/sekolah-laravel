@@ -2,7 +2,7 @@
 
 
 @section('container')
-    @include('layouts.jumbotron')
+    @include('layouts.jumbotron', $aktifitas[0])
 
     <div class="container">
         <div class="row text-center">

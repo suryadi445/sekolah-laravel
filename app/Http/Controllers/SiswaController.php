@@ -14,6 +14,8 @@ use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SiswaExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\Facades\DataTables;
+
 
 
 
@@ -28,9 +30,49 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $title = 'Siswa';
-        $siswa = Siswa::latest()->search()->paginate(20);
+        $model_siswa = new Siswa();
+        $userLogin = userLogin()->id_group;
+        $id_guru = userLogin()->id_guru;
+        $subKelas = Kelas::select('id', 'kelas', 'sub_kelas')->groupBy('sub_kelas')->get();
 
-        return view('backend.siswa', compact(['siswa', 'title']));
+        if (request()->ajax()) {
+            $data = $model_siswa->get_siswa($id_guru);
+
+            if ($userLogin != 3) {
+                $data = Siswa::latest();
+            } else {
+                $data = $model_siswa->get_siswa($id_guru);
+            }
+
+            if (!empty($request->kelas)) {
+                $data->where('kelas', '=', $request->kelas);
+            }
+
+            if (!empty($request->subKelas)) {
+                $data->where('sub_kelas', '=', $request->subKelas);
+            }
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('image', function ($row) {
+                    $image = '<img src="' . $row->image . '" class="img-fluid" width="50px">';
+                    return $image;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<div class="d-flex justify-content-center"><a href="/siswa/' . $row->id . '/edit" class="btn btn-sm btn-warning btn_edit me-2"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                    <form class="delete-form" action="/siswa/' . $row->id . '" method="POST">
+                        ' . csrf_field() . '
+                        ' . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-sm btn-danger btn_delete"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </form></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'image'])
+                ->make(true);
+        }
+
+
+        return view('backend.siswa', compact(['title', 'subKelas']));
     }
 
     /**

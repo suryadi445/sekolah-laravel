@@ -1,7 +1,6 @@
 @extends('layouts.admin.admin')
 
 @section('admin')
-
     <div class="row mt-2">
         <div class="col-md-12">
             <div class="card">
@@ -9,7 +8,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="/siswa/exportPdf" target="_blank" class="btn btn-success">
                                             <span class="me-1">Print PDF</span>
@@ -21,22 +20,21 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="row">
-                                        <form action="{{ route('siswa.index') }}" method="get">
-                                            <div class="input-group">
-                                                <input type="text" name="cari" id="cari"
-                                                    class="form-control shadow mb-3 bg-body rounded"
-                                                    placeholder="Cari Siswa" value="{{ request('cari') }}"
-                                                    aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                                <div class="input-group-append">
-                                                    <button type="submit"
-                                                        class="input-group-text bg-info shadow mb-3 rounded"
-                                                        id="basic-addon2">Search</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <div class="col-md-3 mt-3 mt-sm-0">
+                                    <select class="form-select" id="kelas">
+                                        <option selected value="">Semua Kelas</option>
+                                        @foreach (arrayKelas() as $item)
+                                            <option value="{{ $item }}">Kelas {{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mt-2 mt-sm-0">
+                                    <select class="form-select" id="subKelas">
+                                        <option selected value="">Semua Sub Kelas</option>
+                                        @foreach ($subKelas as $item)
+                                            <option value="{{ $item->sub_kelas }}"> {{ $item->sub_kelas }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-2">
                                     <a href="{{ route('siswa.create') }}" class="btn btn-primary float-end">
@@ -50,9 +48,10 @@
                 </div>
                 <div class="p-2 mt-2 table-responsive">
                     <table
-                        class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden">
+                        class="table table-striped text-center text-capitalize table-responsive rounded rounded-1 overflow-hidden data-table">
                         <thead class="bg-dark text-light">
                             <tr>
+                                <th scope="col">No</th>
                                 <th scope="col">NIS</th>
                                 <th scope="col">Foto</th>
                                 <th scope="col">Nama Siswa</th>
@@ -64,63 +63,113 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!empty($siswa))
-                                @foreach ($siswa as $item)
-                                    <tr>
-                                        <td>{{ $item->nis }}</td>
-                                        <td>
-                                            @if ($item->image)
-                                                <img src="{{ $item->image }}" alt="image" width="50">
-                                            @else
-                                                <span class="badge text-bg-success">Tidak Ada Foto</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $item->nama_siswa }}</td>
-                                        <td>{{ $item->jenis_kelamin }}</td>
-                                        <td>{{ $item->tgl_lahir }}</td>
-                                        <td>{{ $item->kelas }}</td>
-                                        <td>{{ $item->thn_ajaran }}</td>
-                                        <td>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="{{ route('siswa.edit', $item->id) }}"
-                                                    class="btn btn-sm btn-warning btn_edit me-2">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                    Edit
-                                                </a>
-                                                <form method="POST" action="{{ route('siswa.destroy', $item->id) }}">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger btn_delete">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
 
-
-                            @if ($siswa->count() == 0)
-                                <td colspan="8">
-                                    <span class="text-danger">Data Tidak Tersedia </span>
-                                </td>
-                            @endif
                         </tbody>
                     </table>
-
-                    <div class="d-flex justify-content-center">
-                        {!! $siswa->links() !!}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
 
     <script>
         $(function() {
+            var urlData = "{{ route('siswa.index') }}";
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: urlData,
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'nis',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'image',
+                    },
+                    {
+                        data: 'nama_siswa',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'jenis_kelamin',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'tgl_lahir',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'kelas',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'thn_ajaran',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                ]
+            });
+
+            $('#kelas').change(function() {
+                var linkPdf = '/siswa/exportPdf';
+                var linkExcel = '/siswa/exportExcel';
+                var kelas = $(this).val();
+                var subKelas = $('#subKelas').val();
+
+                // merubah url untuk print excel dan pdf
+                $('#printPdf').attr('href', linkPdf + '/' + kelas + '/' + subKelas)
+                $('#printExcel').attr('href', linkExcel + '/' + kelas + '/' + subKelas)
+
+                //  merubah datatable menggunakan ajax
+                var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
+                table.ajax.url(dataSrc).draw();
+            })
+
+            $('#subKelas').change(function() {
+                var linkPdf = '/siswa/exportPdf';
+                var linkExcel = '/siswa/exportExcel';
+                var kelas = $('#kelas').val();
+                var subKelas = $(this).val();
+
+                // merubah url untuk print excel dan pdf
+                $('#printPdf').attr('href', linkPdf + '/' + kelas + '/' + subKelas)
+                $('#printExcel').attr('href', linkExcel + '/' + kelas + '/' + subKelas)
+
+
+                var dataSrc = urlData + '?kelas=' + kelas + '&subKelas=' + subKelas;
+                table.ajax.url(dataSrc).draw();
+            })
+
             $(document).on('click', '.btn_delete', function(e) {
                 e.preventDefault()
                 var form = $(this).closest("form");

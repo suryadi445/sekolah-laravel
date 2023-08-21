@@ -64,7 +64,8 @@
                                 <h4>Ikuti Kami</h4>
                                 @if (!empty($identity['facebook']))
                                     <p>
-                                        <a href="{{ $identity['facebook'] }}" class="text-decoration-none">
+                                        <a href="{{ $identity['facebook'] }}" class="text-decoration-none"
+                                            target="_blank">
                                             <i class="me-1 fa-brands fa-square-facebook"></i>
                                             Facebook
                                         </a>
@@ -79,7 +80,7 @@
                                 @endif
                                 @if (!empty($identity['ig']))
                                     <p>
-                                        <a href="{{ $identity['ig'] }}" class="text-decoration-none">
+                                        <a href="{{ $identity['ig'] }}" class="text-decoration-none" target="_blank">
                                             <i class="me-1 fa-brands fa-square-instagram"></i> Instagram
                                         </a>
                                     </p>
@@ -92,7 +93,8 @@
                                 @endif
                                 @if (!empty($identity['twitter']))
                                     <p>
-                                        <a href="{{ $identity['twitter'] }}" class="text-decoration-none">
+                                        <a href="{{ $identity['twitter'] }}" class="text-decoration-none"
+                                            target="_blank">
                                             <i class="me-1 fa-brands fa-square-twitter"></i>
                                             Twitter
                                         </a>
@@ -107,7 +109,8 @@
                                 @endif
                                 @if (!empty($identity['youtube']))
                                     <p>
-                                        <a href="{{ $identity['youtube'] }}" class="text-decoration-none">
+                                        <a href="{{ $identity['youtube'] }}" class="text-decoration-none"
+                                            target="_blank">
                                             <i class="me-1 fa-brands fa-square-youtube"></i>
                                             Youtube
                                         </a>
@@ -121,7 +124,8 @@
                                 @endif
                                 @if (!empty($identity['linkedin']))
                                     <p>
-                                        <a href="{{ $identity['linkedin'] }}" class="text-decoration-none">
+                                        <a href="{{ $identity['linkedin'] }}" class="text-decoration-none"
+                                            target="_blank">
                                             <i class="me-1 fa-brands fa-linkedin"></i>
                                             Linked In
                                         </a>

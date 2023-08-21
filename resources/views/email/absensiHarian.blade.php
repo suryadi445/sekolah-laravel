@@ -27,7 +27,8 @@
 <body>
 
     <h3>
-        List Absensi Tidak Hadir Siswa Pada {{ hari($data[0]['created_at']) . ', ' . $data[0]['tgl_absensi'] }}
+        List Absensi Tidak Hadir Siswa Pada
+        {{ hari($data[0]['created_at']) . ', ' . date('d-m-Y', strtotime($data[0]['tgl_absensi'])) }}
     </h3>
 
     <table class="centered-text-table">

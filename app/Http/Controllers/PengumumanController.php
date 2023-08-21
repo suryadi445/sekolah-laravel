@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notice;
+use App\Models\Banner;
 
 
 class PengumumanController extends Controller
@@ -11,7 +12,10 @@ class PengumumanController extends Controller
     public function index()
     {
         $pengumuman = Notice::latest()->paginate(20);
-        $data = $this->default();
+        $data = Banner::where('kategori', 'Pengumuman')->first();
+        if (empty($data)) {
+            $data = $this->default();
+        }
 
         return view('frontend.pengumuman', compact('pengumuman', 'data'));
     }

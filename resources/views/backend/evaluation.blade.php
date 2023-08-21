@@ -161,10 +161,6 @@
                                                     <i class="fa-solid fa-floppy-disk"></i>
                                                     Simpan
                                                 </button>
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="fa-brands fa-whatsapp"></i>
-                                                    Kirim
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -317,10 +313,6 @@
                                                 <button type="submit" class="btn btn-primary me-2">
                                                     <i class="fa-solid fa-floppy-disk"></i>
                                                     Simpan
-                                                </button>
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="fa-brands fa-whatsapp"></i>
-                                                    Kirim
                                                 </button>
                                             </div>
                                         </div>
