@@ -37,16 +37,14 @@ class EmailMonthly extends Command
 
         $model_siswa = new Siswa;
 
-        $data = $model_siswa->getSiswaAbsensi();
+        $data = $model_siswa->getSiswaMonthly();
 
         foreach ($data as $key => $value) {
             $email = $value->email;
 
             Mail::to($email)->send(new EmailAbsensiBulanan($data));
+            // Tuliskan logika untuk mengirim email di sini
+            $this->info("$email sent successfully.");
         }
-
-
-        // Tuliskan logika untuk mengirim email di sini
-        $this->info('Emails sent successfully.');
     }
 }

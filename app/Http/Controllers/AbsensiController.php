@@ -10,6 +10,7 @@ use App\Exports\AbsensiExport;
 use App\Jobs\EmailAbsensiHarian;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 class AbsensiController extends Controller
 {
     protected $model;
@@ -113,7 +114,7 @@ class AbsensiController extends Controller
         }
 
         // kirim email melalui sistem queue
-        EmailAbsensiHarian::dispatch($kelas);
+        EmailAbsensiHarian::dispatch($kelas, $id_mapel);
 
 
         if ($insert) {

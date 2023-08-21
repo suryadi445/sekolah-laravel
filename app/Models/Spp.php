@@ -33,4 +33,12 @@ class Spp extends Model
 
         return $spps;
     }
+
+    public function get_spp($insert_id)
+    {
+        return Spp::join('siswas', 'spps.id_siswa', '=', 'siswas.id')
+            ->where('spps.id', $insert_id)
+            ->select('siswas.nama_siswa', 'siswas.email', 'siswas.kelas', 'siswas.sub_kelas', 'spps.nama_bulan', 'spps.tahun', 'spps.tipe_pembayaran', 'spps.jenis_pembayaran', 'spps.nominal', 'spps.created_at')
+            ->first();
+    }
 }
