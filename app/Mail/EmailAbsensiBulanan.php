@@ -60,7 +60,7 @@ class EmailAbsensiBulanan extends Mailable
         }
 
         $writer = new Xlsx($spreadsheet);
-        $excelFilePath = public_path('AbsensiBulanan(' . date('m-Y)') . '.xlsx');
+        $excelFilePath = public_path('file/absensi/AbsensiBulanan(' . date('m-Y)') . '.xlsx');
         $writer->save($excelFilePath);
 
         return $excelFilePath;

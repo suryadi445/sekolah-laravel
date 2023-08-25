@@ -83,3 +83,7 @@
         </div>
     </div>
 @endsection
+
+<script>
+    localStorage.clear();
+</script>

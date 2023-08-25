@@ -1,13 +1,13 @@
 
 $(document).ready(function () {
 
-    var isFirstLogin = localStorage.getItem('isFirstLogin');
-    if (isFirstLogin != 'true') {
-        localStorage.setItem('isFirstLogin', 'true');
-        localStorage.setItem('isFirstLogin', 'false');
-    } else {
-        localStorage.clear();
-    }
+    // var isFirstLogin = localStorage.getItem('isFirstLogin');
+    // if (isFirstLogin != 'true') {
+    //     localStorage.setItem('isFirstLogin', 'true');
+    //     localStorage.setItem('isFirstLogin', 'false');
+    // } else {
+    //     localStorage.clear();
+    // }
 
 
     $(".select2").select2({
